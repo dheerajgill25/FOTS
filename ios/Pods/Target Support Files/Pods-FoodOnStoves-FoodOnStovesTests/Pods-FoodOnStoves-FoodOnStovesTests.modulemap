@@ -1,0 +1,6 @@
+module Pods_FoodOnStoves_FoodOnStovesTests {
+  umbrella header "Pods-FoodOnStoves-FoodOnStovesTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

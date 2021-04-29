@@ -1,0 +1,81 @@
+import Typography from '@components/typography/Typography';
+import React from 'react';
+import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingLeft: 50,
+        paddingRight: 50,
+    },
+    elevation: {
+        elevation: 10,
+        shadowOpacity: 0.15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 20 },
+        shadowRadius: 8,
+    },
+    label: {
+        marginTop: 5,
+        marginBottom: 5,
+        fontSize: 15,
+        color: '#0C0D34',
+        textAlign: 'center',
+    },
+    icon: {
+        marginRight: 8,
+    },
+});
+
+export enum ButtonFoodType {
+    DEFAULT,
+    PRIMARY,
+    SOCIAL,
+}
+
+interface ButtonProps {
+    variant?: ButtonFoodType;
+    label: string;
+    icon?: React.ReactNode;
+    onPress: () => void;
+    isElevated?: boolean;
+    textColor?: string;
+    buttonStyle?: StyleProp<ViewStyle>;
+    textStyle?: StyleProp<TextStyle>;
+}
+
+const ButtonFood = ({
+    variant = ButtonFoodType.PRIMARY,
+    label,
+    onPress,
+    icon,
+    isElevated = false,
+    textColor = 'white',
+    textStyle,
+    buttonStyle,
+}: ButtonProps) => {
+    return (
+        <LinearGradient colors={['#D80000', '#D80000']} style={{
+            borderRadius: 50
+        }}>
+            <TouchableOpacity
+                style={[
+                    styles.container,
+                    isElevated && styles.elevation,
+                    buttonStyle,
+                ]}
+                {...{ onPress }}
+            >
+                {icon && <View style={styles.icon}>{icon}</View>}
+                <Typography style={[styles.label, textStyle, { color: textColor }]}>{label}</Typography>
+            </TouchableOpacity>
+        </LinearGradient>
+    );
+};
+
+export default ButtonFood;
