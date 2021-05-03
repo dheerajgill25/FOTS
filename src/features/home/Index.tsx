@@ -10,6 +10,8 @@ import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
 import { foodItemData, groceryItemData, testimonialData } from "./data";
 import TestimonialComponent from "components/testimonial/Index";
 import OrderScreen from "features/orderScreen/Index";
+import ProductScreen from "features/products/Index";
+import BannerComponent from "components/banner/Index";
 interface HomeScreenProps { }
 
 const renderFoodItems = (item: any) => {
@@ -26,15 +28,13 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                 <ScrollView bounces={false}>
                     <View style={styles.homeSection}>
                         <SearchComponent text="" action={async () => console.log('')} />
-                        <View style={styles.homeBannerSection}>
-                            <Image source={HOMEBANNERIMAGEURL} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" />
-                        </View>
+                        <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL } />
                         <View>
                             <View style={styles.buttonsGroup}>
                                 <RenderButtonWithIcon label={'Farm To Firehouse'} onPress={()=>OrderScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'from the farm'} onPress={()=>OrderScreen.navigate()} />
+                                <RenderButtonWithIcon label={'from the farm'} onPress={()=>ProductScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
                                 <RenderButtonWithIcon label={'for your table'} onPress={()=>OrderScreen.navigate()} />

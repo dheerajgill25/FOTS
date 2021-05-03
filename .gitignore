@@ -66,3 +66,9 @@ dist/
 node_modules/
 .secret-*
 ios/FoodOnStoves.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ios/.DS_Store
+ios/FoodOnStoves.xcworkspace/xcuserdata/devendrasharma.xcuserdatad/UserInterfaceState.xcuserstate
+ios/Podfile 2.lock
+ios/Podfile.lock
+ios/Podfile.lock
+ios/Podfile 2

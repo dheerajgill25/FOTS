@@ -1,5 +1,6 @@
 import { CheckOutBox } from 'components/checkoutbox/Index';
 import Typography from 'components/typography/Typography';
+import BeforePayNow from 'features/paynow/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TextInput } from 'react-native';
@@ -83,7 +84,7 @@ const CartScreen = ({ }: CartProps) => {
                 <FlatList data={cartData} scrollEnabled={false} style={{ marginTop: 38, marginBottom: 63 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
                 {coupenCodeSection()}
             </ScrollView>
-            <CheckOutBox total="$10" deliveryFee="free" tax="$0" />
+            <CheckOutBox total="$10" label="Checkout" deliveryFee="free" tax="$0" onPress={()=>BeforePayNow.navigate()} />
         </View>
     )
 }

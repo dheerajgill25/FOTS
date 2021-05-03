@@ -49,8 +49,8 @@ const TestimonialComponent = ({ data }: any) => {
                             <View style={styles.contentText}>
                                 <Typography style={styles.text}>{item.description}</Typography>
                             </View>
-                            <View style={styles.colonBox}>
-                                <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10 }]}>“</Typography>
+                            <View style={[styles.colonBox,{display:"flex",justifyContent:'flex-end', alignItems:'flex-end'}]}>
+                                <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10,transform: [{ rotate: '180deg'}], }]}>“</Typography>
                             </View>
                         </View>
                     </LinearGradient>
@@ -123,7 +123,8 @@ const styles = StyleSheet.create({
         lineHeight: 50,
         color: "white",
         paddingLeft: 10,
-        paddingTop: 8
+        paddingTop: 8,
+        fontFamily:FontFamilyFoods.POLLERONE
     },
     contentText: {
 

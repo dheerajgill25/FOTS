@@ -7,6 +7,8 @@ import FoodItemsComponent from "components/foodItems/Index";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
 import Typography from "components/typography/Typography";
 import ProductDetailScreen from "features/productdetail/Index";
+import BannerComponent from "components/banner/Index";
+import MealPlan from "features/mealplan/Index";
 interface OrderScreenProps { }
 const orderData: any[] = [
     {
@@ -32,7 +34,7 @@ const renderHowItsWorks = (item: any) => {
                         <View style={styles.howWorkwrap}>
                             <Image style={styles.icon} source={item.item.imageUrl} />
                         </View>
-                        <Typography style={styles.title}>{item.item.title}</Typography>
+                        <Typography onPress={()=>MealPlan.navigate()} style={styles.title}>{item.item.title}</Typography>
                     </View>
                 </View>
             </View>
@@ -49,15 +51,13 @@ const renderFooterItem = () => {
     )
 }
 const OrderScreen = ({ }: OrderScreenProps) => {
-    const BANNERIMAGEURL = require('../../../assets/images/homeBanner.png');
+    const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                        <View style={styles.homeBannerSection}>
-                            <Image source={BANNERIMAGEURL} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" />
-                        </View>
+                    <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL}/>
                         <View>
                             <View style={styles.buttonsGroup}>
                                 <RenderButtonWithIcon label={'Peruvian Chicken'} onPress={() => ProductDetailScreen.navigate()} />

@@ -2,8 +2,10 @@ import React from 'react';
 import { Text, StyleProp, TextStyle } from 'react-native';
 export enum FontFamilyFoods {
     POPPINS = 'Poppins-Regular',
-    POPPINSMEDIUM = 'Poppins-SemiBold',
-    POPPINSBOLD='Poppins-Bold'
+    POPPINSSEMIBOLD = 'Poppins-SemiBold',
+    POPPINSBOLD='Poppins-Bold',
+    POLLERONE="PollerOne-Regular",
+    POPPINSMEDIUM='Poppins-Medium'
 }
 
 interface RoundedButtonProps {

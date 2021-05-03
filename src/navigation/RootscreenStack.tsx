@@ -7,6 +7,11 @@ import OrderScreen from '@features/orderScreen/Index';
 import ProductDetailScreen from '@features/productdetail/Index';
 import CartScreen from 'features/cart/Index';
 import HeaderScreenOptionNavigation from './header';
+import BeforePayNow from 'features/paynow/Index';
+import ThankYouScreen from 'features/thankyou/Index';
+import MyAccount from 'features/myaccount/Index';
+import ProductScreen from 'features/products/Index';
+import MealPlan from 'features/mealplan/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -47,6 +52,48 @@ const RootStackScreen = () => {
                 component={CartScreen}
                 options={HeaderScreenOptionNavigation({
                     showBackButton: true,
+                })}
+                
+            /> 
+            <RootStackNavigator.Screen
+                name={BeforePayNow.SCREEN_NAME}
+                component={BeforePayNow}
+                options={HeaderScreenOptionNavigation({
+                    showBackButton: true,
+                })}
+                
+            />  
+              <RootStackNavigator.Screen
+                name={ThankYouScreen.SCREEN_NAME}
+                component={ThankYouScreen}
+                options={HeaderScreenOptionNavigation({
+                    showBackButton: true,
+                })}
+                
+            /> 
+             <RootStackNavigator.Screen
+                name={MyAccount.SCREEN_NAME}
+                component={MyAccount}
+                options={HeaderScreenOptionNavigation({
+                    showBackButton: true,
+                })}
+                
+            />
+              <RootStackNavigator.Screen
+                name={ProductScreen.SCREEN_NAME}
+                component={ProductScreen}
+                options={ScreenOptionNavigation({
+                    showBackButton: false,
+                    showCartIcon: true,
+                })}
+                
+            />
+              <RootStackNavigator.Screen
+                name={MealPlan.SCREEN_NAME}
+                component={MealPlan}
+                options={ScreenOptionNavigation({
+                    showBackButton: false,
+                    showCartIcon: true,
                 })}
                 
             />

@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 28,
         lineHeight: 42,
-        color: '#fff'
+        color: '#fff',
+        fontFamily:FontFamilyFoods.POPPINSBOLD
     },
     formGroupBox: {
         marginHorizontal: 23,

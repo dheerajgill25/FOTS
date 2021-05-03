@@ -74,7 +74,7 @@ const Register = ({ }: RegisterProps) => {
                                 <BackIcon />
                             </View>
                             <View style={styles.bannerBox}>
-                                <Typography style={styles.heading} fontFamily={FontFamilyFoods.POPPINSBOLD}>Sign Up</Typography>
+                                <Typography style={styles.heading}>Sign Up</Typography>
                             </View>
 
                         </View>

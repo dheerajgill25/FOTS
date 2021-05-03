@@ -10,15 +10,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 21,
         marginTop: 20,
     },
-    homeBannerSection: {
-        marginTop: 15,
-        marginBottom: 25,
-        elevation: 4
-    },
-    homeBannerImg: {
-        width: '100%',
-        height: 200,
-    },
     foodItemPopluar: {
         fontSize: 18,
         lineHeight: 27,
