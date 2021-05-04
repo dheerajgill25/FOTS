@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     foodItemPopluar:{
         fontSize:18,
         lineHeight:27,
-        fontFamily:FontFamilyFoods.POPPINSBOLD,
+        fontFamily:FontFamilyFoods.POPPINSSEMIBOLD,
         marginBottom:10
     },
     buttonsGroup:{

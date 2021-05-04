@@ -29,7 +29,7 @@ const MealPlan = (props: MealPlanProps) => {
           <View style={[styles.mealPlanSection,{marginTop:47}]}>
             <Typography style={styles.mealPlanText}>A La Carte</Typography>
             <View style={styles.mealPlanButtons}>
-              <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={"Select at least 5 meals"} onPress={() => { }} />
+              <RenderButtonWithIcon buttonStyle={[styles.buttonstyles,{textAlign:'center'}]} fiveMealBtn={true} label={"Select at least 5 meals"} onPress={() => { }} />
             </View>
 
           </View>

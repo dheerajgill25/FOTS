@@ -12,6 +12,9 @@ import ThankYouScreen from 'features/thankyou/Index';
 import MyAccount from 'features/myaccount/Index';
 import ProductScreen from 'features/products/Index';
 import MealPlan from 'features/mealplan/Index';
+import BottomTabNavigation from './tabbar';
+import HomeStack from './homestack';
+import OrderScreenSecond from 'features/orderScreentwo/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -24,8 +27,8 @@ const RootStackScreen = () => {
             />
 
             <RootStackNavigator.Screen
-                name={HomeScreen.SCREEN_NAME}
-                component={HomeScreen}
+                name={HomeStack.SCREEN_NAME}
+                component={HomeStack}
                 options={ScreenOptionNavigation({
                     showBackButton: true,
                     showCartIcon: true,
@@ -96,7 +99,16 @@ const RootStackScreen = () => {
                     showCartIcon: true,
                 })}
                 
-            />
+            /> 
+               <RootStackNavigator.Screen
+                name={OrderScreenSecond.SCREEN_NAME}
+                component={OrderScreenSecond}
+                options={ScreenOptionNavigation({
+                    showBackButton: false,
+                    showCartIcon: true,
+                })}
+                
+            /> 
         </RootStackNavigator.Navigator>
     );
 };

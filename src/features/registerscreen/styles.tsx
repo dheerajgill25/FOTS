@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         marginVertical:40
     },
     buttonStyle:{
-        fontFamily:FontFamilyFoods.POPPINSBOLD,
+        fontFamily:FontFamilyFoods.POPPINSMEDIUM,
         fontSize:18,
         lineHeight:27
     }

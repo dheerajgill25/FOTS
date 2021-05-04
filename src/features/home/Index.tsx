@@ -34,23 +34,23 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                                 <RenderButtonWithIcon label={'Farm To Firehouse'} onPress={()=>OrderScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'from the farm'} onPress={()=>ProductScreen.navigate()} />
+                                <RenderButtonWithIcon label={'for your table'} onPress={()=>OrderScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'for your table'} onPress={()=>OrderScreen.navigate()} />
+                                <RenderButtonWithIcon label={'from the farm'} onPress={()=>ProductScreen.navigate()} />
                             </View>
 
                         </View>
                         <View>
-                            <Typography style={styles.foodItemPopluar}>Popular Food Items</Typography>
+                            <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
                             <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                         </View>
                         <View>
-                            <Typography style={styles.foodItemPopluar}>Popular Food Item</Typography>
+                            <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meal </Typography>
                             <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                         </View>
                         <View>
-                            <Typography style={styles.foodItemPopluar}>Popular Grocery</Typography>
+                            <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
                             <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                         </View>
 

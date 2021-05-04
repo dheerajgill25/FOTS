@@ -79,3 +79,6 @@ ios/.DS_Store
 .DS_Store
 assets/.DS_Store
 .DS_Store
+ios/FoodOnStoves.xcodeproj/project.pbxproj
+ios/FoodOnStoves.xcworkspace/xcuserdata/devendrasharma.xcuserdatad/UserInterfaceState.xcuserstate
+package-lock.json

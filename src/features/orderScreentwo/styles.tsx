@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: 'center',
         flexDirection:'row',
-        justifyContent:'space-between'
     },
     howWorkBox: {
     },
@@ -36,27 +35,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#F2F2F2',
         padding: 10,
         borderRadius: 50,
-        width:80,
-        height:80,
+        width:75,
+        height:75,
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center',
-        marginLeft:10,
+        marginRight:10,
     },
     icon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
     },
     title: {
         textAlign:'center',
-        maxWidth:100,
+        maxWidth:75,
         alignSelf:'center',
         marginTop:10,
         color:'#484848',
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
         fontSize:15,
-        lineHeight:20
+        lineHeight:20,
     },
     footerSection:{
         marginVertical:27
@@ -84,5 +83,8 @@ const styles = StyleSheet.create({
         letterSpacing:0.7,
         textAlign:'center'
     },
+    itemImg:{
+        width:28,height:39
+    }
 });
 export default styles;

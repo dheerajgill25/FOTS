@@ -11,6 +11,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ButtonFood from 'components/buttons/ButtonFoods';
 import HomeScreen from 'features/home/Index';
 import BackIcon from 'components/backicon/Index';
+import BottomTabNavigation from 'navigation/tabbar';
+import HomeStack from 'navigation/homestack';
 interface RegisterProps { }
 const state = [
     {
@@ -81,7 +83,7 @@ const Register = ({ }: RegisterProps) => {
                     </LinearGradient>
                     {registerForm()}
                     <View style={styles.buttonSetion}>
-                       <ButtonFood onPress={()=>HomeScreen.navigate()} label={'Sign Up'} textColor={'white'} textStyle={styles.buttonStyle} />
+                       <ButtonFood onPress={()=>HomeStack.navigate()} label={'Sign Up'} textColor={'white'} textStyle={styles.buttonStyle} />
                     </View>
                 </ScrollView>
             </SafeAreaView>

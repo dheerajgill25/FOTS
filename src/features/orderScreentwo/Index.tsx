@@ -9,49 +9,52 @@ import Typography from "components/typography/Typography";
 import ProductDetailScreen from "features/productdetail/Index";
 import BannerComponent from "components/banner/Index";
 import MealPlan from "features/mealplan/Index";
-import OrderScreenSecond from "features/orderScreentwo/Index";
-interface OrderScreenProps { }
+interface OrderScreenSecondProps { }
 const orderData: any[] = [
     {
-        imageUrl: require("../../../assets/images/icon2.png"),
-        title: 'Choose Your Meal'
+        imageUrl: require("../../../assets/images/icon4.png"),
+        title: 'Choose Your Plan'
     },
     {
-        imageUrl: require("../../../assets/images/icon1.png"),
-        title: 'We Package & Deliver'
+        imageUrl: require("../../../assets/images/icon2.png"),
+        title: 'Choose Your Meals'
     },
     {
         imageUrl: require("../../../assets/images/icon3.png"),
-        title: 'You Cook & Eat'
+        title: 'Meals Made & Delivered Fresh'
+    },
+    {
+        imageUrl: require("../../../assets/images/icon1.png"),
+        title: 'Eat & Enjoy'
     },
 ];
 
-const renderHowItsWorks = (item: any) => {
+const renderHowItsWorks = (item: any,index:number) => {
     return (
         <>
             <View key={item.index} style={styles.howWorkSection}>
                 <View style={styles.worksFlex}>
                     <View style={styles.howWorkBox}>
                         <View style={styles.howWorkwrap}>
-                            <Image style={styles.icon} source={item.item.imageUrl} />
+                            <Image style={[styles.icon,index==0&&styles.itemImg]} source={item.imageUrl} />
                         </View>
-                        <Typography onPress={()=>MealPlan.navigate()} style={styles.title}>{item.item.title}</Typography>
+                        <Typography onPress={()=>MealPlan.navigate()} style={styles.title}>{item.title}</Typography>
                     </View>
                 </View>
             </View>
         </>
     )
 };
-// const renderFooterItem = () => {
-//     return (
-//         <View style={styles.footerSection}>
-//             <View style={styles.footerBox}>
-//                 <Typography style={styles.footerTitle}>Orders must be placed by 9am to receive the same day delivery</Typography>
-//             </View>
-//         </View>
-//     )
-// }
-const OrderScreen = ({ }: OrderScreenProps) => {
+const renderFooterItem = () => {
+    return (
+        <View style={styles.footerSection}>
+            <View style={styles.footerBox}>
+                <Typography style={styles.footerTitle}>Orders must be placed by 9am to receive the same day delivery</Typography>
+            </View>
+        </View>
+    )
+}
+const OrderScreenSecond = ({ }: OrderScreenSecondProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
@@ -61,20 +64,20 @@ const OrderScreen = ({ }: OrderScreenProps) => {
                     <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL}/>
                         <View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'Peruvian Chicken'} buttonStyle={styles.buttonText}  onPress={() => ProductDetailScreen.navigate()} />
+                                <RenderButtonWithIcon label={'breakfast'} buttonStyle={styles.buttonText}  onPress={() => ProductDetailScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'meal type 2'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate()}} />
+                                <RenderButtonWithIcon label={'lunch'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate()}} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'meal type 3'} buttonStyle={styles.buttonText} onPress={() => { }} />
+                                <RenderButtonWithIcon label={'dinner'} buttonStyle={styles.buttonText} onPress={() => { }} />
                             </View>
                         </View>
                         <View>
                             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
-                            <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={renderHowItsWorks} />
+                            <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({item,index})=>renderHowItsWorks(item,index)} />
                         </View>
-                        {/* {renderFooterItem()} */}
+                        {renderFooterItem()}
                     </View>
 
                 </ScrollView>
@@ -82,11 +85,11 @@ const OrderScreen = ({ }: OrderScreenProps) => {
         </BaseScreen>
     )
 }
-OrderScreen.SCREEN_NAME = 'OrderScreen';
-OrderScreen.navigationOptions = {
+OrderScreenSecond.SCREEN_NAME = 'OrderScreenSecond';
+OrderScreenSecond.navigationOptions = {
     headerShown: false,
 };
-OrderScreen.navigate = () => {
-    RootNavigator.navigate(OrderScreen.SCREEN_NAME);
+OrderScreenSecond.navigate = () => {
+    RootNavigator.navigate(OrderScreenSecond.SCREEN_NAME);
 };
-export default OrderScreen;
+export default OrderScreenSecond;
