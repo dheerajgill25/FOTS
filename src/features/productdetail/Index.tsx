@@ -5,6 +5,7 @@ import Typography from "components/typography/Typography";
 import styles from "./styles";
 import { MyStatusBar } from "components/statusbar/Index";
 import ButtonWithText from "components/buttons/BurttonWithText";
+import CartScreen from "features/cart/Index";
 
 interface ProductDetailScreenProps { };
 const bannerSection = () => {
@@ -141,7 +142,7 @@ const cookingInstructionSection = () => {
 const renderButtonSection = ()=>{
     return(
         <View style={styles.descriptionSection}>
-             <ButtonWithText label={"Add to cart"}  subText="$0" onPress={()=>{}} />
+             <ButtonWithText label={"Add to cart"}  subText="$0" onPress={()=>CartScreen.navigate()} />
         </View>
     )
 }
@@ -149,7 +150,7 @@ const ProductDetailScreen = ({ }: ProductDetailScreenProps) => {
 
     return (
         <>
-            <MyStatusBar backgroundColor="#F2F2F2" barStyle="dark-content" />
+            <MyStatusBar backgroundColor="#F2F2F2" height={29} barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     {bannerSection()}

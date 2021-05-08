@@ -30,7 +30,7 @@ const RootStackScreen = () => {
                 name={HomeStack.SCREEN_NAME}
                 component={HomeStack}
                 options={ScreenOptionNavigation({
-                    showBackButton: true,
+                    showBackButton: false,
                     showCartIcon: true,
                 })}
             />
@@ -39,7 +39,7 @@ const RootStackScreen = () => {
                 name={OrderScreen.SCREEN_NAME}
                 component={OrderScreen}
                 options={ScreenOptionNavigation({
-                    showBackButton: true,
+                    showBackButton: false,
                     showCartIcon: true
                 })}
             />
@@ -55,6 +55,7 @@ const RootStackScreen = () => {
                 component={CartScreen}
                 options={HeaderScreenOptionNavigation({
                     showBackButton: true,
+                    headerTitle:"Cart"
                 })}
                 
             /> 
@@ -63,6 +64,8 @@ const RootStackScreen = () => {
                 component={BeforePayNow}
                 options={HeaderScreenOptionNavigation({
                     showBackButton: true,
+                    headerTitle:"Delivery",
+                    showCartIcon:true
                 })}
                 
             />  
@@ -71,6 +74,7 @@ const RootStackScreen = () => {
                 component={ThankYouScreen}
                 options={HeaderScreenOptionNavigation({
                     showBackButton: true,
+                    headerTitle:"Order Confirmed",
                 })}
                 
             /> 
@@ -79,6 +83,8 @@ const RootStackScreen = () => {
                 component={MyAccount}
                 options={HeaderScreenOptionNavigation({
                     showBackButton: true,
+                    headerTitle:"My Account",
+                    showCartIcon:true
                 })}
                 
             />

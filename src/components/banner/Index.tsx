@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     homeBannerSection: {
         marginTop: 15,
         marginBottom: 25,
-        elevation: 4
+        elevation: 4,
+        marginHorizontal:21
     },
     homeBannerImg: {
         width: '100%',

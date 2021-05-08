@@ -18,7 +18,7 @@ const BaseScreen = ({ navigatorBarOptions, children }: BaseScreenProps) => {
     return (
         <View style={{ backgroundColor: 'white', flex: 1 }}>
             <SafeAreaView style={{ flex: 1, flexDirection: 'column' }}>
-                <View style={{ height: 1, width: '100%', backgroundColor: 'white' }} />
+                <View style={{  width: '100%', backgroundColor: 'white' }} />
                 {children}
             </SafeAreaView>
         </View>

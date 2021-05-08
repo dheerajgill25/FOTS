@@ -41,8 +41,8 @@ const BottomTabNavigation = () => {
                     inactiveTintColor: "gray",
                     activeBackgroundColor: "#D80000",
                     showLabel:false,
-                    tabStyle:{borderRadius:100,maxWidth:50,width:50,height:50,marginLeft:'15%',marginTop:10},
-                    style:{width:'100%',backgroundColor:'#fff',}
+                    tabStyle:{borderRadius:100,maxWidth:40,width:40,height:40,marginLeft:'18%',marginTop:4},
+                    style:{width:'100%',backgroundColor:'#fff',paddingBottom:5}
                 }}
             
                 initialRouteName={HomeScreen.SCREEN_NAME}
@@ -57,8 +57,8 @@ const BottomTabNavigation = () => {
                             <Image
                                 source={SEARCHURL}
                                 style={{
-                                    height: 20,
-                                    width: 20,
+                                    height: 15,
+                                    width: 15,
                                     tintColor: color,
                                 }}
                             />
@@ -77,8 +77,8 @@ const BottomTabNavigation = () => {
                             <Image
                                 source={HOMEURL}
                                 style={{
-                                    height: 20,
-                                    width: 20,
+                                    height: 15,
+                                    width: 15,
                                     tintColor: color,
                                 }}
                             />
@@ -95,8 +95,8 @@ const BottomTabNavigation = () => {
                             <Image
                                 source={PROFILEURL}
                                 style={{
-                                    height: 20,
-                                    width: 20,
+                                    height: 15,
+                                    width: 15,
                                     tintColor: color,
                                 }}
                             />

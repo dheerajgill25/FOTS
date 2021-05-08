@@ -67,7 +67,7 @@ const coupenCodeSection = () => {
             <View style={styles.coupenCodeWrap}>
                 <View style={styles.coupenCodeBox}  >
                     <View style={styles.coupenForm}>
-                        <TextInput placeholder="Have Coupen Code?" style={styles.formControl} />
+                        <TextInput placeholder="Have Coupen Code?" style={styles.formControl} placeholderTextColor={"#A3A3A3"} />
                         <Image source={COUPENURL} style={styles.coupenIcon} />
                     </View>
                 </View>
@@ -81,7 +81,7 @@ const CartScreen = ({ }: CartProps) => {
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
-                <FlatList data={cartData} scrollEnabled={false} style={{ marginTop: 38, marginBottom: 63 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
+                <FlatList data={cartData} scrollEnabled={false} style={{ marginTop: 38, marginBottom: 53 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
                 {coupenCodeSection()}
             </ScrollView>
             <CheckOutBox total="$10" label="Checkout" deliveryFee="free" tax="$0" onPress={()=>BeforePayNow.navigate()} />

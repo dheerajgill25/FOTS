@@ -1,4 +1,5 @@
 
+import { MyStatusBar } from 'components/statusbar/Index';
 import Typography from 'components/typography/Typography';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
@@ -111,6 +112,7 @@ const renderItems = (items: OrderDataProps, index: any) => {
 const MyAccount = (props: MyAccountProps) => {
     return (
         <SafeAreaView style={styles.container}>
+             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <ScrollView bounces={false} >
                 {renderAccountInfo()}
                 {renderHelpSection()}

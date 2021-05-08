@@ -10,6 +10,7 @@ import ProductDetailScreen from "features/productdetail/Index";
 import BannerComponent from "components/banner/Index";
 import MealPlan from "features/mealplan/Index";
 import OrderScreenSecond from "features/orderScreentwo/Index";
+import { MyStatusBar } from "components/statusbar/Index";
 interface OrderScreenProps { }
 const orderData: any[] = [
     {
@@ -55,6 +56,7 @@ const OrderScreen = ({ }: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
+             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>

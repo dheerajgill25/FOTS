@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
        
     },
     donateBtn:{
-        backgroundColor:'#E5E5E5'
+        backgroundColor:'#E5E5E5',
+        borderRadius:50
     },
     successBtnBox:{
         marginBottom:30

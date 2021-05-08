@@ -17,17 +17,15 @@ const renderButtonWithIcon = () => {
 const SearchComponent = ({ }: SearchProps) => {
     const IMAGEURL = require("../../../assets/images/search.png")
     return (
-        <SafeAreaView>
-            <View style={styles.searchBox}>
-                <View style={styles.searchWrap}>
-                    <TextInput placeholder={'Search'} style={styles.formControl} />
-                    <Image source={IMAGEURL} style={styles.searchIcon} />
-                </View>
-                <View style={styles.filterBox}>
-                    {renderButtonWithIcon()}
-                </View>
+        <View style={styles.searchBox}>
+            <View style={styles.searchWrap}>
+                <Image source={IMAGEURL} style={styles.searchIcon} />
+                <TextInput placeholder={'Search'} style={styles.formControl} placeholderTextColor={"#484848"} />
             </View>
-        </SafeAreaView>
+            <View style={styles.filterBox}>
+                {renderButtonWithIcon()}
+            </View>
+        </View>
     )
 }
 export default SearchComponent;
@@ -37,8 +35,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        borderColor:'#C4C4C4',
-        borderRadius:7
+        borderColor: '#C4C4C4',
+        borderRadius: 7
     },
     searchWrap: {
         position: 'relative',
@@ -48,20 +46,23 @@ const styles = StyleSheet.create({
         flex: 0
     },
     formControl: {
-        paddingVertical: 20,
+        paddingVertical: 12,
         paddingLeft: 40,
-        fontFamily:FontFamilyFoods.POPPINS,
-        color:'black',
-        paddingRight:10
+        fontFamily: FontFamilyFoods.POPPINS,
+        color: 'black',
+        paddingRight: 10
     },
     searchIcon: {
         position: 'absolute',
-        top: 21.5,
+        top: 20,
         left: 12,
+        height: 15,
+        width: 15,
     },
     filterText: {
-        fontSize:12,
-        lineHeight:20
+        fontSize: 12,
+        lineHeight: 20,
+        fontFamily: FontFamilyFoods.POPPINS
     },
     filterIcon: {},
     filterButton: {
@@ -70,9 +71,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         marginRight: 20,
-        backgroundColor:'#F2F2F2',
-        padding: 10,
-        borderRadius:4,
-        maxWidth:100
+        backgroundColor: '#F2F2F2',
+        padding: 8,
+        borderRadius: 4,
+        maxWidth: 100
     },
 })

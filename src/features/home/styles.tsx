@@ -4,11 +4,10 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#fff'
     },
     homeSection:{
         marginHorizontal:23,
-        marginTop: 20,
+        marginTop: 0,
     },
     homeBannerSection:{
         marginTop:15,

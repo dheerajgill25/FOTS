@@ -7,23 +7,26 @@ import CartIcon from 'components/carticon/Index';
 import CartScreen from '@features/cart/Index';
 import BackIcon from '@components/backicon/Index';
 import BackIconDark from 'components/backicon/BackIconDark';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import { View } from 'react-native';
 
 interface HeaderScreenOptionNavigationProps {
     showBackButton: boolean;
     showCartIcon?: boolean;
     headerLeft?: React.ReactNode;
     headerRight?: React.ReactNode;
-    headerTitle?:React.ReactNode;
+    headerTitle?: string;
 }
 
 const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps) => {
-    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight, headerTitle} =
+    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight, headerTitle } =
         props || {};
     return {
         headerStyle: {
             backgroundColor: 'white',
+            padding: 5,
         },
-        headerLeftContainerStyle:{
+        headerLeftContainerStyle: {
             marginLeft: 10,
         },
         headerLeft: () => {
@@ -46,7 +49,11 @@ const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps)
             }
             return null;
         },
-        headerTitle: () =>  {return headerTitle},
+        headerTitle: () => {
+            return (<View>
+                {!!headerTitle && <Typography style={{fontFamily:FontFamilyFoods.POPPINSMEDIUM,textAlign:'center',fontSize:18,color:'#D80009',marginLeft:-25}}>{headerTitle}</Typography>}
+            </View>)
+        },
         headerRight: () => {
             if (showCartIcon) {
                 return (
@@ -57,9 +64,9 @@ const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps)
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
-                        onPress={()=>CartScreen.navigate()}
+                        onPress={() => CartScreen.navigate()}
                     >
-                        <CartIcon  />
+                        <CartIcon />
                     </TouchableOpacity>
                 );
             } else if (headerRight) {

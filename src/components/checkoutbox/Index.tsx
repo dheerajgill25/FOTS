@@ -27,7 +27,7 @@ export const CheckOutBox = ({total,deliveryFee,tax,onPress,label}:CheckoutProps)
 							<Typography style={styles.checkoutTitle}>Delivery Fee</Typography>
 						</View>
 						<View style={styles.checkoutPriceSection}>
-							<Typography style={styles.checkoutPrice}>{deliveryFee}</Typography>
+							<Typography style={[styles.checkoutPrice,{fontFamily:FontFamilyFoods.POPPINSMEDIUM}]}>{deliveryFee}</Typography>
 						</View>
 						
 					</View>
@@ -40,7 +40,7 @@ export const CheckOutBox = ({total,deliveryFee,tax,onPress,label}:CheckoutProps)
 						</View>
 					</View>
 				</View>
-			<ButtonWithText label={label} onPress={()=>onPress()} subText={total} />
+			<ButtonWithText label={label}  onPress={()=>onPress()} subText={total} />
 			</View>
 		</View>
 	);
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
 		textAlign:'right',
 		fontFamily: FontFamilyFoods.POPPINSBOLD,
         fontSize: 18, color: '#484848',
-        lineHeight: 27
+        lineHeight: 27,
+		textTransform:'capitalize'
 	},
 });

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        left: 140,
+        left: 120,
     },
     clientImage: {
         height: 80,

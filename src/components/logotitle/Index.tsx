@@ -3,11 +3,12 @@ import { Image, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     logo: {
-        width: 150,
-        height: 50,
+        width: 79,
+        height: 44,
         resizeMode: 'contain',
         flex: 1,
         alignSelf: 'center',
+        marginLeft:'20%',
     },
 });
 

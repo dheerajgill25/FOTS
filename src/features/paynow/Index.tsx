@@ -38,13 +38,13 @@ const renderItems = (items: ElementData) => {
         <View style={styles.deliveryContentbox}>
             <View style={styles.deliveryContentWrap}>
                 <View style={styles.deliveryContentInner}>
-                    <View style={styles.deliveryContentContent}>
+                    <View style={[styles.deliveryContentContent,{maxWidth:50}]}>
                         <Image source={items.leftIcon ? items.imageUrlLeft : ''} style={styles.iconLeft} />
                     </View>
                     <View style={styles.deliveryContentContent}>
                         <Typography style={styles.title}>{items.title}</Typography>
                     </View>
-                    <View style={styles.deliveryContentContent}>
+                    <View style={[styles.deliveryContentContent,{maxWidth:50}]}>
                         <Image source={items.rightIcon} style={styles.arrowdownIcon} />
                     </View>
                 </View>
@@ -65,9 +65,6 @@ const renderDateOfDeliverSection = () => {
                     <View style={styles.dateWrap}>
                         <Typography style={styles.date}>DD / MM / YY</Typography>
                     </View>
-                     <View style={styles.dateWrap}>
-                        <Typography style={styles.time}>Time</Typography>
-                    </View>
                 </View>
             </View>
             </View>
@@ -81,7 +78,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={data} renderItem={({ item }) => renderItems(item)} keyExtractor={(item, index) => index.toString()} />
                 {renderDateOfDeliverSection()}
             </ScrollView>
-            <CheckOutBox label="Pay now" total="$10" deliveryFee="free" tax="$0" onPress={()=>ThankYouScreen.navigate()} />
+            <CheckOutBox label="Order Now" total="$10" deliveryFee="free" tax="$0" onPress={()=>ThankYouScreen.navigate()} />
         </SafeAreaView>
     );
 };

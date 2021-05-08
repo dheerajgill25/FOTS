@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         textAlign:'left',
         flex:1,
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        textTransform:'uppercase',
+        textTransform:'capitalize',
         letterSpacing:0.7,
         paddingLeft:10
     },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         textAlign:"right",
         flex:1,
         fontFamily:FontFamilyFoods.POPPINSBOLD,
-        textTransform:'uppercase',
+        textTransform:'capitalize',
         letterSpacing:0.7
     },
     filterButton: {

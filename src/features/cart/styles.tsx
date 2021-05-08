@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         paddingHorizontal: 23,
-        paddingVertical: 30,
+        paddingVertical: 25 ,
     },
     borderBox: {
         width: 123,
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius:5
     },
     productName: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
@@ -77,7 +78,9 @@ const styles = StyleSheet.create({
         fontSize: 20, color: '#484848',
         lineHeight: 30
     },
-    coupenCodeSection:{},
+    coupenCodeSection:{
+        marginBottom:30
+    },
     coupenCodeWrap:{
         backgroundColor: '#fff',
         shadowColor: "#000",
@@ -95,21 +98,23 @@ const styles = StyleSheet.create({
     coupenCodeBox:{},
     coupenForm:{
         position:'relative',
-        borderBottomColor: '#CACACA',
-        borderBottomWidth:1
     },
     formControl:{
         fontFamily:FontFamilyFoods.POPPINS,
         color:'black',
-        paddingHorizontal:15,
-        paddingVertical:10,fontSize:16
+        paddingHorizontal:25,
+        paddingVertical:10,fontSize:16,
+        backgroundColor:'#E5E5E5',
+        borderRadius:50,
+        paddingRight:20
     },
     coupenIcon:{
         height:19,
         width:24,
         position: 'absolute',
-        top: 10,
+        top: 12,
         right: 12,
+        maxWidth:40
     },
 });
 export default styles;

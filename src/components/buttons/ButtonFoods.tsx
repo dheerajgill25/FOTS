@@ -69,10 +69,9 @@ const ButtonFood = ({
                     isElevated && styles.elevation,
                     buttonStyle,
                 ]}
-                {...{ onPress }}
+                {...{ onPress }} 
             >
-                {icon && <View style={styles.icon}>{icon}</View>}
-                <Typography style={[styles.label, textStyle, { color: textColor }]}>{label}</Typography>
+                <Typography {...{ onPress }} style={[styles.label, textStyle, { color: textColor }]}>{label}</Typography>
             </TouchableOpacity>
         </LinearGradient>
     );

@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     },
     formControl: {
         paddingHorizontal: 5,
-        paddingVertical: 10
+        paddingVertical: 10,
+        fontFamily:FontFamilyFoods.POPPINS
     },
     buttonSetion:{
         marginHorizontal: 23,

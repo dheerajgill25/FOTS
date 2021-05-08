@@ -7,13 +7,14 @@ import styles from "./styles";
 import FoodItemsComponent from "components/foodItems/Index";
 import Typography from "components/typography/Typography";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
-import { foodItemData, groceryItemData, testimonialData } from "./data";
+import { foodItemData, groceryItemData, label, testimonialData } from "./data";
 import TestimonialComponent from "components/testimonial/Index";
 import OrderScreen from "features/orderScreen/Index";
 import ProductScreen from "features/products/Index";
 import BannerComponent from "components/banner/Index";
+import { MyStatusBar } from "components/statusbar/Index";
+import ModalComponent from "components/popup/Index";
 interface HomeScreenProps { }
-
 const renderFoodItems = (item: any) => {
     return (
         <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} />
@@ -21,9 +22,10 @@ const renderFoodItems = (item: any) => {
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
     const HOMEBANNERIMAGEURL = require('../../../assets/images/homeBanner.png');
-    const ARROWLEFTIMAGE = require('../../../assets/images/arrowleft.png');
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
+            <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
+            <ModalComponent label={label}   />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false}>
                     <View style={styles.homeSection}>
@@ -69,6 +71,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
 HomeScreen.SCREEN_NAME = 'HomeScreen';
 HomeScreen.navigationOptions = {
     headerShown: false,
+    headerTransparent: true,
 };
 HomeScreen.navigate = () => {
     RootNavigator.navigate(HomeScreen.SCREEN_NAME);

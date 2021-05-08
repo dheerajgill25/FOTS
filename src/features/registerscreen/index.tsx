@@ -13,6 +13,7 @@ import HomeScreen from 'features/home/Index';
 import BackIcon from 'components/backicon/Index';
 import BottomTabNavigation from 'navigation/tabbar';
 import HomeStack from 'navigation/homestack';
+import ModalComponent from 'components/popup/Index';
 interface RegisterProps { }
 const state = [
     {
@@ -37,16 +38,16 @@ const registerForm = () => {
     return (
             <View style={styles.formGroupBox}>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} placeholder={'Name'} />
+                    <TextInput style={styles.formControl} placeholder={'Name'} placeholderTextColor={"#A7A7A7"} />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} placeholder={'Email'} keyboardType="email-address" autoCompleteType="email" />
+                    <TextInput style={styles.formControl} placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} placeholder={'Password'} secureTextEntry={true} />
+                    <TextInput style={styles.formControl} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} placeholder={'Mobile No.'} keyboardType="number-pad" />
+                    <TextInput style={styles.formControl} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
                 </View>
                 <View>
                     <DropdownComponent title="State" data={state} onPress={async () => onChangeListener()} />
@@ -57,10 +58,6 @@ const registerForm = () => {
                 <View >
                     <DropdownComponent title="Fire Station / Engine" data={state} onPress={async () => onChangeListener()} />
                 </View>
-                <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} placeholder={'Rank'} />
-                </View>
-
             </View>
     )
 }
