@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         flex:1,
     },
     homeSection:{
-        marginHorizontal:23,
+        marginHorizontal:21,
         marginTop: 0,
     },
     homeBannerSection:{

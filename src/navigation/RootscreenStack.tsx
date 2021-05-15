@@ -23,7 +23,11 @@ const RootStackScreen = () => {
             <RootStackNavigator.Screen
                 name={Register.SCREEN_NAME}
                 component={Register}
-                options={Register.navigationOptions}
+                options={ScreenOptionNavigation({
+                    showBackButton: false,
+                    showCartIcon: false,
+                    showOnlyLogo:true
+                })}
             />
 
             <RootStackNavigator.Screen
@@ -32,6 +36,7 @@ const RootStackScreen = () => {
                 options={ScreenOptionNavigation({
                     showBackButton: false,
                     showCartIcon: true,
+                    showOnlyLogo:false
                 })}
             />
 
@@ -40,7 +45,8 @@ const RootStackScreen = () => {
                 component={OrderScreen}
                 options={ScreenOptionNavigation({
                     showBackButton: false,
-                    showCartIcon: true
+                    showCartIcon: true,
+                    showOnlyLogo:false
                 })}
             />
             <RootStackNavigator.Screen
@@ -94,6 +100,7 @@ const RootStackScreen = () => {
                 options={ScreenOptionNavigation({
                     showBackButton: false,
                     showCartIcon: true,
+                    showOnlyLogo:false
                 })}
                 
             />
@@ -103,6 +110,7 @@ const RootStackScreen = () => {
                 options={ScreenOptionNavigation({
                     showBackButton: false,
                     showCartIcon: true,
+                    showOnlyLogo:false
                 })}
                 
             /> 
@@ -112,6 +120,7 @@ const RootStackScreen = () => {
                 options={ScreenOptionNavigation({
                     showBackButton: false,
                     showCartIcon: true,
+                    showOnlyLogo:false
                 })}
                 
             /> 

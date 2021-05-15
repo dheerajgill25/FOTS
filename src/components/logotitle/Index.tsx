@@ -1,6 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-
+interface LogoTitleProps{
+    showOnlyLogo?:boolean
+}
 const styles = StyleSheet.create({
     logo: {
         width: 79,
@@ -8,11 +10,10 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         flex: 1,
         alignSelf: 'center',
-        marginLeft:'20%',
     },
 });
 
-export default function LogoTitle() {
+export default function LogoTitle({showOnlyLogo}:LogoTitleProps) {
     const IMAGEURL = require("../../../assets/images/logo.png")
-    return <Image style={styles.logo} source={IMAGEURL} />
+    return <Image style={[styles.logo,{marginLeft:showOnlyLogo?0:"20%"}]} source={IMAGEURL} />
 }

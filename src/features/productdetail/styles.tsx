@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     descriptiongBox:{},
     descriptionInner:{},
     descriptionName:{
-        fontSize: 18,
-        lineHeight:27,
+        fontSize: 16,
+        lineHeight:25,
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
         color:'#404040'
     },
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
          borderRadius:5
     },
     description:{
-        fontSize: 14,
-        lineHeight:20,
+        fontSize: 13,
+        lineHeight:19,
         fontFamily:FontFamilyFoods.POPPINS,
         color:'#484848'
     },
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
     nutritionQuantity:{
         textAlign:'center',
         color:'#D80000',
-        fontSize: 18,
-        lineHeight:27,
+        fontSize: 16,
+        lineHeight:24,
         fontFamily:FontFamilyFoods.POPPINSBOLD,
     },
     nutritionType:{
@@ -157,10 +157,11 @@ const styles = StyleSheet.create({
         maxWidth: 120,
         height:42,
         width:112,
+        borderRadius:5
     },
     cookingTime:{
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        fontSize:18, color:'#484848',
+        fontSize:16, color:'#484848',
         lineHeight:27
     },
     cookingTimeText:{
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
         textAlign:"center",
         marginTop: 9,
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        fontSize:16, color:'#484848',
+        fontSize:15, color:'#484848',
         lineHeight:25
     },
     accordienSection:{
@@ -198,8 +199,8 @@ const styles = StyleSheet.create({
     },
     accordienTitle:{
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        fontSize:20, color:'#484848',
-        lineHeight:30
+        fontSize:18, color:'#484848',
+        lineHeight:27
     },
 });
 export default styles;

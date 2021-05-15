@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderRadius: 5,
         marginBottom: 20,
-        marginLeft: 15,
+        marginRight: 14,
         width: 135
     },
     foodItemImageSection: {},

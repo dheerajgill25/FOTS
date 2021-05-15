@@ -64,20 +64,17 @@ const registerForm = () => {
 const Register = ({ }: RegisterProps) => {
     return (
         <>
-            <MyStatusBar backgroundColor="#D80000" barStyle="light-content" />
+            <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.rootContainer}>
                 <ScrollView bounces={false} showsVerticalScrollIndicator={false} nestedScrollEnabled={false}>
-                    <LinearGradient colors={['#D80000', '#D80000']}>
                         <View style={styles.banner}>
                             <View style={styles.bannerWrap}>
-                                <BackIcon />
                             </View>
                             <View style={styles.bannerBox}>
                                 <Typography style={styles.heading}>Sign Up</Typography>
                             </View>
 
                         </View>
-                    </LinearGradient>
                     {registerForm()}
                     <View style={styles.buttonSetion}>
                        <ButtonFood onPress={()=>HomeStack.navigate()} label={'Sign Up'} textColor={'white'} textStyle={styles.buttonStyle} />

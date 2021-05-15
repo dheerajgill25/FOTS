@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         color:'#484848',
     },
     buttonsGroup: {
-        marginHorizontal: 20,
+        marginHorizontal: 35,
         marginBottom: 20
     },
     howWorkSection: {
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         marginLeft:10,
     },
     icon: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
     },
     title: {
         textAlign:'center',
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
         marginTop:10,
         color:'#484848',
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        fontSize:15,
-        lineHeight:20
+        fontSize:13,
+        lineHeight:18
     },
     footerSection:{
         marginVertical:27
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         color:'#484848'
     },
     buttonText:{
-        fontSize:16 ,
-        lineHeight: 24,
+        fontSize:13,
+        lineHeight: 21,
         color:'#fff',
         flex:1,
         fontFamily:FontFamilyFoods.POPPINSSEMIBOLD,
@@ -84,5 +84,12 @@ const styles = StyleSheet.create({
         letterSpacing:0.7,
         textAlign:'center'
     },
+    blurViewStyle: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        right: 0,
+      },
 });
 export default styles;

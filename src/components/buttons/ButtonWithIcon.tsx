@@ -48,13 +48,13 @@ export default RenderButtonWithIcon;
 
 const styles = StyleSheet.create({
     filterText: {
-        fontSize: 17,
-        lineHeight: 25,
+        fontSize: 14,
+        lineHeight: 22,
         color: '#fff',
         flex: 1,
-        fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
+        fontFamily: FontFamilyFoods.POPPINSMEDIUM,
         textTransform: 'uppercase',
-        letterSpacing: 0.7,
+        letterSpacing: 0.5,
     },
     filterIcon: {
         width: 10,

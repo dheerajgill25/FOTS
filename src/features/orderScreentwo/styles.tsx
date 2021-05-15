@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         marginTop:10,
         color:'#484848',
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-        fontSize:15,
+        fontSize:14,
         lineHeight:20,
     },
     footerSection:{

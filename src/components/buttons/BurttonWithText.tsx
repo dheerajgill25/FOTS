@@ -22,8 +22,8 @@ export default ButtonWithText;
 
 const styles = StyleSheet.create({
     filterText: {
-        fontSize:17 ,
-        lineHeight: 25,
+        fontSize:15,
+        lineHeight: 23,
         color:'#fff',
         textAlign:'left',
         flex:1,

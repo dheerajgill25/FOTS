@@ -128,7 +128,7 @@ const cookingInstructionSection = () => {
                     </View>
                     <View>
                         <View>
-                            <Typography style={[styles.description,{fontSize:16,lineHeight:22}]}>Food on the Stove encourages portion control. The
+                            <Typography style={[styles.description,{fontSize:14,lineHeight:19}]}>Food on the Stove encourages portion control. The
                             quantity provided is based on the known staffing
                             count provided by your department. Food on the
                             Stove buffers for 2-3 extra servings per delivery. </Typography>

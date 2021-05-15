@@ -1,7 +1,7 @@
 import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 
 interface ModalComponentProps {
@@ -9,22 +9,25 @@ interface ModalComponentProps {
     isVisiable?: boolean,
 }
 
-
 const ModalComponent = ({ label, isVisiable }: ModalComponentProps) => {
     const [isShown, setIsShown] = React.useState(true);
     const closeModal = () => {
-        console.log(isShown)
         setIsShown(false);
     }
     return (
-        <ReactNativeModal isVisible={isShown} onModalHide={()=>closeModal()} style={styles.modal} coverScreen={true}  >
+        <ReactNativeModal isVisible={isShown} onModalHide={() => closeModal()} style={styles.modal} coverScreen={true}  >
             <View style={styles.container}>
                 <View style={styles.modalSection}>
                     <View style={styles.modalInner}>
-                        <Typography onPress={()=>closeModal()} style={styles.label}>{label}</Typography>
+                        <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
                     </View>
                     <View style={styles.modalButton}>
-                        <ButtonFood label={"Ok"} onPress={() => closeModal()} textStyle={styles.buttonText} />
+                        <TouchableOpacity
+                            style={styles.btn}
+                            onPress={closeModal}
+                        >
+                            <Typography style={styles.buttonText}>{'OK'}</Typography>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -64,9 +67,20 @@ const styles = StyleSheet.create({
     },
     modalButton: {
         marginHorizontal: 40,
+        marginTop:10
     },
     buttonText: {
         fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
-        fontSize: 16
+        fontSize: 14,
+        color:"#fff"
+    },
+    btn:{
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingLeft: 50,
+        paddingRight: 50,
+        borderRadius: 50,
+        backgroundColor:"#D80000",
     }
 });

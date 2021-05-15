@@ -90,7 +90,9 @@ const ProductScreen = (props: ProductScreenProps) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView bounces={false}>
-                <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
+                <View style={{ marginHorizontal: 20 }}>
+                    <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
+                </View>
                 <FlatList data={cartData} scrollEnabled={false} style={{ marginBottom: 23 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
             </ScrollView>
         </SafeAreaView>

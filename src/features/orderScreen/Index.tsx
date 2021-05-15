@@ -11,6 +11,8 @@ import BannerComponent from "components/banner/Index";
 import MealPlan from "features/mealplan/Index";
 import OrderScreenSecond from "features/orderScreentwo/Index";
 import { MyStatusBar } from "components/statusbar/Index";
+import ModalComponent from "components/popup/Index";
+import { label } from "features/home/data";
 interface OrderScreenProps { }
 const orderData: any[] = [
     {
@@ -36,7 +38,7 @@ const renderHowItsWorks = (item: any) => {
                         <View style={styles.howWorkwrap}>
                             <Image style={styles.icon} source={item.item.imageUrl} />
                         </View>
-                        <Typography onPress={()=>MealPlan.navigate()} style={styles.title}>{item.item.title}</Typography>
+                        <Typography onPress={() => MealPlan.navigate()} style={styles.title}>{item.item.title}</Typography>
                     </View>
                 </View>
             </View>
@@ -56,22 +58,21 @@ const OrderScreen = ({ }: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
-             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
+            <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
+            <ModalComponent label={label}   />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                    <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL}/>
-                        <View>
+                        <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL} />
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'Peruvian Chicken'} buttonStyle={styles.buttonText}  onPress={() => ProductDetailScreen.navigate()} />
+                                <RenderButtonWithIcon label={'Peruvian Chicken'} buttonStyle={styles.buttonText} onPress={() => ProductDetailScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'meal type 2'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate()}} />
+                                <RenderButtonWithIcon label={'meal type 2'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate() }} />
                             </View>
                             <View style={styles.buttonsGroup}>
                                 <RenderButtonWithIcon label={'meal type 3'} buttonStyle={styles.buttonText} onPress={() => { }} />
                             </View>
-                        </View>
                         <View>
                             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
                             <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={renderHowItsWorks} />

@@ -41,7 +41,6 @@ const TestimonialComponent = ({ data }: any) => {
         return (
             <View  key={index} style={styles.testimonialSection}>
                 <View style={styles.testimonialWrap}>
-                    <LinearGradient colors={['#D80000', '#D80000',]} >
                         <View style={styles.testimonialBox}>
                             <View style={styles.colonBox}>
                                 <Typography style={styles.colon}>“</Typography>
@@ -53,13 +52,9 @@ const TestimonialComponent = ({ data }: any) => {
                                 <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10,transform: [{ rotate: '180deg'}], }]}>“</Typography>
                             </View>
                         </View>
-                    </LinearGradient>
                     <View style={styles.clientSection}>
                         <View style={styles.clientBox}>
                             <Image source={item.imageUrl} style={styles.clientImage} />
-                            <View style={styles.ratingSection}>
-                                {ratingComponent()}
-                            </View>
                             <View style={styles.clientDetail}>
                                 <Typography style={styles.clientName}>{item.name}</Typography>
                                 <Typography style={styles.clientDesgination}>{item.designation}r</Typography>
@@ -82,6 +77,8 @@ const TestimonialComponent = ({ data }: any) => {
                     borderRadius: 5,
                     marginHorizontal: 0,
                     backgroundColor: '#D80000',
+                    bottom:40,
+                    paddingHorizontal:0
                 }}
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
@@ -114,12 +111,14 @@ const styles = StyleSheet.create({
     },
     testimonialWrap: {
         position: 'relative',
-        marginBottom: 120
+        marginBottom: 120,
+        backgroundColor:"#D80000",
+        borderRadius:6
     },
     testimonialBox: {},
     colonBox: {},
     colon: {
-        fontSize: 50,
+        fontSize:40,
         lineHeight: 50,
         color: "white",
         paddingLeft: 10,
@@ -131,8 +130,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 14,
-        lineHeight: 20,
+        fontSize: 13,
+        lineHeight: 18,
         textAlign: 'center',
         paddingHorizontal: 15
     },
@@ -153,19 +152,18 @@ const styles = StyleSheet.create({
     },
     clientBox: {
         position: 'absolute',
-        bottom: -120,
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        left: 120,
+        left:0,
+        right:0,
+        top:"100%",
+        marginTop:-30
     },
     clientImage: {
         height: 80,
         width: 80,
-    },
-    ratingSection: {
-        marginVertical: 10
     },
     clientDetail: {},
     clientDesgination: {

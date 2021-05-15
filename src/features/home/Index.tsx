@@ -25,7 +25,6 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
-            <ModalComponent label={label}   />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false}>
                     <View style={styles.homeSection}>

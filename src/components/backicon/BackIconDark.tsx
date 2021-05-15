@@ -7,7 +7,7 @@ const BackIconDark = ({ }) => {
     return (
         <>
             <View>
-                <Image source={IMAGEURL} style={{ height: 15, width: 25,marginBottom:5 }} />
+                <Image source={IMAGEURL} style={{ height: 13, width: 22,marginBottom:5 }} />
             </View>
         </>
     )

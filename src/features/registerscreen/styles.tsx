@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     banner: {
-        height: 229,
+        height: 159,
         paddingHorizontal: 23,
-
+        backgroundColor:"#D80000"
     },
     bannerWrap: {
-        paddingVertical: 31
+        paddingVertical: 12
     },
     bannerBox: {},
     heading: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     formGroupBox: {
         marginHorizontal: 23,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#fff',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

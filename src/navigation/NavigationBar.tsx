@@ -11,12 +11,13 @@ import CartScreen from 'features/cart/Index';
 interface ScreenOptionNavigation {
     showBackButton: boolean;
     showCartIcon?: boolean;
+    showOnlyLogo: boolean;
     headerLeft?: React.ReactNode;
     headerRight?: React.ReactNode;
 }
 
 const ScreenOptionNavigation = (props?: ScreenOptionNavigation) => {
-    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight } =
+    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo } =
         props || {};
     return {
         headerStyle: {
@@ -43,7 +44,7 @@ const ScreenOptionNavigation = (props?: ScreenOptionNavigation) => {
             }
             return null;
         },
-        headerTitle: () => <LogoTitle />,
+        headerTitle: () => <LogoTitle showOnlyLogo={showOnlyLogo} />,
         headerRight: () => {
             if (showCartIcon) {
                 return (
