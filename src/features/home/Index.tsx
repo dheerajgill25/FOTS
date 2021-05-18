@@ -17,7 +17,7 @@ import ModalComponent from "components/popup/Index";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
-        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} />
+        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index} />
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {

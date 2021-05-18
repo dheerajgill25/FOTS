@@ -1,9 +1,10 @@
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
 import React from "react";
-import { SafeAreaView, View, StyleSheet, TextInput, Image } from "react-native";
+import { SafeAreaView, View, StyleSheet,  Image, ImageSourcePropType } from "react-native";
 interface FoodItemsProps {
     text: string;
-    imageUrl: any;
+    imageUrl: ImageSourcePropType;
+    key:number
 }
 const ratingComponent = () => {
     return (
@@ -24,10 +25,10 @@ const ratingComponent = () => {
         </View>
     )
 }
-const FoodItemsComponent = ({ imageUrl, text }: FoodItemsProps) => {
+const FoodItemsComponent = ({ imageUrl, text ,key}: FoodItemsProps) => {
     return (
         <SafeAreaView>
-            <View style={styles.foodItemSection}>
+            <View key={key} style={styles.foodItemSection}>
                 <View style={styles.foodItemBox}>
                     <View style={styles.foodItemContent}>
                         <View style={styles.foodItemImageSection}>
