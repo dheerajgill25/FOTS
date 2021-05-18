@@ -85,3 +85,5 @@ package-lock.json
 .DS_Store
 ios/Podfile.lock
 package-lock.json
+ios/Podfile.lock
+package-lock.json

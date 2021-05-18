@@ -1,7 +1,6 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import React, { useRef, useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 

@@ -1,7 +1,6 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 interface ButtonWithIconProps {
     label: string;
     onPress: () => void,
@@ -15,26 +14,22 @@ const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: Butt
         <>
             {
                 fiveMealBtn ? (
-                    <LinearGradient colors={['#D80000', '#D80000']} style={{ borderRadius: 5 }}>
-                        <View style={styles.filterButton}>
-                            <View style={{flex:1}}>
-                            <Typography onPress={onPress} style={[buttonStyle ? buttonStyle : styles.filterText,{flex:0}]}>{label}</Typography>
-                            </View>
-                           
-                            <View style={styles.imageForIcon}>
-                                <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
-                            </View>
+                    <TouchableOpacity onPress={onPress} style={styles.filterButton}>
+                        <View style={{ flex: 1 }}>
+                            <Typography style={[buttonStyle ? buttonStyle : styles.filterText, { flex: 0 }]}>{label}</Typography>
                         </View>
-                    </LinearGradient>
+
+                        <View style={styles.imageForIcon}>
+                            <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
+                        </View>
+                    </TouchableOpacity>
                 ) : (
-                    <LinearGradient colors={['#D80000', '#D80000']} style={{ borderRadius: 5 }}>
-                        <View style={styles.filterButton}>
-                            <Typography onPress={onPress} style={buttonStyle ? buttonStyle : styles.filterText}>{label}</Typography>
-                            <View style={styles.imageForIcon}>
-                                <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
-                            </View>
+                    <TouchableOpacity onPress={onPress} style={styles.filterButton}>
+                        <Typography style={buttonStyle ? buttonStyle : styles.filterText}>{label}</Typography>
+                        <View style={styles.imageForIcon}>
+                            <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
                         </View>
-                    </LinearGradient>
+                    </TouchableOpacity>
                 )
             }
         </>
@@ -66,7 +61,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         paddingVertical: 12,
-        borderRadius: 4,
+        borderRadius: 5,
+        backgroundColor: "#D80000",
     },
     imageForIcon: {
         flex: 1,

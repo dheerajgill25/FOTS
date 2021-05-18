@@ -1,8 +1,6 @@
 import Typography from '@components/typography/Typography';
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
+import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -12,6 +10,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: 50,
         paddingRight: 50,
+        backgroundColor: "#D80000",
+        borderRadius: 50
     },
     elevation: {
         elevation: 10,
@@ -60,20 +60,16 @@ const ButtonFood = ({
     buttonStyle,
 }: ButtonProps) => {
     return (
-        <LinearGradient colors={['#D80000', '#D80000']} style={{
-            borderRadius: 50
-        }}>
-            <TouchableOpacity
-                style={[
-                    styles.container,
-                    isElevated && styles.elevation,
-                    buttonStyle,
-                ]}
-                {...{ onPress }} 
-            >
-                <Typography {...{ onPress }} style={[styles.label, textStyle, { color: textColor }]}>{label}</Typography>
-            </TouchableOpacity>
-        </LinearGradient>
+        <TouchableOpacity
+            style={[
+                styles.container,
+                isElevated && styles.elevation,
+                buttonStyle,
+            ]}
+            {...{ onPress }}
+        >
+            <Typography {...{ onPress }} style={[styles.label, textStyle, { color: textColor }]}>{label}</Typography>
+        </TouchableOpacity>
     );
 };
 

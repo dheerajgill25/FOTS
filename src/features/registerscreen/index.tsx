@@ -4,16 +4,11 @@ import DropdownComponent from '@components/dropdown/Index';
 import { MyStatusBar } from '@components/statusbar/Index';
 import React from 'react';
 import { View, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';
 import { isAndroid } from 'themes/functions';
 import { ScrollView } from 'react-native-gesture-handler';
 import ButtonFood from 'components/buttons/ButtonFoods';
-import HomeScreen from 'features/home/Index';
-import BackIcon from 'components/backicon/Index';
-import BottomTabNavigation from 'navigation/tabbar';
 import HomeStack from 'navigation/homestack';
-import ModalComponent from 'components/popup/Index';
 interface RegisterProps { }
 const state = [
     {
