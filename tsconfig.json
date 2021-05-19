@@ -31,6 +31,9 @@
       "@navigation/*": [
         "src/navigation/*"
       ],
+      "@libs/*": [
+        "src/libs/*"
+      ]
     },
     "noEmit": true,
     "strict": true,

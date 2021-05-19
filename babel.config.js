@@ -13,6 +13,7 @@ module.exports = {
         "@themes": "./src/themes",
         "@redux": "./src/redux",
         "@navigation": "./src/navigation",
+        "@libs":"./src/libs"
       }
     }
   ]
