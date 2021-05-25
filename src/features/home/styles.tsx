@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     },
     homeSection:{
         marginHorizontal:21,
-        marginTop: 0,
+        marginTop: 15,
     },
     homeBannerSection:{
         marginTop:15,

@@ -1,10 +1,10 @@
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
 import React from "react";
-import { SafeAreaView, View, StyleSheet,  Image, ImageSourcePropType } from "react-native";
+import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "react-native";
 interface FoodItemsProps {
     text: string;
     imageUrl: ImageSourcePropType;
-    key:number
+    key: number
 }
 const ratingComponent = () => {
     return (
@@ -25,26 +25,24 @@ const ratingComponent = () => {
         </View>
     )
 }
-const FoodItemsComponent = ({ imageUrl, text ,key}: FoodItemsProps) => {
+const FoodItemsComponent = ({ imageUrl, text, key }: FoodItemsProps) => {
     return (
-        <SafeAreaView>
-            <View key={key} style={styles.foodItemSection}>
-                <View style={styles.foodItemBox}>
-                    <View style={styles.foodItemContent}>
-                        <View style={styles.foodItemImageSection}>
-                            <Image source={imageUrl} style={styles.foodImage} resizeMode="contain" />
+        <View key={key} style={styles.foodItemSection}>
+            <View style={styles.foodItemBox}>
+                <View style={styles.foodItemContent}>
+                    <View style={styles.foodItemImageSection}>
+                        <Image source={imageUrl} style={styles.foodImage} resizeMode="contain" />
+                    </View>
+                    <View style={styles.foodItemDetail}>
+                        <Typography style={styles.text}>{text}</Typography>
+                        <View style={styles.foodItemRate}>
+                            {ratingComponent()}
                         </View>
-                        <View style={styles.foodItemDetail}>
-                            <Typography style={styles.text}>{text}</Typography>
-                            <View style={styles.foodItemRate}>
-                                {ratingComponent()}
-                            </View>
 
-                        </View>
                     </View>
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 export default FoodItemsComponent;
@@ -75,24 +73,24 @@ const styles = StyleSheet.create({
     foodItemRatingBox: {
         display: 'flex',
         flexDirection: 'row',
-        marginLeft:-3
+        marginLeft: -3
     },
     foodItemRating: {
-        marginLeft:3,
+        marginLeft: 3,
     },
     rating: {
-        height:15,
-        width:15
+        height: 15,
+        width: 15
     },
     foodItemRate: {
-        marginTop:6
+        marginTop: 6
     },
     foodItemDetail: {
-        padding:15,
+        padding: 15,
     },
-    text:{
-        textAlignVertical:'top',
-        lineHeight:21,
-        fontSize:13
+    text: {
+        textAlignVertical: 'top',
+        lineHeight: 21,
+        fontSize: 13
     }
 })

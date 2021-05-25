@@ -2,11 +2,17 @@ import BannerComponent from 'components/banner/Index';
 import RenderButtonWithIcon from 'components/buttons/ButtonWithIcon';
 import Typography from 'components/typography/Typography';
 import RootNavigator from 'navigation/rootnavigation';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+import RootStore from 'reduxModule/store/Index';
+import MealPlanControllerInstance from './controllers/meal-plan.controller';
 import styles from './styles';
 
-interface MealPlanProps { }
+interface MealPlanProps { 
+  route:any;
+  params:any
+}
 const orderData: any[] = [
   {
       imageUrl: require("../../../assets/images/icon4.png"),
@@ -42,8 +48,28 @@ const renderHowItsWorks = (item: any,index:number) => {
     </>
   )
 };
+const renderMealButton = (item: any,index: number)=>{
+  return(
+    <View key={index} style={styles.mealPlanButtons}>
+    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day} Days (${item.meal_count} Meals) = $${item.price} ($${item.price} per meal)`} onPress={() => { }} />
+  </View>
+  )
+}
+const renderEmptyCom = ()=>{
+  return(
+    <Typography style={[styles.mealPlanText,{textAlign:"center",color:"#D80000"}]}>No Data Available</Typography>
+  )
+}
 const MealPlan = (props: MealPlanProps) => {
+  const {
+    route: { params,  },
+} = props;
+
   const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
+  useEffect(()=>{
+    MealPlanControllerInstance.getMealPlan(params.id);
+  },[]);
+  const mealPlanData = useSelector((state:RootStore)=>state.MealPlanInState.data?.data);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView bounces={false}>
@@ -51,14 +77,8 @@ const MealPlan = (props: MealPlanProps) => {
           <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL} />
           <View style={styles.mealPlanSection}>
             <Typography style={styles.mealPlanText}>Meal Plan</Typography>
-            <View style={styles.mealPlanButtons}>
-              <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={"3 Days (9 Meals) = $120 ($13.33 per meal)"} onPress={() => { }} />
-            </View>
-            <View style={styles.mealPlanButtons}>
-              <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={"5 Days (15 Meals) = $180 (12.00 per meal)"} onPress={() => { }} />
-            </View>
-            <View style={styles.mealPlanButtons}>
-              <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={"7 Days (21 Meals) = $230 ($10.95 per meal)"} onPress={() => { }} />
+            <View>
+            <FlatList scrollEnabled={false} ListEmptyComponent={()=>renderEmptyCom()} keyExtractor={(item, index) => index.toString()}  data={mealPlanData} renderItem={({item,index})=>renderMealButton(item,index)} />
             </View>
           </View>
           <View style={[styles.mealPlanSection, { marginTop: 12 ,marginBottom:11}]}>
@@ -80,7 +100,7 @@ MealPlan.SCREEN_NAME = 'MealPlan';
 MealPlan.navigationOptions = {
   headerShown: false,
 };
-MealPlan.navigate = () => {
-  RootNavigator.navigate(MealPlan.SCREEN_NAME);
+MealPlan.navigate = (id:string) => {
+  RootNavigator.navigate(MealPlan.SCREEN_NAME,{id:id});
 };
 export default MealPlan;

@@ -11,7 +11,7 @@ module.exports = {
         "@components": "./src/components",
         "@features": "./src/features",
         "@themes": "./src/themes",
-        "@redux": "./src/redux",
+        "@reduxModule": "./src/reduxModule",
         "@navigation": "./src/navigation",
         "@libs":"./src/libs"
       }

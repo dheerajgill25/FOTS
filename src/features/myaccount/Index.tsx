@@ -1,6 +1,7 @@
 
 import { MyStatusBar } from 'components/statusbar/Index';
 import Typography from 'components/typography/Typography';
+import SignInControllerInstance from 'features/login/controllers/login.controller';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
@@ -56,6 +57,14 @@ const renderHelpSection = () => {
                     <View style={styles.helpLeft}>
                         <Typography style={styles.helpText}>Help</Typography>
                         <Typography style={styles.faqText}>FAQ & Links</Typography>
+                    </View>
+                    <View style={styles.helpRight}>
+                        <Image source={ARROWRIGHT} style={styles.arrowRight} />
+                    </View>
+                </View> 
+                <View style={styles.helpContent}>
+                    <View style={styles.helpLeft}>
+                        <Typography onPress={()=>SignInControllerInstance.signout()} style={styles.helpText}>Sign out</Typography>
                     </View>
                     <View style={styles.helpRight}>
                         <Image source={ARROWRIGHT} style={styles.arrowRight} />

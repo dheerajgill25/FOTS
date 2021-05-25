@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         alignItems:'center',
-
+        marginBottom:30
     },
     helpLeft:{
         flex:1
@@ -73,8 +73,7 @@ const styles = StyleSheet.create({
         height:15
     },
     orderContentbox:{
-       
-        marginTop: 37,
+         marginTop: 17,
     },
     myOrderBox:{
         backgroundColor:'#F2F2F2',

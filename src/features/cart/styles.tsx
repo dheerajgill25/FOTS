@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     cartBox: {
         marginTop: 10,
-        marginBottom: 30,
+        marginBottom:10,
     },
     cartItemWrap: {
         backgroundColor: '#fff',
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         paddingHorizontal: 23,
-        paddingVertical: 25,
+        paddingVertical: 20,
         borderRadius:23,
     },
     coupenCodeBox:{},

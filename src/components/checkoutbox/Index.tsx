@@ -40,7 +40,9 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label }: Checkou
 						</View>
 					</View>
 				</View>
+				<View style={{justifyContent:'center',display:"flex"}}>
 				<ButtonWithText label={label} onPress={() => onPress()} subText={total} />
+				</View>
 			</View>
 		</View>
 	);

@@ -25,8 +25,8 @@
       "@themes/*": [
         "src/themes/*"
       ],
-      "@redux/*": [
-        "src/redux/*"
+      "@reduxModule/*": [
+        "src/reduxModule/*"
       ],
       "@navigation/*": [
         "src/navigation/*"

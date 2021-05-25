@@ -24,7 +24,6 @@ const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps)
     return {
         headerStyle: {
             backgroundColor: 'white',
-            padding: 5,
         },
         headerLeftContainerStyle: {
             marginLeft: 10,

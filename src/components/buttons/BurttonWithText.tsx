@@ -7,7 +7,6 @@ interface ButtonWithTextProps{
     subText:string
 }
 const ButtonWithText = ({label,onPress,subText}:ButtonWithTextProps) => {
-    const IMAGEURLFILTER = require("../../../assets/images/arrowleft.png")
     return (
             <TouchableOpacity style={styles.filterButton}>
                 <Typography onPress={onPress} style={styles.filterText}>{label}</Typography>
@@ -44,10 +43,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-between",
-        marginRight: 20,
+        marginRight: 10,
         padding: 10,
         paddingVertical:12,
         borderRadius: 30,
-        backgroundColor:"#D80000"
+        backgroundColor:"#D80000",
+        alignSelf:"center",
+        paddingRight:10
     },
 })
