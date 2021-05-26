@@ -6,6 +6,7 @@ import HomeStack from "navigation/homestack";
 import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { RegisterAction } from "../actions/register.action";
 import Toast from 'react-native-simple-toast';
+import TokenControllerInstance from "features/login/controllers/token.controller";
 class RegisterController {
     async reigsterUser(first_name: string, last_name: string, email: string, password: string, mobile: string, fireDepartmentId: string, fireStationId: string) {
 
@@ -27,10 +28,10 @@ class RegisterController {
                 StorageService.setItem("user", JSON.stringify(data.data))
                 useAppDispatch(RegisterAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                HomeStack.navigate();
-                Toast.showWithGravity(message||"Login success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
+                TokenControllerInstance.setInitialTokens();
+                Toast.showWithGravity(message||"Register success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
             } else {
-                Toast.showWithGravity(message||"Please enter valid credentials", Toast.LONG, Toast.BOTTOM);
+                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

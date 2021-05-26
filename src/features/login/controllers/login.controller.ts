@@ -8,6 +8,7 @@ import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { SignInAction } from "../action/login.action";
 import Login from "../Index";
 import Toast from 'react-native-simple-toast';
+import TokenControllerInstance from "./token.controller";
 class SignInController {
     async loginUser(email: string, password: string) {
         try {
@@ -24,10 +25,12 @@ class SignInController {
                 StorageService.setItem("token", data.token)
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                HomeStack.navigate();
+                TokenControllerInstance.setInitialTokens();
+                //HomeStack.navigate();
                 Toast.showWithGravity(message||"Login success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
             } else {
                 Toast.showWithGravity(message||"Please enter valid credentials", Toast.LONG, Toast.BOTTOM);
+                useAppDispatch(LoadingAction.showLoading(false));
             }
             useAppDispatch(LoadingAction.showLoading(false));
         } catch (err) {
@@ -37,14 +40,12 @@ class SignInController {
         }
 
     }
-    async setInitialToken() {
-        const token = await AsyncStorage.getItem("token");
-        return token;
-    }
     async signout() {
+        AsyncStorage.removeItem('token');
         StorageService.clearStorage();
+        AsyncStorage.clear();
+        TokenControllerInstance.setInitialTokens();
         useAppDispatch(SignInAction.requestClear());
-        Login.navigate();
     }
 }
 

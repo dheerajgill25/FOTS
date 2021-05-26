@@ -12,6 +12,7 @@ import { signInReducer } from '@features/login/reducers/login.reducer';
 import { registerReducer } from '@features/registerscreen/reducers/register.reducer';
 import { categoriesReducer } from 'features/home/reducers/category.reducer';
 import { mealPlanReducer } from 'features/mealplan/reducers/meal-plan.reducer';
+import { tokenReducer } from 'features/login/reducers/token.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -27,7 +28,8 @@ function createReducer(injectedReducers = {}) {
         SignInInState:signInReducer,
         RegisterInState:registerReducer,
         CategoryInState:categoriesReducer,
-        MealPlanInState:mealPlanReducer
+        MealPlanInState:mealPlanReducer,
+        TokenInState:tokenReducer
     });
     const persistConfig = {
         key: 'root',

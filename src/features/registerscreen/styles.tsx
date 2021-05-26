@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     formControl: {
         paddingHorizontal: 5,
         paddingVertical: 10,
-        fontFamily:FontFamilyFoods.POPPINS
+        fontFamily:FontFamilyFoods.POPPINS,
+        color:"black"
     },
     buttonSetion:{
         marginHorizontal: 23,

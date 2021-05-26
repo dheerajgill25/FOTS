@@ -18,7 +18,9 @@ const loginForm = () => {
     const handleLoginButton = () => {
         if (email !== '' && password !== '') {
             SignInControllerInstance.loginUser(email, password);
-            inputFeilds.current?.clear();
+            inputFeilds.current?.clear()
+            setEmail("");
+            setPassword("")
         } else {
             Snackbar.show({
                 text: 'Please fill all required Fields',
@@ -31,10 +33,27 @@ const loginForm = () => {
         <>
             <View style={styles.formGroupBox}>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} ref={inputFeilds} onChangeText={(text) => setEmail(text)} placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
+                    <TextInput
+                        style={styles.formControl}
+                        ref={inputFeilds}
+                        onChangeText={(text) => setEmail(text)}
+                        placeholder={'Email'}
+                        placeholderTextColor={"#A7A7A7"}
+                        keyboardType="email-address"
+                        autoCompleteType="email"
+                        value={email}
+                    />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} ref={inputFeilds} onChangeText={(text) => setPassword(text)} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
+                    <TextInput
+                        style={styles.formControl}
+                        ref={inputFeilds}
+                        onChangeText={(text) => setPassword(text)}
+                        placeholder={'Password'}
+                        placeholderTextColor={"#A7A7A7"}
+                        secureTextEntry={true}
+                        value={password}
+                    />
                 </View>
                 <View>
                     <TouchableOpacity>
@@ -46,7 +65,7 @@ const loginForm = () => {
                 </View>
                 <View style={styles.registerButton}>
                     <Typography style={styles.dontHave}>Don't have an account?</Typography>
-                    <TouchableOpacity onPress={()=>Register.navigate()}>
+                    <TouchableOpacity onPress={() => Register.navigate()}>
                         <Typography style={styles.register}>Register</Typography>
                     </TouchableOpacity>
                 </View>
@@ -56,13 +75,15 @@ const loginForm = () => {
     )
 }
 const Login = (props: LoginProps) => {
-    useEffect(()=>{
-        StorageService.getItem('token').then((token)=>{
-          if(token){
-              HomeStack.navigate()
-          }
-      })
-    },[])
+    const [token,setToken] = useState<string>("");
+    useEffect(() => {
+        StorageService.getItem('token').then((token:any) => {
+            if (token) {
+                HomeStack.navigate()
+            }
+            setToken(token)
+        });
+    }, [token])
     return (
         <SafeAreaView style={styles.rootContainer}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false} nestedScrollEnabled={false}>

@@ -12,22 +12,24 @@ let isShown: boolean = false;
 const DropdownComponent = ({ data, title ,onPress}: DropdownProps) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(title);
+    const [selectedValue, setSelectedValue] = useState<boolean>(false);
     const handleValue = (data:any)=>{
         setDropdownValue(data.name);
-        setShowDropdown(false)
+        setShowDropdown(false);
+        setSelectedValue(true)
     }
     return (
         <>
             <View style={styles.dropdownBox}>
                 <View>
                     <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : 22 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true }}>
-                        <Typography style={styles.title}>{dropdownValue}</Typography>
+                        <Typography style={[styles.title,{color:selectedValue?'black':'#A7A7A7'}]}>{dropdownValue}</Typography>
                         <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15 }} />
                     </TouchableOpacity>
                     {
                         showDropdown ? (
                             data && data.length > 0 && (
-                                data.map((item: any, index: any) => (
+                                data && data.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
                                         <TouchableOpacity onPress={() =>  {onPress(item);handleValue(item)}} activeOpacity={0.6} style={styles.dropdownInner}>
                                             <Typography style={styles.values}>{item.name}</Typography>
