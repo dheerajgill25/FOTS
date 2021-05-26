@@ -12,6 +12,7 @@ import HomeStack from './homestack';
 import Login from 'features/login/Index';
 import OrderScreenSecond from 'features/orderScreentwo/Index';
 import MealPlan from 'features/mealplan/Index';
+import ProductDetailScreen from 'features/productdetail/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -104,14 +105,19 @@ const RootStackScreen = () => {
             <RootStackNavigator.Screen
                 name={MealPlan.SCREEN_NAME}
                 component={MealPlan}
-                options={HeaderScreenOptionNavigation({
-                    showBackButton: true,
-                    headerTitle: "My Account",
-                    showCartIcon: true
+                options={ScreenOptionNavigation({
+                    showBackButton: false,
+                    showCartIcon: true,
+                    showOnlyLogo: false
                 })}
 
             />
-            
+              <RootStackNavigator.Screen
+                name={ProductDetailScreen.SCREEN_NAME}
+                component={ProductDetailScreen}
+                options={{headerShown:false}}
+
+            />
         </RootStackNavigator.Navigator>
     );
 };

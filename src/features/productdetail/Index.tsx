@@ -1,11 +1,13 @@
 import React from "react";
 import {  Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
-import RootNavigator from "navigation/rootnavigation";
-import Typography from "components/typography/Typography";
+import RootNavigator from "@navigation/rootnavigation";
+import Typography from "@components/typography/Typography";
 import styles from "./styles";
-import { MyStatusBar } from "components/statusbar/Index";
-import ButtonWithText from "components/buttons/BurttonWithText";
-import CartScreen from "features/cart/Index";
+import { MyStatusBar } from "@components/statusbar/Index";
+import ButtonWithText from "@components/buttons/BurttonWithText";
+import CartScreen from "@features/cart/Index";
+import ModalComponent from "@components/popup/Index";
+import { label } from "@features/home/data";
 
 interface ProductDetailScreenProps { };
 const bannerSection = () => {
@@ -120,7 +122,7 @@ const cookingInstructionSection = () => {
                     </View>
                     <View style={styles.accordienWrap}>
                         <View style={styles.accordienContentFlex}>
-                            <Typography style={styles.accordienTitle}>In Your Box</Typography>
+                            <Typography style={styles.accordienTitle}>Cooking Instructions</Typography>
                         </View>
                         <TouchableOpacity style={styles.accordienContentFlexRight}>
                             <Image source={PLUSIMAGEURL} style={styles.plusIcon} />
@@ -128,7 +130,7 @@ const cookingInstructionSection = () => {
                     </View>
                     <View>
                         <View>
-                            <Typography style={[styles.description,{fontSize:14,lineHeight:19}]}>Food on the Stove encourages portion control. The
+                            <Typography style={[styles.description,{fontSize:14,lineHeight:19,fontStyle:"italic"}]}>Food on the Stove encourages portion control. The
                             quantity provided is based on the known staffing
                             count provided by your department. Food on the
                             Stove buffers for 2-3 extra servings per delivery. </Typography>
@@ -152,7 +154,9 @@ const ProductDetailScreen = ({ }: ProductDetailScreenProps) => {
         <>
             <MyStatusBar backgroundColor="#F2F2F2" height={29} barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
+            <ModalComponent label={label}   />
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
+
                     {bannerSection()}
                     {headingSection()}
                     {renderDescriptionSection()}

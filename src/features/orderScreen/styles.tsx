@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
     howWorkSection: {
         flex: 1,
+        paddingBottom:20
     },
     worksFlex:{
         display: "flex",

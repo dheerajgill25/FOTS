@@ -14,9 +14,11 @@ interface LoginProps { }
 const loginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const inputFeilds = React.createRef<TextInput>()
     const handleLoginButton = () => {
         if (email !== '' && password !== '') {
             SignInControllerInstance.loginUser(email, password);
+            inputFeilds.current?.clear();
         } else {
             Snackbar.show({
                 text: 'Please fill all required Fields',
@@ -29,10 +31,10 @@ const loginForm = () => {
         <>
             <View style={styles.formGroupBox}>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text) => setEmail(text)} placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
+                    <TextInput style={styles.formControl} ref={inputFeilds} onChangeText={(text) => setEmail(text)} placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text) => setPassword(text)} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
+                    <TextInput style={styles.formControl} ref={inputFeilds} onChangeText={(text) => setPassword(text)} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
                 </View>
                 <View>
                     <TouchableOpacity>

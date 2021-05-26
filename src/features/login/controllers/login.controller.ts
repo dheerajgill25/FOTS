@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import HomeScreen from "features/home/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
@@ -8,9 +7,9 @@ import HomeStack from "navigation/homestack";
 import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { SignInAction } from "../action/login.action";
 import Login from "../Index";
+import Toast from 'react-native-simple-toast';
 class SignInController {
     async loginUser(email: string, password: string) {
-
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
@@ -18,20 +17,23 @@ class SignInController {
             formData.append("password", password);
             const LOGINURL = APIENDPOINTS.APIBASEURL + URL.LOGIN + `?key=${APIENDPOINTS.APIKEY}`
             const getSignIn = await HttpCall.post(LOGINURL, formData, true);
-            const { data, status }: any = getSignIn;
+            const { data, status, }: any = getSignIn;
+            const {message} = data;
             if (data.status && status) {
                 StorageService.setItem("user", JSON.stringify(data.data))
                 StorageService.setItem("token", data.token)
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 HomeStack.navigate();
+                Toast.showWithGravity(message||"Login success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
+            } else {
+                Toast.showWithGravity(message||"Please enter valid credentials", Toast.LONG, Toast.BOTTOM);
             }
             useAppDispatch(LoadingAction.showLoading(false));
-        } catch (error) {
+        } catch (err) {
             useAppDispatch(LoadingAction.showLoading(false));
-            console.log("error1doConfirm", error);
-            const { message } = error;
-            console.log(message)
+            console.log("error1doConfirm", err);
+
         }
 
     }

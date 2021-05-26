@@ -37,7 +37,7 @@ const renderHowItsWorks = (item: any) => {
                         <View style={styles.howWorkwrap}>
                             <Image style={styles.icon} source={item.item.imageUrl} />
                         </View>
-                        <Typography onPress={() => MealPlan.navigate()} style={styles.title}>{item.item.title}</Typography>
+                        <Typography style={styles.title}>{item.item.title}</Typography>
                     </View>
                 </View>
             </View>
@@ -58,21 +58,20 @@ const OrderScreen = ({ }: OrderScreenProps) => {
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
-            <ModalComponent label={label}   />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                        <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL} />
+                        <BannerComponent label BANNERIMAGEURL={BANNERIMAGEURL} />
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'Peruvian Chicken'} buttonStyle={styles.buttonText} onPress={() => ProductDetailScreen.navigate()} />
+                                <RenderButtonWithIcon fiveMealBtn label={'Peruvian Chicken'} buttonStyle={styles.buttonText} onPress={() => ProductDetailScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'meal type 2'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate() }} />
+                                <RenderButtonWithIcon fiveMealBtn label={'honey glazed salmon'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate() }} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'meal type 3'} buttonStyle={styles.buttonText} onPress={() => { }} />
+                                <RenderButtonWithIcon fiveMealBtn label={'GRILLED FLANK STEAK   '} buttonStyle={styles.buttonText} onPress={() => { }} />
                             </View>
-                        <View>
+                        <View style={{paddingBottom:30}}>
                             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
                             <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={renderHowItsWorks} />
                         </View>

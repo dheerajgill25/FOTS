@@ -51,7 +51,7 @@ const renderHowItsWorks = (item: any,index:number) => {
 const renderMealButton = (item: any,index: number)=>{
   return(
     <View key={index} style={styles.mealPlanButtons}>
-    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day} Days (${item.meal_count} Meals) = $${item.price} ($${item.price} per meal)`} onPress={() => { }} />
+    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => { }} />
   </View>
   )
 }
@@ -81,13 +81,7 @@ const MealPlan = (props: MealPlanProps) => {
             <FlatList scrollEnabled={false} ListEmptyComponent={()=>renderEmptyCom()} keyExtractor={(item, index) => index.toString()}  data={mealPlanData} renderItem={({item,index})=>renderMealButton(item,index)} />
             </View>
           </View>
-          <View style={[styles.mealPlanSection, { marginTop: 12 ,marginBottom:11}]}>
-            <Typography style={styles.mealPlanText}>À la carte</Typography>
-            <View style={styles.mealPlanButtons}>
-              <RenderButtonWithIcon buttonStyle={[styles.buttonstyles, { textAlign: 'center' }]} fiveMealBtn={true} label={"Select at least 5 meals"} onPress={() => { }} />
-            </View>
-          </View>
-          <View>
+          <View style={{marginTop:21,paddingBottom:30}}>
             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
             <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({item,index})=>renderHowItsWorks(item,index)} />
           </View>

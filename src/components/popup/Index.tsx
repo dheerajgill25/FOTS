@@ -15,8 +15,13 @@ const ModalComponent = ({ label, isVisiable }: ModalComponentProps) => {
         setIsShown(false);
     }
     return (
-        <ReactNativeModal isVisible={isShown} onModalHide={() => closeModal()} style={styles.modal} coverScreen={true}  >
-            <View style={styles.container}>
+        <ReactNativeModal isVisible={isShown} onModalHide={() => closeModal()} style={styles.modal}
+            backdropColor={'black'}
+            backdropOpacity={0.3}
+            coverScreen={true}
+            
+        >
+            <View style={styles.container} >
                 <View style={styles.modalSection}>
                     <View style={styles.modalInner}>
                         <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
@@ -67,20 +72,20 @@ const styles = StyleSheet.create({
     },
     modalButton: {
         marginHorizontal: 40,
-        marginTop:10
+        marginTop: 10
     },
     buttonText: {
         fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
         fontSize: 14,
-        color:"#fff"
+        color: "#fff"
     },
-    btn:{
+    btn: {
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         paddingLeft: 50,
         paddingRight: 50,
         borderRadius: 50,
-        backgroundColor:"#D80000",
+        backgroundColor: "#D80000",
     }
 });

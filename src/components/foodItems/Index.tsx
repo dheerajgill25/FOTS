@@ -54,21 +54,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
+            width: 2,
             height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        borderRadius: 5,
         marginBottom: 20,
-        marginRight: 14,
-        width: 135
+        marginRight: 15,
+        width: 135,
+        marginLeft:5,
+        borderRadius:5
     },
     foodItemImageSection: {},
     foodImage: {
         width: '100%',
-        height: 140
+        height: 140,
+        
     },
     foodItemRatingBox: {
         display: 'flex',

@@ -67,7 +67,7 @@ const coupenCodeSection = () => {
             <View style={styles.coupenCodeWrap}>
                 <View style={styles.coupenCodeBox}  >
                     <View style={styles.coupenForm}>
-                        <TextInput placeholder="Have Coupen Code?" style={styles.formControl} placeholderTextColor={"#A3A3A3"} />
+                        <TextInput placeholder="Have Coupen Code?" editable={false} style={styles.formControl} placeholderTextColor={"#A3A3A3"} />
                         <Image source={COUPENURL} style={styles.coupenIcon} />
                     </View>
                 </View>

@@ -15,6 +15,7 @@ import CategoryControllerInstance from "./controllers/category.controller";
 import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
 import MealPlan from "features/mealplan/Index";
+import OrderScreen from "features/orderScreen/Index";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
@@ -30,7 +31,9 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
-                <RenderButtonWithIcon label={item.name} onPress={() => MealPlan.navigate(item.id)} />
+                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>
+                    index == 0 ? OrderScreen.navigate() :
+                        MealPlan.navigate(item.id)} />
             </View>
         )
     }
@@ -43,22 +46,23 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                         <SearchComponent text="" action={async () => console.log('')} />
                         <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
                         <View>
-                            <FlatList data={categoryData} keyExtractor={(item,index)=>index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
+                            <FlatList data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>
-                        <View>
-                            <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
-                            <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
-                        </View>
-                        <View>
-                            <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meal </Typography>
-                            <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
-                        </View>
-                        <View>
-                            <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
-                            <FlatList keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
-                        </View>
-
                     </View>
+                    <View >
+                        <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
+                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                    </View>
+                    <View>
+                        <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meals </Typography>
+                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                    </View>
+                    <View>
+                        <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
+                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                    </View>
+
+
                     <View>
                         <View style={{ marginHorizontal: 23 }}>
                             <Typography style={styles.foodItemPopluar} >Testimonial</Typography>
