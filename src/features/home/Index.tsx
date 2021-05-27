@@ -32,8 +32,8 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
                 <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>
-                    index == 0 ? OrderScreen.navigate() :
-                        MealPlan.navigate(item.id)} />
+                    index == 0 ? OrderScreen.navigate() : index == 1 ?
+                        null : MealPlan.navigate(item.id)} />
             </View>
         )
     }
@@ -51,21 +51,21 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                     </View>
                     <View >
                         <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
-                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
                     <View>
                         <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meals </Typography>
-                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
                     <View>
                         <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
-                        <FlatList style={{paddingLeft:21,}} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
 
 
                     <View>
-                        <View style={{ marginHorizontal: 23 }}>
-                            <Typography style={styles.foodItemPopluar} >Testimonial</Typography>
+                        <View>
+                            <Typography style={styles.foodItemPopluar} >Testimonials</Typography>
                         </View>
                         <TestimonialComponent data={testimonialData} />
                     </View>

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         lineHeight:27,
         fontFamily:FontFamilyFoods.POPPINSSEMIBOLD,
         marginBottom:10,
-        marginHorizontal:21,
+        marginHorizontal:15,
     },
     buttonsGroup:{
         marginHorizontal:20,
