@@ -1,6 +1,7 @@
 import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography from 'components/typography/Typography';
 import Register from 'features/registerscreen';
+import { validateLogin } from 'libs/functions/validation';
 import StorageService from 'libs/storage/Storage';
 import HomeStack from 'navigation/homestack';
 import RootNavigator from 'navigation/rootnavigation';
@@ -9,18 +10,51 @@ import { Text, View, StyleSheet, SafeAreaView, ScrollView, TextInput, TouchableO
 import Snackbar from 'react-native-snackbar';
 import SignInControllerInstance from './controllers/login.controller';
 import styles from './styles';
-
+interface error {
+    [key: string]: any;
+}
 interface LoginProps { }
 const loginForm = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const inputFeilds = React.createRef<TextInput>()
+    const inputFeilds = React.createRef<TextInput>();
+    const [formValidate, setSubmitting] = useState<any>({
+        isSubmitting: false,
+        error: undefined,
+    });
+    const [loginRequest, setLoginRequest] = useState({
+        email: '',
+        password: '',
+    });
+    const [errors, setErrors] = useState<error>({ selected: undefined });
+    React.useEffect(() => {
+        const validationErrors = validateLogin(loginRequest);
+        let noErrors = Object.keys(validationErrors).length == 0;
+        let currentError = validationErrors[errors.selected];
+        setSubmitting({ isSubmitting: noErrors, error: currentError });
+    }, [errors]);
+    const handleTextInput = (id: any, text: any) => {
+        setLoginRequest({
+            ...loginRequest,
+            [id]: text,
+        });
+        setErrors({
+            ...errors,
+            selected: id,
+        });
+    };
     const handleLoginButton = () => {
+        const { email, password } = loginRequest;
         if (email !== '' && password !== '') {
-            SignInControllerInstance.loginUser(email, password);
+            SignInControllerInstance.loginUser(email.trim(), password);
             inputFeilds.current?.clear()
-            setEmail("");
-            setPassword("")
+            setLoginRequest({
+                ...loginRequest,
+                email: '',
+                password: ''
+            });
+            setSubmitting({
+                isSubmitting: false,
+                error: undefined,
+            })
         } else {
             Snackbar.show({
                 text: 'Please fill all required Fields',
@@ -36,25 +70,40 @@ const loginForm = () => {
                     <TextInput
                         style={styles.formControl}
                         ref={inputFeilds}
-                        onChangeText={(text) => setEmail(text)}
+                        onChangeText={(value) =>
+                            handleTextInput('email', value)
+                        }
                         placeholder={'Email'}
                         placeholderTextColor={"#A7A7A7"}
                         keyboardType="email-address"
                         autoCompleteType="email"
-                        value={email}
+                        value={loginRequest.email}
                     />
                 </View>
+                {errors?.selected == 'email' && (
+                    <Typography style={styles.errors}>
+                        {formValidate?.error}
+                    </Typography>
+                )}
                 <View style={styles.formGroup}>
                     <TextInput
                         style={styles.formControl}
                         ref={inputFeilds}
-                        onChangeText={(text) => setPassword(text)}
+                        onChangeText={(value) =>
+                            handleTextInput('password', value)
+                        }
                         placeholder={'Password'}
                         placeholderTextColor={"#A7A7A7"}
                         secureTextEntry={true}
-                        value={password}
+                        value={loginRequest.password}
+
                     />
                 </View>
+                {errors?.selected == 'password' && (
+                    <Typography style={styles.errors}>
+                        {formValidate?.error}
+                    </Typography>
+                )}
                 <View>
                     <TouchableOpacity>
                         <Typography style={styles.forgotPass}>Forgot Password?</Typography>
@@ -75,15 +124,6 @@ const loginForm = () => {
     )
 }
 const Login = (props: LoginProps) => {
-    const [token,setToken] = useState<string>("");
-    useEffect(() => {
-        StorageService.getItem('token').then((token:any) => {
-            if (token) {
-                HomeStack.navigate()
-            }
-            setToken(token)
-        });
-    }, [token])
     return (
         <SafeAreaView style={styles.rootContainer}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false} nestedScrollEnabled={false}>

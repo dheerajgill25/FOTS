@@ -19,7 +19,7 @@ import OrderScreen from "features/orderScreen/Index";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
-        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index} />
+        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index}   />
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {

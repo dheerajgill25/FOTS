@@ -81,6 +81,12 @@ const styles = StyleSheet.create({
         lineHeight:23,
         color:"#D80000",
         paddingLeft:5
+    },
+    errors:{
+        textAlign:"right",
+        fontSize:14,
+        fontFamily:FontFamilyFoods.POPPINS,
+        color:"#D80000",
     }
   });
 export default styles;

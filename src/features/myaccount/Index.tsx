@@ -2,6 +2,7 @@
 import { MyStatusBar } from 'components/statusbar/Index';
 import Typography from 'components/typography/Typography';
 import SignInControllerInstance from 'features/login/controllers/login.controller';
+import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
@@ -31,14 +32,14 @@ const orderData: OrderDataProps[] = [
         productStatus: STATUS.DELIVERED
     },
 ];
-const renderAccountInfo = () => {
+const renderAccountInfo = (data:any) => {
     return (
         <View style={styles.accountInfoSecion}>
             <View style={styles.accountInfoBox}>
                 <View style={styles.accountInfoWrap}>
                     <View style={styles.accountInfoContent}>
-                        <Typography style={styles.accountName}>Eon Rovena</Typography>
-                        <Typography style={styles.accountEmail}>+87-5421368796   •   eon458@gmail.com</Typography>
+                        <Typography style={styles.accountName}>{`${data.first_name} ${data.last_name}`}</Typography>
+                        <Typography style={styles.accountEmail}>{data.mobile}   •   {data.email}</Typography>
                     </View>
                     <View style={styles.accountInfoContent}>
                         <Typography style={styles.editBtn}>Edit</Typography>
@@ -61,10 +62,10 @@ const renderHelpSection = () => {
                     <View style={styles.helpRight}>
                         <Image source={ARROWRIGHT} style={styles.arrowRight} />
                     </View>
-                </View> 
+                </View>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <Typography onPress={()=>SignInControllerInstance.signout()} style={styles.helpText}>Sign out</Typography>
+                        <Typography onPress={() => SignInControllerInstance.signout()} style={styles.helpText}>Sign out</Typography>
                     </View>
                     <View style={styles.helpRight}>
                         <Image source={ARROWRIGHT} style={styles.arrowRight} />
@@ -74,12 +75,12 @@ const renderHelpSection = () => {
         </View>
     )
 }
-interface ButtonWithIconProps{
-    label:string;
-    onPress:()=>void
+interface ButtonWithIconProps {
+    label: string;
+    onPress: () => void
 }
-const ButtonFood = ({label,onPress}:ButtonWithIconProps)=>{
-    return(
+const ButtonFood = ({ label, onPress }: ButtonWithIconProps) => {
+    return (
         <View style={styles.filterButton}>
             <Typography onPress={onPress} style={styles.filterText}>{label}</Typography>
         </View>
@@ -102,8 +103,8 @@ const renderItems = (items: OrderDataProps, index: any) => {
                     <View style={styles.orderStatusBox}>
                         <View style={styles.orderStatuswrp}>
                             <Typography style={styles.orderStatusType}>{items.productStatus == STATUS.PROCESSING ? "In Process" : items.productStatus == STATUS.DISPATCH ? "Dispatch" : items.productStatus == STATUS.DELIVERED ? "Delivered" : "Status Unknown"}</Typography>
-                            <View style={[styles.orderStatus,{
-                                backgroundColor:items.productStatus == STATUS.PROCESSING ? "#FE8E3C" :items.productStatus == STATUS.DISPATCH ?"#FE8E3C":items.productStatus == STATUS.DELIVERED ? "#77D32F" : "Status Unknown"
+                            <View style={[styles.orderStatus, {
+                                backgroundColor: items.productStatus == STATUS.PROCESSING ? "#FE8E3C" : items.productStatus == STATUS.DISPATCH ? "#FE8E3C" : items.productStatus == STATUS.DELIVERED ? "#77D32F" : "Status Unknown"
                             }]}>
                                 <Image source={ARROWRIGHT} style={styles.arrowIcon} />
                             </View>
@@ -112,18 +113,26 @@ const renderItems = (items: OrderDataProps, index: any) => {
                     </View>
                 </View>
                 <View style={styles.buttonBox}>
-                    <ButtonFood onPress={() => { }} label="RATE ORDER"   />
+                    <ButtonFood onPress={() => { }} label="RATE ORDER" />
                 </View>
             </View>
         </View>
     )
 }
 const MyAccount = (props: MyAccountProps) => {
+    const [userData, setUserData] = React.useState({});
+
+    React.useEffect(() => {
+        StorageService.getItem('user').then((values: any) => {
+            const currentUser = JSON.parse(values);
+            setUserData(currentUser);
+        })
+    }, [userData])
     return (
         <SafeAreaView style={styles.container}>
-             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
+            <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <ScrollView bounces={false} >
-                {renderAccountInfo()}
+                {renderAccountInfo(userData)}
                 {renderHelpSection()}
                 <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={orderData} renderItem={({ item, index }) => renderItems(item, index)} keyExtractor={(item, index) => index.toString()} />
             </ScrollView>
