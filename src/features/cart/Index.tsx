@@ -81,7 +81,7 @@ const CartScreen = ({ }: CartProps) => {
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
-                <FlatList data={cartData} scrollEnabled={false} style={{ marginTop: 38, marginBottom: 23 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
+                <FlatList data={cartData} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
                 {coupenCodeSection()}
             </ScrollView>
             <CheckOutBox total="$10" label="Checkout" deliveryFee="free" tax="$0" onPress={()=>BeforePayNow.navigate()} />

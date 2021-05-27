@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     },
     shoppingCartTitle: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
-        fontSize: 20, color: '#484848',
-        lineHeight: 30
+        fontSize: 18, color: '#484848',
+        lineHeight: 28
     },
     shoppingCartSubTitle: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,

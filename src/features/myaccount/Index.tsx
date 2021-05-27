@@ -5,7 +5,7 @@ import SignInControllerInstance from 'features/login/controllers/login.controlle
 import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 interface MyAccountProps { }
@@ -81,9 +81,9 @@ interface ButtonWithIconProps {
 }
 const ButtonFood = ({ label, onPress }: ButtonWithIconProps) => {
     return (
-        <View style={styles.filterButton}>
-            <Typography onPress={onPress} style={styles.filterText}>{label}</Typography>
-        </View>
+        <TouchableOpacity onPress={onPress} style={styles.filterButton}>
+            <Typography  style={styles.filterText}>{label}</Typography>
+        </TouchableOpacity>
     )
 }
 const renderItems = (items: OrderDataProps, index: any) => {
