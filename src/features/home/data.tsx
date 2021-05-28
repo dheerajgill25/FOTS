@@ -11,7 +11,7 @@ export const foodItemData: FoodItemProps[] = [
     },
     {
         text: 'CHICKEN',
-        imageUrl: require("../../../assets/images/chicker.png"),
+        imageUrl: require("../../../assets/images/salmon.png"),
     },
     {
         text: 'SALMON',
@@ -22,7 +22,7 @@ export const foodItemData: FoodItemProps[] = [
         imageUrl: require("../../../assets/images/salad.png"),
     }, {
         text: 'CHICKEN',
-        imageUrl: require("../../../assets/images/chicker.png"),
+        imageUrl: require("../../../assets/images/salmon.png"),
     },
 ];
 export const groceryItemData: FoodItemProps[] = [
@@ -32,7 +32,7 @@ export const groceryItemData: FoodItemProps[] = [
     },
     {
         text: 'Sprouts Healthy Food',
-        imageUrl: require("../../../assets/images/chicker.png"),
+        imageUrl: require("../../../assets/images/salmon.png"),
     },
     {
         text: 'Sprouts Healthy Food',
@@ -43,7 +43,7 @@ export const groceryItemData: FoodItemProps[] = [
         imageUrl: require("../../../assets/images/salad.png"),
     }, {
         text: 'Sprouts Healthy Food',
-        imageUrl: require("../../../assets/images/chicker.png"),
+        imageUrl: require("../../../assets/images/salmon.png"),
     },
 ];
 export const testimonialData:any[] = [

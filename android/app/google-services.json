@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "177517280792",
+    "project_id": "fots-bd16b",
+    "storage_bucket": "fots-bd16b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177517280792:android:543ede98c399fa71d70d6d",
+        "android_client_info": {
+          "package_name": "com.foodonstoves"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177517280792-f2kanq8d4fba0a66jbg6rg3ntd8qhm56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhK6ZarAv3GfZe6uc2oQRI-CcXLBkr9Es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177517280792-f2kanq8d4fba0a66jbg6rg3ntd8qhm56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

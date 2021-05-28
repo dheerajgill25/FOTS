@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     cartImage:{
         height:26,
         width:26,
+        marginTop: 10,
     },
     headingSection:{
         marginTop: 16,
@@ -201,6 +202,21 @@ const styles = StyleSheet.create({
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
         fontSize:18, color:'#484848',
         lineHeight:27
+    },
+    fixedHeaderView:{
+        
+    },
+    headerSection:{
+        backgroundColor:"#D80000",
+        padding:20,
+    },
+    headerImage:{
+        marginLeft:5
+    },
+    backicon:{},
+    amountCart:{
+        bottom:10,
+        left:10
     },
 });
 export default styles;

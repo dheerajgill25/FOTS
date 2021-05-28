@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './src/reduxModule';
 import NetworkInfo from '@libs/netInfo';
 import TokenControllerInstance from '@features/login/controllers/token.controller';
-import RootStore from 'reduxModule/store/Index';
+import NotificationWatcher from '@components/notifications';
 
 declare const global: { HermesInternal: null | {} };
 const App = () => {
@@ -23,6 +23,7 @@ return (
           }}
         >
           <NetworkInfo>
+            <NotificationWatcher />
             <RootStackScreen />
             <LoadingScreen />
           </NetworkInfo>

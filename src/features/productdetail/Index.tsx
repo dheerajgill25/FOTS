@@ -1,5 +1,5 @@
-import React from "react";
-import {  Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useRef, useState } from "react";
+import { Animated, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
 import Typography from "@components/typography/Typography";
 import styles from "./styles";
@@ -8,7 +8,8 @@ import ButtonWithText from "@components/buttons/BurttonWithText";
 import CartScreen from "@features/cart/Index";
 import ModalComponent from "@components/popup/Index";
 import { label } from "@features/home/data";
-
+import CircleNumber from "components/circleNumber";
+const { height, width } = Dimensions.get('screen');
 interface ProductDetailScreenProps { };
 const bannerSection = () => {
     const BANNERIMAGEURL = require('../../../assets/images/noimg.png');
@@ -21,7 +22,12 @@ const bannerSection = () => {
                 </View>
             </View>
             <View style={styles.cartIconSection}>
-                <Image source={CARTIMAGEURL} style={styles.cartImage} />
+                <View style={{ position: 'relative' }}>
+                    <Image source={CARTIMAGEURL} style={styles.cartImage} />
+                    <View style={styles.amountCart}>
+                        <CircleNumber amountCart={0} />
+                    </View>
+                </View>
             </View>
         </View>
     )
@@ -130,7 +136,7 @@ const cookingInstructionSection = () => {
                     </View>
                     <View>
                         <View>
-                            <Typography style={[styles.description,{fontSize:14,lineHeight:19,fontStyle:"italic"}]}>Food on the Stove encourages portion control. The
+                            <Typography style={[styles.description, { fontSize: 14, lineHeight: 19, fontStyle: "italic" }]}>Food on the Stove encourages portion control. The
                             quantity provided is based on the known staffing
                             count provided by your department. Food on the
                             Stove buffers for 2-3 extra servings per delivery. </Typography>
@@ -141,24 +147,49 @@ const cookingInstructionSection = () => {
         </View>
     )
 }
-const renderButtonSection = ()=>{
-    return(
+const scrollHeadingSection = () => {
+    return (
+        <View style={[styles.fixedHeaderView]}>
+            <View style={styles.headerSection}>
+                <TouchableOpacity onPress={() => RootNavigator.pop()} style={styles.headerImage}>
+                    <Image source={require("../../../assets/images/backicon.png")} style={styles.backicon} />
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
+const renderButtonSection = () => {
+    return (
         <View style={styles.descriptionSection}>
-             <ButtonWithText label={"Add to cart"}  subText="$0" onPress={()=>CartScreen.navigate()} />
+            <ButtonWithText label={"Add to cart"} subText="$0" onPress={() => CartScreen.navigate()} />
         </View>
     )
 }
 const ProductDetailScreen = ({ }: ProductDetailScreenProps) => {
+    const [isShown, setIsShown] = useState<boolean>(false);
+    const fadeAnim = useRef(new Animated.Value(0)).current;
 
     return (
         <>
             <MyStatusBar backgroundColor="#F2F2F2" height={29} barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
-            <ModalComponent label={label}   />
-                <ScrollView bounces={false} nestedScrollEnabled={false}>
+                <ModalComponent label={label} />
+                <ScrollView bounces={false} stickyHeaderIndices={[2]}
+                    onScroll={(event) => {
+                        const y = event.nativeEvent.contentOffset.y;
+                        if (y >= height / 2) {
+                            setIsShown(true);
+                        } else {
+                            setIsShown(false)
+                        }
+                    }}
+                    nestedScrollEnabled={false}>
 
                     {bannerSection()}
                     {headingSection()}
+                    {
+                        isShown && scrollHeadingSection()
+                    }
                     {renderDescriptionSection()}
                     {nutritionSection()}
                     {cookingSection()}

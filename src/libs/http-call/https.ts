@@ -5,6 +5,7 @@ import Register from "features/registerscreen";
 import { setGlobalConfig } from "axios-logger";
 import { APIENDPOINTS } from "libs/api/apiEndpoints";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TokenControllerInstance from "features/login/controllers/token.controller";
 
 const instance = axios.create();
 instance.interceptors.request.use(AxiosLogger.requestLogger);
@@ -55,7 +56,7 @@ class HttpCallClass {
             if (status === 401 || status === 403) {
                 const accessToken = await AsyncStorage.getItem("token");
                 if (accessToken) {
-                    Register.navigate();
+                    TokenControllerInstance.setInitialTokens();
                     return Promise.reject('Please sign in again');
                 }
                 console.debug('err', err);
