@@ -1,6 +1,6 @@
 import { FontFamilyFoods } from "components/typography/Typography";
-import { StyleSheet } from "react-native";
-
+import { Dimensions, StyleSheet } from "react-native";
+const { height, width } = Dimensions.get('screen');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -19,10 +19,12 @@ const styles = StyleSheet.create({
         alignContent:'center'
     },
     previewImageSection:{
+        maxWidth:"100%",
+        maxHeight:340
     },
     previewImage:{
-        width: 110,
-        height:92
+        height:340,
+        width: width,
     },
     cartIconSection:{
         position: "absolute",
@@ -120,21 +122,27 @@ const styles = StyleSheet.create({
         borderColor:'#484848',
         marginLeft: 10,
         padding:10,
-        borderRadius:3
+        borderRadius:3,
+        height:70,
+        alignSelf:'center',
+       display:"flex",
+       justifyContent:"center"
     },
     nutritionQuantity:{
         textAlign:'center',
         color:'#D80000',
-        fontSize: 16,
-        lineHeight:24,
+        fontSize: 15,
+        lineHeight:20,
         fontFamily:FontFamilyFoods.POPPINSBOLD,
+        textAlignVertical:'center'
     },
     nutritionType:{
         textAlign:'center',
-        fontSize: 12,
-        lineHeight:17,
+        fontSize: 11,
+        lineHeight:15,
         fontFamily:FontFamilyFoods.POPPINS,
-        color:'#404040'
+        color:'#404040',
+        textAlignVertical:'center'
     },
     cookingSection:{
         marginHorizontal: 21,

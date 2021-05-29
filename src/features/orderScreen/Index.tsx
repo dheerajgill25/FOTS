@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Image, SafeAreaView, ScrollView, View } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import RootNavigator from "navigation/rootnavigation";
@@ -12,7 +12,13 @@ import OrderScreenSecond from "features/orderScreentwo/Index";
 import { MyStatusBar } from "components/statusbar/Index";
 import ModalComponent from "components/popup/Index";
 import { label } from "features/home/data";
-interface OrderScreenProps { }
+import ProductListControllerInstance from "features/products/controllers/product.controller";
+import { useSelector } from "react-redux";
+import RootStore from "reduxModule/store/Index";
+interface OrderScreenProps {
+    route: any;
+    params: any
+}
 const orderData: any[] = [
     {
         imageUrl: require("../../../assets/images/icon2.png"),
@@ -53,8 +59,23 @@ const renderHowItsWorks = (item: any) => {
 //         </View>
 //     )
 // }
-const OrderScreen = ({ }: OrderScreenProps) => {
+
+const OrderScreen = (props: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
+    const {
+        route: { params, },
+    } = props;
+    useEffect(() => {
+        ProductListControllerInstance.getProductList(params.params,)
+    }, [])
+    const productList = useSelector((state: RootStore) => state.ProductInState.data?.data?.data);
+    const handleProducts = (item: any, index: number) => {
+        return (
+            <View key={index} style={styles.buttonsGroup}>
+                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() => ProductDetailScreen.navigate(item.product_id)} />
+            </View>
+        )
+    }
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
@@ -62,16 +83,10 @@ const OrderScreen = ({ }: OrderScreenProps) => {
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
                         <BannerComponent label BANNERIMAGEURL={BANNERIMAGEURL} />
-                            <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon fiveMealBtn label={'Peruvian Chicken'} buttonStyle={styles.buttonText} onPress={() => ProductDetailScreen.navigate()} />
-                            </View>
-                            <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon fiveMealBtn label={'honey glazed salmon'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate() }} />
-                            </View>
-                            <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon fiveMealBtn label={'GRILLED FLANK STEAK   '} buttonStyle={styles.buttonText} onPress={() => { }} />
-                            </View>
-                        <View style={{paddingBottom:30}}>
+                        <View>
+                            <FlatList data={productList} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleProducts(item, index)} />
+                        </View>
+                        <View style={{ paddingBottom: 30 }}>
                             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
                             <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={renderHowItsWorks} />
                         </View>
@@ -87,7 +102,7 @@ OrderScreen.SCREEN_NAME = 'OrderScreen';
 OrderScreen.navigationOptions = {
     headerShown: false,
 };
-OrderScreen.navigate = () => {
-    RootNavigator.navigation('OrderScreen',OrderScreen.SCREEN_NAME);
+OrderScreen.navigate = (id: any) => {
+    RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, id);
 };
 export default OrderScreen;

@@ -131,7 +131,7 @@
 		<key>RNCAsyncStorage.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>51</integer>
+			<integer>50</integer>
 		</dict>
 		<key>RNCMaskedView.xcscheme</key>
 		<dict>
@@ -169,7 +169,7 @@
 		<key>RNSnackbar.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>49</integer>
+			<integer>51</integer>
 		</dict>
 		<key>React-Core-AccessibilityResources.xcscheme</key>
 		<dict>
@@ -361,7 +361,7 @@
 		<key>react-native-netinfo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>50</integer>
+			<integer>49</integer>
 		</dict>
 		<key>react-native-safe-area-context.xcscheme</key>
 		<dict>

@@ -6,6 +6,7 @@ import { setGlobalConfig } from "axios-logger";
 import { APIENDPOINTS } from "libs/api/apiEndpoints";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TokenControllerInstance from "features/login/controllers/token.controller";
+import CrashReporterInstance from "libs/crash-reporter/CrashReporter";
 
 const instance = axios.create();
 instance.interceptors.request.use(AxiosLogger.requestLogger);
@@ -48,6 +49,7 @@ class HttpCallClass {
     }
     errorHandler = async (error: any, url: string, method: HttpMethod, params: Record<string, any>, useAccessToken = false) => {
         const err = error as AxiosError;
+        CrashReporterInstance.recordError(error)
         if (err.response) {
             const { status, data: { error: { errors = [] } = {} } } = err.response;
             const errorMessage = errors.length > 0 ? errors[0].message : "error";

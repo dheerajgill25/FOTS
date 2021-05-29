@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Animated, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
-import Typography from "@components/typography/Typography";
+import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
 import { MyStatusBar } from "@components/statusbar/Index";
 import ButtonWithText from "@components/buttons/BurttonWithText";
@@ -9,16 +9,22 @@ import CartScreen from "@features/cart/Index";
 import ModalComponent from "@components/popup/Index";
 import { label } from "@features/home/data";
 import CircleNumber from "components/circleNumber";
+import ProductDetailControllerInstance from "./controllers/productdetail.controller";
+import { useSelector } from "react-redux";
+import RootStore from "reduxModule/store/Index";
+import HTML from "react-native-render-html";
 const { height, width } = Dimensions.get('screen');
-interface ProductDetailScreenProps { };
-const bannerSection = () => {
-    const BANNERIMAGEURL = require('../../../assets/images/noimg.png');
+interface ProductDetailScreenProps {
+    route: any
+};
+const bannerSection = (_data: any) => {
+    const BANNERIMAGEURL = _data && _data.length > 0 ? _data[0].image : "";
     const CARTIMAGEURL = require('../../../assets/images/cartwhite.png');
     return (
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <Image source={BANNERIMAGEURL} style={styles.previewImage} />
+                    <Image source={{ uri: BANNERIMAGEURL }} style={styles.previewImage} resizeMode="contain" />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
@@ -32,22 +38,22 @@ const bannerSection = () => {
         </View>
     )
 }
-const headingSection = () => {
+const headingSection = (_data: any) => {
     return (
         <View style={styles.headingSection}>
             <View style={styles.headingBox}>
                 <View style={styles.headingInner}>
-                    <Typography style={styles.productName}>Peruvian Chicken</Typography>
+                    <Typography style={styles.productName}>{_data.heading}</Typography>
                     <Typography style={styles.productSubText}>With roasted baby potatoes</Typography>
                 </View>
                 <View style={styles.productPrice}>
-                    <Typography style={styles.price}>$0</Typography>
+                    <Typography style={styles.price}>${_data.amount}</Typography>
                 </View>
             </View>
         </View>
     )
 }
-const renderDescriptionSection = () => {
+const renderDescriptionSection = (_data: any) => {
     return (
         <View style={styles.descriptionSection}>
             <View style={styles.descriptiongBox}>
@@ -56,14 +62,14 @@ const renderDescriptionSection = () => {
                 </View>
                 <View style={styles.borderBottom}></View>
                 <View>
-                    <Typography style={styles.description}>This healthy classic is a definite crowd pleaser. Simply grilled chicken breast has been marinated in lemon and herbs. Served with roasted baby potato and seasonal vegetables.
-                        Ingredients: chicken breast, canola oil, salt, black pepper, lemon juice, baby potatoes, parsley, Thai vegetable blend, rice vinegar, Italian seasoning, garlic.</Typography>
+                    <HTML source={{ html: _data }} baseFontStyle={{fontSize:14,fontFamily:FontFamilyFoods.POPPINS,lineHeight:24}} contentWidth={width} />
+                    {/* <Typography style={styles.description}>{_data}</Typography> */}
                 </View>
             </View>
         </View>
     )
 }
-const nutritionSection = () => {
+const nutritionSection = (_data: any, totalCalories: string) => {
     return (
         <View style={styles.descriptionSection}>
             <View style={styles.descriptiongBox}>
@@ -73,22 +79,29 @@ const nutritionSection = () => {
                 <View style={styles.borderBottom}></View>
                 <View style={styles.nutritionWrap}>
                     <View style={styles.nutritionBox}>
-                        <View style={styles.nutritionContent}>
-                            <Typography style={styles.nutritionQuantity}>50g</Typography>
-                            <Typography style={styles.nutritionType}>PROTEIN</Typography>
-                        </View>
-                        <View style={styles.nutritionContent}>
-                            <Typography style={styles.nutritionQuantity}>50g</Typography>
-                            <Typography style={styles.nutritionType}>PROTEIN</Typography>
-                        </View>
-                        <View style={styles.nutritionContent}>
-                            <Typography style={styles.nutritionQuantity}>50g</Typography>
-                            <Typography style={styles.nutritionType}>PROTEIN</Typography>
-                        </View>
-                        <View style={styles.nutritionContent}>
-                            <Typography style={styles.nutritionQuantity}>50g</Typography>
-                            <Typography style={styles.nutritionType}>PROTEIN</Typography>
-                        </View>
+                        {
+                            _data && _data.length > 0 ? (
+                                _data && _data.map((item: any, index: any) => (
+                                    <>
+                                        <View key={index} style={styles.nutritionContent}>
+                                            <Typography style={styles.nutritionQuantity}>{item.value}{item.unit}</Typography>
+                                            <Typography style={styles.nutritionType}>{item.name}</Typography>
+                                        </View>
+                                        {
+                                            index == 2 && (
+                                                <View style={styles.nutritionContent}>
+                                                    <Typography style={styles.nutritionQuantity}>{totalCalories}</Typography>
+                                                    <Typography style={styles.nutritionType}>TOTAL CAL</Typography>
+                                                </View>
+                                            )
+                                        }
+
+                                    </>
+                                ))
+                            ) : (
+                                <View />
+                            )
+                        }
 
                     </View>
                 </View>
@@ -96,7 +109,7 @@ const nutritionSection = () => {
         </View>
     )
 }
-const cookingSection = () => {
+const cookingSection = (_data: any) => {
     return (
         <View style={styles.cookingSection}>
             <View style={styles.cookingSectionWrap}>
@@ -105,14 +118,14 @@ const cookingSection = () => {
                         <Typography style={styles.cookingTime}>Cooking Time</Typography>
                     </View>
                     <View style={styles.cookingSectionTime}>
-                        <Typography style={styles.cookingTimeText}>30 Minutes</Typography>
+                        <Typography style={styles.cookingTimeText}>{_data} Minutes</Typography>
                     </View>
                 </View>
             </View>
         </View>
     )
 }
-const cookingInstructionSection = () => {
+const cookingInstructionSection = (_data: any) => {
     const PLUSIMAGEURL = require('../../../assets/images/plus.png');
     return (
         <View style={styles.accordienSection}>
@@ -136,10 +149,8 @@ const cookingInstructionSection = () => {
                     </View>
                     <View>
                         <View>
-                            <Typography style={[styles.description, { fontSize: 14, lineHeight: 19, fontStyle: "italic" }]}>Food on the Stove encourages portion control. The
-                            quantity provided is based on the known staffing
-                            count provided by your department. Food on the
-                            Stove buffers for 2-3 extra servings per delivery. </Typography>
+                            <HTML source={{ html: _data }} baseFontStyle={{fontSize:14,fontFamily:FontFamilyFoods.POPPINS,lineHeight:24}} contentWidth={width} />
+                            {/* <Typography style={[styles.description, { fontSize: 14, lineHeight: 19, fontStyle: "italic" }]}>{_data} </Typography> */}
                         </View>
                     </View>
                 </View>
@@ -158,17 +169,22 @@ const scrollHeadingSection = () => {
         </View>
     )
 }
-const renderButtonSection = () => {
+const renderButtonSection = (_data: string) => {
     return (
         <View style={styles.descriptionSection}>
-            <ButtonWithText label={"Add to cart"} subText="$0" onPress={() => CartScreen.navigate()} />
+            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => CartScreen.navigate()} />
         </View>
     )
 }
-const ProductDetailScreen = ({ }: ProductDetailScreenProps) => {
+const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     const [isShown, setIsShown] = useState<boolean>(false);
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-
+    const {
+        route: { params: { id } },
+    } = props;
+    useEffect(() => {
+        ProductDetailControllerInstance.getProductDetails(id)
+    }, []);
+    const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
     return (
         <>
             <MyStatusBar backgroundColor="#F2F2F2" height={29} barStyle="dark-content" />
@@ -185,16 +201,16 @@ const ProductDetailScreen = ({ }: ProductDetailScreenProps) => {
                     }}
                     nestedScrollEnabled={false}>
 
-                    {bannerSection()}
-                    {headingSection()}
+                    {bannerSection(productDetail?.image)}
+                    {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.amount })}
                     {
                         isShown && scrollHeadingSection()
                     }
-                    {renderDescriptionSection()}
-                    {nutritionSection()}
-                    {cookingSection()}
-                    {cookingInstructionSection()}
-                    {renderButtonSection()}
+                    {renderDescriptionSection(productDetail?.description)}
+                    {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
+                    {cookingSection(productDetail?.cooking_time)}
+                    {cookingInstructionSection(productDetail?.cooking_instructions)}
+                    {renderButtonSection(productDetail?.amount)}
                 </ScrollView>
             </SafeAreaView>
         </>
@@ -204,7 +220,7 @@ ProductDetailScreen.SCREEN_NAME = 'ProductDetailScreen';
 ProductDetailScreen.navigationOptions = {
     headerShown: false,
 };
-ProductDetailScreen.navigate = () => {
-    RootNavigator.navigate(ProductDetailScreen.SCREEN_NAME);
+ProductDetailScreen.navigate = (id?: string) => {
+    RootNavigator.navigate(ProductDetailScreen.SCREEN_NAME, { id: id });
 };
 export default ProductDetailScreen;

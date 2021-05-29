@@ -10,5 +10,7 @@ export const URL={
     FIREDEPARTMENT:"/fire-department",
     FIRESTATION:"/fire-station",
     CATEGORY:"/category",
-    MEALPLAN:"/meal-plan"
+    MEALPLAN:"/meal-plan",
+    PRODUCTS:"/product-list",
+    PRODUCTSDETAILS:"/product-details",
 }

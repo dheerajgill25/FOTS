@@ -26,6 +26,7 @@ class RegisterController {
             const {message} = data;
             if (data.status&&status) {
                 StorageService.setItem("user", JSON.stringify(data.data))
+                StorageService.setItem("token", data.token)
                 useAppDispatch(RegisterAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();

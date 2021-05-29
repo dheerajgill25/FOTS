@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
         lineHeight: 12,
     },
     bannerImage: {
-        height: 24,
-        width: 26,
+        width: 62,
+        height: 62,
     },
     cartBox: {
         marginTop: 10,
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     productName: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
         fontSize: 14, color: '#484848',
-        lineHeight: 21,paddingBottom:4
+        lineHeight: 21,paddingBottom:4,
+        textTransform:'capitalize'
     },
     productPrice: {
         fontFamily: FontFamilyFoods.POPPINSBOLD,

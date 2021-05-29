@@ -1,6 +1,7 @@
 import BannerComponent from 'components/banner/Index';
 import RenderButtonWithIcon from 'components/buttons/ButtonWithIcon';
 import Typography from 'components/typography/Typography';
+import ProductScreen from 'features/products/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
@@ -51,7 +52,7 @@ const renderHowItsWorks = (item: any,index:number) => {
 const renderMealButton = (item: any,index: number)=>{
   return(
     <View key={index} style={styles.mealPlanButtons}>
-    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => { }} />
+    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => ProductScreen.navigate(item.category_id,item.id)} />
   </View>
   )
 }

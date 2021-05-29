@@ -16,6 +16,7 @@ import ProductDetailScreen from 'features/productdetail/Index';
 import TokenControllerInstance from 'features/login/controllers/token.controller';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
+import ProductScreen from 'features/products/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -110,6 +111,16 @@ const RootStackScreen = () => {
                             options={{ headerShown: false }}
 
                         />
+                          <RootStackNavigator.Screen
+                        name={ProductScreen.SCREEN_NAME}
+                        component={ProductScreen}
+                        options={ScreenOptionNavigation({
+                            showBackButton: false,
+                            showCartIcon: true,
+                            showOnlyLogo: false
+                        })}
+
+                    />
                     </>
                 ) : (
                     <>

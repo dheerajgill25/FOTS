@@ -13,6 +13,8 @@ import { registerReducer } from '@features/registerscreen/reducers/register.redu
 import { categoriesReducer } from 'features/home/reducers/category.reducer';
 import { mealPlanReducer } from 'features/mealplan/reducers/meal-plan.reducer';
 import { tokenReducer } from 'features/login/reducers/token.reducer';
+import { productReducer } from 'features/products/reducers/product.reducer';
+import { productDetailReducer } from 'features/productdetail/reducers/productdetail.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -29,7 +31,9 @@ function createReducer(injectedReducers = {}) {
         RegisterInState:registerReducer,
         CategoryInState:categoriesReducer,
         MealPlanInState:mealPlanReducer,
-        TokenInState:tokenReducer
+        TokenInState:tokenReducer,
+        ProductInState:productReducer,
+        ProductDetailInState:productDetailReducer
     });
     const persistConfig = {
         key: 'root',

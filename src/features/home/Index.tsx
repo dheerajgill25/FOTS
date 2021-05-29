@@ -32,7 +32,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
                 <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>
-                    index == 0 ? OrderScreen.navigate() : index == 1 ?
+                    index == 0 ? OrderScreen.navigate(item.id) : index == 1 ?
                         null : MealPlan.navigate(item.id)} />
             </View>
         )
