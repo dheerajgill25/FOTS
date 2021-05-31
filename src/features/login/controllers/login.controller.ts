@@ -3,12 +3,11 @@ import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import StorageService from "libs/storage/Storage";
-import HomeStack from "navigation/homestack";
 import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { SignInAction } from "../action/login.action";
-import Login from "../Index";
 import Toast from 'react-native-simple-toast';
 import TokenControllerInstance from "./token.controller";
+import AnalyticsFunction from "behaviour/analytics/AnalyticsService";
 class SignInController {
     async loginUser(email: string, password: string) {
         try {
@@ -21,8 +20,9 @@ class SignInController {
             const { data, status, }: any = getSignIn;
             const {message} = data;
             if (data.status && status) {
-                StorageService.setItem("user", JSON.stringify(data.data))
-                StorageService.setItem("token", data.token)
+                StorageService.setItem("user", JSON.stringify(data.data));
+                StorageService.setItem("token", data.token);
+                AnalyticsFunction.functionSetUserId(data.data.id);
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();

@@ -25,7 +25,7 @@ const RootStackScreen = () => {
     }, [getToken])
 
     return (
-        <RootStackNavigator.Navigator mode="card" initialRouteName={Login.SCREEN_NAME}>
+        <RootStackNavigator.Navigator mode="card" screenOptions={{animationEnabled:false}} initialRouteName={Login.SCREEN_NAME}>
             {
                 getToken ? (
                     <>

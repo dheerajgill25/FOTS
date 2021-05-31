@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, Modal, Text } from 'react-native';
-import { CommonActions, StackActions } from '@react-navigation/native';
-import { FontFamilyFoods } from 'components/typography/Typography';
+import { Image } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import HomeScreen from 'features/home/Index';
 import MyAccount from 'features/myaccount/Index';
 import OrderScreen from 'features/orderScreen/Index';

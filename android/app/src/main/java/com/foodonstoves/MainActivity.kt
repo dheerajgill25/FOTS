@@ -1,5 +1,5 @@
 package com.foodonstoves
-
+import android.os.Bundle
 import com.facebook.react.ReactActivity
 
 class MainActivity : ReactActivity() {
@@ -11,4 +11,8 @@ class MainActivity : ReactActivity() {
     override fun getMainComponentName(): String? {
         return "FoodOnStoves"
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(null)
+    }   
 }

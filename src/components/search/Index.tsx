@@ -2,7 +2,7 @@ import Typography, { FontFamilyFoods } from "components/typography/Typography";
 import React from "react";
 import { SafeAreaView, View, StyleSheet, TextInput, Image } from "react-native";
 interface SearchProps {
-    action: () => {}
+    action: (text: string) => void
     text: string;
 }
 const renderButtonWithIcon = () => {
@@ -14,13 +14,13 @@ const renderButtonWithIcon = () => {
         </View>
     )
 }
-const SearchComponent = ({ }: SearchProps) => {
+const SearchComponent = ({ action,text}: SearchProps) => {
     const IMAGEURL = require("../../../assets/images/search.png")
     return (
         <View style={styles.searchBox}>
             <View style={styles.searchWrap}>
                 <Image source={IMAGEURL} style={styles.searchIcon} />
-                <TextInput placeholder={'Search'} style={styles.formControl} placeholderTextColor={"#484848"} />
+                <TextInput placeholder={'Search'} value={text} onChangeText={(text)=>action(text)} style={styles.formControl} placeholderTextColor={"#484848"} />
             </View>
             <View style={styles.filterBox}>
                 {renderButtonWithIcon()}
@@ -64,7 +64,10 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontFamily: FontFamilyFoods.POPPINS
     },
-    filterIcon: {},
+    filterIcon: {
+        width:20,
+        height:18
+    },
     filterButton: {
         display: 'flex',
         flexDirection: 'row',

@@ -13,7 +13,8 @@ module.exports = {
         "@themes": "./src/themes",
         "@reduxModule": "./src/reduxModule",
         "@navigation": "./src/navigation",
-        "@libs":"./src/libs"
+        "@libs":"./src/libs",
+        "@behaviour":"./src/behaviour"
       }
     }
   ]

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, ScrollView, View } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import SearchComponent from "@components/search/Index";
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
 import MealPlan from "features/mealplan/Index";
 import OrderScreen from "features/orderScreen/Index";
+import ProductListControllerInstance from "features/products/controllers/product.controller";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
@@ -24,6 +25,7 @@ const renderFoodItems = (item: any) => {
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
     const HOMEBANNERIMAGEURL = require('../../../assets/images/homeBanner.png');
+    const [text,setText] = useState<string>('');
     useEffect(() => {
         CategoryControllerInstance.getCategory();
     }, [])
@@ -37,13 +39,17 @@ const HomeScreen = ({ }: HomeScreenProps) => {
             </View>
         )
     }
+    const handleTextInput = (text: string)=>{
+       setText(text);
+       ProductListControllerInstance.getProductList("","",text)
+    }
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false}>
                     <View style={styles.homeSection}>
-                        <SearchComponent text="" action={async () => console.log('')} />
+                        <SearchComponent text={text} action={(text) => handleTextInput(text)} />
                         <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
                         <View>
                             <FlatList data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />

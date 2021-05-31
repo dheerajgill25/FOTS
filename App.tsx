@@ -8,11 +8,21 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './src/reduxModule';
 import NetworkInfo from '@libs/netInfo';
 import TokenControllerInstance from '@features/login/controllers/token.controller';
-import NotificationWatcher from '@components/notifications';
-
+import { enableScreens } from 'react-native-screens';
+import NotificationWatcher from 'behaviour/notifications';
+import AnalyticsWatcher from 'behaviour/analytics';
+import AnalyticsFunction from 'behaviour/analytics/AnalyticsService';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
+  let previousRouteName: string | undefined;
+  enableScreens(true)
   TokenControllerInstance.setInitialTokens();
+
+  useEffect(() => {
+    return () => {
+        RootNavigator.isReadyRef = false;
+    };
+}, []);
 return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -20,10 +30,19 @@ return (
           ref={navigationRef}
           onReady={() => {
             RootNavigator.isReadyRef = true;
-          }}
+            previousRouteName = navigationRef.current?.getCurrentRoute()?.name;
+        }}
+        onStateChange={async () => {
+            const screenName = navigationRef.current?.getCurrentRoute()?.name;
+            AnalyticsFunction.functionScreenTracking(
+                previousRouteName,
+                screenName
+            );
+        }}
         >
           <NetworkInfo>
             <NotificationWatcher />
+            <AnalyticsWatcher/>
             <RootStackScreen />
             <LoadingScreen />
           </NetworkInfo>
