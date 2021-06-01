@@ -15,6 +15,7 @@ import { mealPlanReducer } from 'features/mealplan/reducers/meal-plan.reducer';
 import { tokenReducer } from 'features/login/reducers/token.reducer';
 import { productReducer } from 'features/products/reducers/product.reducer';
 import { productDetailReducer } from 'features/productdetail/reducers/productdetail.reducer';
+import { cartListReducer } from 'features/cart/httpCall/reducers/cartList.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -33,7 +34,8 @@ function createReducer(injectedReducers = {}) {
         MealPlanInState:mealPlanReducer,
         TokenInState:tokenReducer,
         ProductInState:productReducer,
-        ProductDetailInState:productDetailReducer
+        ProductDetailInState:productDetailReducer,
+        CartListInState:cartListReducer
     });
     const persistConfig = {
         key: 'root',

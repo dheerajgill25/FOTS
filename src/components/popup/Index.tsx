@@ -5,11 +5,13 @@ import { Text, View, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } fr
 import ReactNativeModal from 'react-native-modal';
 
 interface ModalComponentProps {
-    label: string,
-    isVisiable?: boolean,
+    label: string;
+    isVisiable?: boolean;
+    mealPlan?: boolean;
+    subTitle?: string;
 }
 
-const ModalComponent = ({ label, isVisiable }: ModalComponentProps) => {
+const ModalComponent = ({ label, isVisiable, mealPlan, subTitle }: ModalComponentProps) => {
     const [isShown, setIsShown] = React.useState(true);
     const closeModal = () => {
         setIsShown(false);
@@ -19,22 +21,42 @@ const ModalComponent = ({ label, isVisiable }: ModalComponentProps) => {
             backdropColor={'black'}
             backdropOpacity={0.3}
             coverScreen={true}
-            
+
         >
             <View style={styles.container} >
-                <View style={styles.modalSection}>
-                    <View style={styles.modalInner}>
-                        <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
-                    </View>
-                    <View style={styles.modalButton}>
-                        <TouchableOpacity
-                            style={styles.btn}
-                            onPress={closeModal}
-                        >
-                            <Typography style={styles.buttonText}>{'OK'}</Typography>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {
+                    mealPlan ? (
+                        <View style={styles.modalSection}>
+                            <View style={styles.modalInner}>
+                                <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
+                            </View>
+                            <Typography onPress={() => closeModal()} style={[styles.label,{fontStyle:"italic"}]}>{subTitle}</Typography>
+                            <View style={styles.modalButton}>
+                                <TouchableOpacity
+                                    style={styles.btn}
+                                    onPress={closeModal}
+                                >
+                                    <Typography style={styles.buttonText}>{'OK'}</Typography>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    ) : (
+                        <View style={styles.modalSection}>
+                            <View style={styles.modalInner}>
+                                <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
+                            </View>
+                            <View style={styles.modalButton}>
+                                <TouchableOpacity
+                                    style={styles.btn}
+                                    onPress={closeModal}
+                                >
+                                    <Typography style={styles.buttonText}>{'OK'}</Typography>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )
+                }
+
             </View>
         </ReactNativeModal>
     );

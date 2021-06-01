@@ -23,6 +23,7 @@ const ScreenOptionNavigation = (props?: ScreenOptionNavigation) => {
         headerStyle: {
             backgroundColor: 'white',
         },
+        headerTitleAlign:"center",
         headerLeft: () => {
             if (showBackButton) {
                 return (

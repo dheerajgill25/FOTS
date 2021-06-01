@@ -22,7 +22,7 @@ class SignInController {
             if (data.status && status) {
                 StorageService.setItem("user", JSON.stringify(data.data));
                 StorageService.setItem("token", data.token);
-                AnalyticsFunction.functionSetUserId(data.data.id);
+                AnalyticsFunction.functionSetUserId(JSON.stringify(data.data.id));
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();

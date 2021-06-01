@@ -1,4 +1,5 @@
 import BannerComponent from 'components/banner/Index';
+import ModalComponent from 'components/popup/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import ProductDetailScreen from 'features/productdetail/Index';
 import RootNavigator from 'navigation/rootnavigation';
@@ -49,7 +50,7 @@ const renderCartItems = (data: any) => {
 
                         </View>
                         <View style={{ flex: 1, maxWidth: 60 }}>
-                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{data.price}</Typography>
+                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{`$${data.amount}`}</Typography>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -73,6 +74,7 @@ const ProductScreen = (props: ProductScreenProps) => {
     const productList  = useSelector((state:RootStore)=>state.ProductInState.data?.data?.data);
     return (
         <SafeAreaView style={styles.container}>
+           <ModalComponent label={"Orders must be placed by 12pm Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
             <ScrollView bounces={false}>
                 <View style={{ marginHorizontal: 20 }}>
                     <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />

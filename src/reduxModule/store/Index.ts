@@ -9,6 +9,7 @@ import { MealPlanInState } from "features/mealplan/reducers/meal-plan.reducer";
 import { TokenInState } from "features/login/reducers/token.reducer";
 import { ProductInState } from "features/products/reducers/product.reducer";
 import { ProductDetailInState } from "features/productdetail/reducers/productdetail.reducer";
+import { CartListInState } from "features/cart/httpCall/reducers/cartList.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -21,5 +22,6 @@ export default interface RootStore {
     MealPlanInState:MealPlanInState;
     TokenInState:TokenInState;
     ProductInState:ProductInState;
-    ProductDetailInState:ProductDetailInState
+    ProductDetailInState:ProductDetailInState;
+    CartListInState:CartListInState
 };

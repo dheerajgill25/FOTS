@@ -30,11 +30,11 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         CategoryControllerInstance.getCategory();
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
-    const handleCategory = (item: any, index: number) => {
+    const handleCategory = (item: any, index: number) => {  
         return (
             <View key={index} style={styles.buttonsGroup}>
                 <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>
-                    index == 0 ? OrderScreen.navigate(item.id) : index == 1 ?
+                    item.status == 'free' ? OrderScreen.navigate(item.id) : item.status == "paid" ?
                         null : MealPlan.navigate(item.id)} />
             </View>
         )

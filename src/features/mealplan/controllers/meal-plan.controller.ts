@@ -6,6 +6,7 @@ import { MealPlanAction } from "../action/meal-plan.action";
 class MealPlanController {
     async getMealPlan(id:string) {
         try {
+            useAppDispatch(LoadingAction.showLoading(true));
             var formData:FormData = new FormData();
             formData.append('category_id',id)
             useAppDispatch(LoadingAction.showLoading(true));
@@ -19,6 +20,7 @@ class MealPlanController {
                 useAppDispatch(LoadingAction.showLoading(false));
                 
             }
+            useAppDispatch(LoadingAction.showLoading(false));
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
             console.log("error1doConfirm", error);

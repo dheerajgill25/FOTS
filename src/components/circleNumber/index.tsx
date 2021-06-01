@@ -15,9 +15,10 @@ const style = StyleSheet.create({
     },
 });
 
-const CircleNumber = ({ amountCart }: { amountCart: number }) => {
+const CircleNumber = ({ amountCart,cart }: { amountCart: number,cart?:boolean }) => {
+  
     return (
-        <View style={style.circleNumber}>
+        <View style={[style.circleNumber,{backgroundColor:cart?"#D80000":"#484848"}]}>
             <Typography style={{ fontSize: 10, color: 'white',fontFamily:FontFamilyFoods.POPPINS,marginTop: 3, }}>{amountCart}</Typography>
         </View>
     );

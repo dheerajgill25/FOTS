@@ -11,12 +11,14 @@ class CategoryController {
             const getCategory = await HttpCall.post(CATEGORYURL,{}, true);
             const {data,status}:any = getCategory;
             if(data.status&&status){
+                useAppDispatch(LoadingAction.showLoading(true));
                 useAppDispatch(CategoryAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false))
             }else{
                 useAppDispatch(LoadingAction.showLoading(false));
                 
             }
+            useAppDispatch(LoadingAction.showLoading(false));
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
             console.log("error1doConfirm", error);

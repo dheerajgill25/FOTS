@@ -12,7 +12,6 @@ class ProductDetailController {
             const URLS = APIENDPOINTS.APIBASEURL+URL.PRODUCTSDETAILS+`?key=${APIENDPOINTS.APIKEY}`;
             const getProductDetail= await HttpCall.post(URLS,formData, true);
             const {data,status}:any = getProductDetail;
-            console.log("data-----",data)
             if(data.status&&status){
                 useAppDispatch(ProductsDetailAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false))

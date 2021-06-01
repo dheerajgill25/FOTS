@@ -13,6 +13,7 @@ import ProductDetailControllerInstance from "./controllers/productdetail.control
 import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
 import HTML from "react-native-render-html";
+import AddToCartControllerInstance from "features/commonApiCall/addToCart/controllers/addToCart.controller";
 const { height, width } = Dimensions.get('screen');
 interface ProductDetailScreenProps {
     route: any
@@ -169,10 +170,23 @@ const scrollHeadingSection = () => {
         </View>
     )
 }
-const renderButtonSection = (_data: string) => {
+const renderButtonSection = (_data: string,item:any) => {
+    const handleAddToCart = ()=>{
+      const products:any[] = [];
+      const productId = {
+          product_id:item.id,quantity:1
+      };
+      products.push(productId);
+      const request = {
+        category_id:item.category_id,
+        meal_id:"",
+        products:products
+      };
+      AddToCartControllerInstance.addToCartProducts(request);
+    }
     return (
         <View style={styles.descriptionSection}>
-            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => CartScreen.navigate()} />
+            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => handleAddToCart()} />
         </View>
     )
 }
@@ -210,7 +224,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {cookingSection(productDetail?.cooking_time)}
                     {cookingInstructionSection(productDetail?.cooking_instructions)}
-                    {renderButtonSection(productDetail?.amount)}
+                    {renderButtonSection(productDetail?.amount,productDetail)}
                 </ScrollView>
             </SafeAreaView>
         </>
