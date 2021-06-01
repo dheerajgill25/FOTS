@@ -4,7 +4,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 interface ButtonWithTextProps{
     label:string;
     onPress:()=>void;
-    subText:string
+    subText:string|undefined
 }
 const ButtonWithText = ({label,onPress,subText}:ButtonWithTextProps) => {
     return (

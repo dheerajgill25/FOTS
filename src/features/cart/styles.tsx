@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     shoppingCartWrap: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: "center"
+        alignItems: "center",
     },
     shoppingCartLeft: {
     },

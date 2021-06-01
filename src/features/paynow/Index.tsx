@@ -38,13 +38,13 @@ const renderItems = (items: ElementData) => {
         <View style={styles.deliveryContentbox}>
             <View style={styles.deliveryContentWrap}>
                 <View style={styles.deliveryContentInner}>
-                    <View style={[styles.deliveryContentContent,{maxWidth:50}]}>
+                    <View style={[styles.deliveryContentContent, { maxWidth: 50 }]}>
                         <Image source={items.leftIcon ? items.imageUrlLeft : ''} style={styles.iconLeft} />
                     </View>
                     <View style={styles.deliveryContentContent}>
                         <Typography style={styles.title}>{items.title}</Typography>
                     </View>
-                    <View style={[styles.deliveryContentContent,{maxWidth:50}]}>
+                    <View style={[styles.deliveryContentContent, { maxWidth: 50 }]}>
                         <Image source={items.rightIcon} style={styles.arrowdownIcon} />
                     </View>
                 </View>
@@ -53,6 +53,17 @@ const renderItems = (items: ElementData) => {
     )
 }
 const renderDateOfDeliverSection = () => {
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var currentDate:Date =new Date()
+    var day = days[currentDate.getDay()];
+    var month = months[currentDate.getMonth()];
+    function dates() {
+        var dayOfWeek = 5;//friday
+        var date = currentDate;
+        date.setDate(date.getDate() + (dayOfWeek + 7 - date.getDay()) % 7);
+       return date;
+      }
     return (
         <View style={styles.descriptionSection}>
             <View style={styles.descriptiongBox}>
@@ -60,13 +71,13 @@ const renderDateOfDeliverSection = () => {
                     <Typography style={styles.descriptionName}>Date of Delivery</Typography>
                 </View>
                 <View style={styles.borderBottom}></View>
-            <View style={styles.dateBox}> 
-                <View style={styles.dateSection}>
-                    <View style={styles.dateWrap}>
-                        <Typography style={styles.date}>DD / MM / YY</Typography>
+                <View style={styles.dateBox}>
+                    <View style={styles.dateSection}>
+                        <View style={styles.dateWrap}>
+                            <Typography style={styles.date}>{dates().toDateString()}</Typography>
+                        </View>
                     </View>
                 </View>
-            </View>
             </View>
         </View>
     )
@@ -78,7 +89,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={data} renderItem={({ item }) => renderItems(item)} keyExtractor={(item, index) => index.toString()} />
                 {renderDateOfDeliverSection()}
             </ScrollView>
-            <CheckOutBox label="Order Now" total="$10" deliveryFee="free" tax="$0" onPress={()=>ThankYouScreen.navigate()} />
+            <CheckOutBox label="Order Now" total="$10" deliveryFee="free" tax="$0" onPress={() => ThankYouScreen.navigate()} />
         </SafeAreaView>
     );
 };

@@ -8,7 +8,7 @@ interface CheckoutProps {
 	tax: string;
 	onPress: () => void,
 	label: string;
-	totalMrp:string
+	totalMrp?:string
 }
 export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label,totalMrp }: CheckoutProps) => {
 	return (

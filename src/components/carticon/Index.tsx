@@ -19,7 +19,7 @@ const CartIcon = ({ }) => {
                     bottom: 10,
                     left: 10,
                 }}>
-                    <CircleNumber amountCart={cartLength?.data?.length} cart />
+                    <CircleNumber amountCart={cartLength?.data?.length?cartLength?.data?.length:0} cart />
                 </View>
             </View>
         </>

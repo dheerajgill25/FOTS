@@ -7,7 +7,6 @@ import Toast from 'react-native-simple-toast';
 import { CartListAction } from "../actions/cartList.action";
 class CartListController {
     async getCartProducts() {
-        useAppDispatch(LoadingAction.showLoading(true));
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             const URLS = APIENDPOINTS.APIBASEURL + URL.CARTLIST + `?key=${APIENDPOINTS.APIKEY}`;
