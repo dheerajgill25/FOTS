@@ -32,7 +32,9 @@ class RegisterController {
                 TokenControllerInstance.setInitialTokens();
                 Toast.showWithGravity(message||"Register success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
             } else {
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                const {mobile,email} = message;
+                useAppDispatch(LoadingAction.showLoading(false));
+                Toast.showWithGravity(mobile&&mobile[0]||email&&email[0], Toast.LONG, Toast.BOTTOM);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

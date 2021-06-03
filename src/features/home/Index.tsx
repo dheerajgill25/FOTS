@@ -17,6 +17,7 @@ import RootStore from "reduxModule/store/Index";
 import MealPlan from "features/mealplan/Index";
 import OrderScreen from "features/orderScreen/Index";
 import ProductListControllerInstance from "features/products/controllers/product.controller";
+import StorageService from "libs/storage/Storage";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
@@ -33,9 +34,9 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const handleCategory = (item: any, index: number) => {  
         return (
             <View key={index} style={styles.buttonsGroup}>
-                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>
-                    item.status == 'free' ? OrderScreen.navigate(item.id) : item.status == "paid" ?
-                        null : MealPlan.navigate(item.id)} />
+                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>{
+                    item.status == 'free' ? OrderScreen.navigate(item.id) : item.status == "meal" ?
+                    MealPlan.navigate(item.id) :null ;StorageService.setItem("cId",item.id)}} />
             </View>
         )
     }

@@ -1,4 +1,4 @@
-import Typography from '@components/typography/Typography';
+import Typography, { FontFamilyFoods } from '@components/typography/Typography';
 import React from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#0C0D34',
         textAlign: 'center',
+        fontFamily:FontFamilyFoods.POPPINSMEDIUM
     },
     icon: {
         marginRight: 8,

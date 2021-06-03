@@ -23,7 +23,6 @@ export function validateLogin(values: any) {
     }
     return errors;
 }
-
 export function validateForgotPassword(values: any) {
     var errors: { [k: string]: any } = {};
     if (!values?.loyalty_id) {

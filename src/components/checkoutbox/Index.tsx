@@ -8,9 +8,9 @@ interface CheckoutProps {
 	tax: string;
 	onPress: () => void,
 	label: string;
-	totalMrp?:string
+	totalMrp?: any
 }
-export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label,totalMrp }: CheckoutProps) => {
+export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp }: CheckoutProps) => {
 	return (
 		<View style={styles.checkoutSection}>
 			<View style={styles.checkoutBox}>
@@ -30,19 +30,22 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label,totalMrp }
 						<View style={styles.checkoutPriceSection}>
 							<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{deliveryFee}</Typography>
 						</View>
+					</View>
+					{
+						totalMrp == 0 && (<View style={styles.checkoutSectionFlex}>
+							<View style={styles.checkoutTitleSection}>
+								<Typography style={styles.checkoutTitle}>TAX (6.17%)</Typography>
+							</View>
+							<View style={styles.checkoutPriceSection}>
+								<Typography style={styles.checkoutPrice}>{tax}</Typography>
+							</View>
+						</View>
+						)
+					}
 
-					</View>
-					<View style={styles.checkoutSectionFlex}>
-						<View style={styles.checkoutTitleSection}>
-							<Typography style={styles.checkoutTitle}>TAX (6.17%)</Typography>
-						</View>
-						<View style={styles.checkoutPriceSection}>
-							<Typography style={styles.checkoutPrice}>{tax}</Typography>
-						</View>
-					</View>
 				</View>
-				<View style={{justifyContent:'center',display:"flex"}}>
-				<ButtonWithText label={label} onPress={() => onPress()} subText={totalMrp} />
+				<View style={{ justifyContent: 'center', display: "flex" }}>
+					<ButtonWithText label={label} onPress={() => onPress()} subText={total} />
 				</View>
 			</View>
 		</View>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	checkoutTitle: {
-		fontFamily:FontFamilyFoods.POPPINSMEDIUM,
+		fontFamily: FontFamilyFoods.POPPINSMEDIUM,
 		fontSize: 16,
 		color: '#484848',
 		lineHeight: 24

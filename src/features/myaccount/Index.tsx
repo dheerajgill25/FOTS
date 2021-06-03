@@ -2,6 +2,7 @@
 import { MyStatusBar } from 'components/statusbar/Index';
 import Typography from 'components/typography/Typography';
 import SignInControllerInstance from 'features/login/controllers/login.controller';
+import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
@@ -32,7 +33,7 @@ const orderData: OrderDataProps[] = [
         productStatus: STATUS.DELIVERED
     },
 ];
-const renderAccountInfo = (data:any) => {
+const renderAccountInfo = (data: any) => {
     return (
         <View style={styles.accountInfoSecion}>
             <View style={styles.accountInfoBox}>
@@ -82,7 +83,7 @@ interface ButtonWithIconProps {
 const ButtonFood = ({ label, onPress }: ButtonWithIconProps) => {
     return (
         <TouchableOpacity onPress={onPress} style={styles.filterButton}>
-            <Typography  style={styles.filterText}>{label}</Typography>
+            <Typography style={styles.filterText}>{label}</Typography>
         </TouchableOpacity>
     )
 }
@@ -123,10 +124,14 @@ const MyAccount = (props: MyAccountProps) => {
     const [userData, setUserData] = React.useState({});
 
     React.useEffect(() => {
+        let cancelled = false;
         StorageService.getItem('user').then((values: any) => {
-            const currentUser = JSON.parse(values);
-            setUserData(currentUser);
-        })
+            if (!cancelled) {
+                const currentUser = JSON.parse(values);
+                setUserData(currentUser);
+            }
+        }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
+        return () => { cancelled = true; }
     }, [userData])
     return (
         <SafeAreaView style={styles.container}>

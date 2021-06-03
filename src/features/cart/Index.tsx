@@ -1,5 +1,6 @@
 import { CheckOutBox } from 'components/checkoutbox/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import CheckOutControllerInstance from 'features/commonApiCall/checkout/controllers/checkout.controller';
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
 import BeforePayNow from 'features/paynow/Index';
 import RootNavigator from 'navigation/rootnavigation';
@@ -30,10 +31,11 @@ const renderShoppingCartSection = () => {
 }
 const renderCartItems = (data: any) => {
     const CLOSEICON = require('../../../assets/images/cut.png');
-    const { product, id } = data;
+    const { product, id ,cart_id} = data;
     const handleRemoveCart = () => {
-        RemoveCartControllerInstance.RemoveCartProducts(id)
+        RemoveCartControllerInstance.RemoveCartProducts(cart_id,product.id)
     }
+    console.log(product)
     return (
         <View style={styles.cartBox}>
             <View style={styles.cartItemWrap}>
@@ -49,7 +51,7 @@ const renderCartItems = (data: any) => {
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{product?.name}</Typography>
-                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{"$" + product?.amount}</Typography>
+                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{"$" + product?.net_amount}</Typography>
                         </View>
 
                     </View>
@@ -83,17 +85,20 @@ const CartScreen = ({ }: CartProps) => {
         CartListControllerInstance.getCartProducts();
     }, []);
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
-
+    const {data} = cartData;
+    const handleCheckout = ()=>{
+        CheckOutControllerInstance.Checkout();
+    }
     return (
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
-                <FlatList data={cartData?.data} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
+                <FlatList data={data&&data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
                 {cartData?.total_mrp>0?coupenCodeSection():<View/>}
             </ScrollView>
             {
-                cartData?.total_mrp ==0? (
-                    <CheckOutBox totalMrp={`$${cartData?.total_mrp}`} total={`$${cartData?.total_amount}`} label="Checkout" deliveryFee={cartData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => BeforePayNow.navigate()} />
+                cartData?.total_mrp >=0? (
+                    <CheckOutBox totalMrp={`$${cartData?.total_mrp}`} total={`$${cartData?.total_amount}`} label="Checkout" deliveryFee={cartData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => handleCheckout()} />
                 ) : (
                     <View />
                 )

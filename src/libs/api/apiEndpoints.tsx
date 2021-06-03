@@ -16,4 +16,7 @@ export const URL={
     ADDTOCART:"/add-to-cart",
     CARTLIST:"/cart-list",
     REMOVECART:"/remove-cart-product",
+    CHECKOUT:"/checkout",
+    ORDER:"/order",
+    REMOVECARTOTHERPRODUCT:"/remove-cart-other-product"
 }

@@ -10,6 +10,7 @@ import { TokenInState } from "features/login/reducers/token.reducer";
 import { ProductInState } from "features/products/reducers/product.reducer";
 import { ProductDetailInState } from "features/productdetail/reducers/productdetail.reducer";
 import { CartListInState } from "features/cart/httpCall/reducers/cartList.reducer";
+import { CheckoutInState } from "features/commonApiCall/checkout/reducers/checkout.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -23,5 +24,6 @@ export default interface RootStore {
     TokenInState:TokenInState;
     ProductInState:ProductInState;
     ProductDetailInState:ProductDetailInState;
-    CartListInState:CartListInState
+    CartListInState:CartListInState;
+    CheckoutInState:CheckoutInState
 };

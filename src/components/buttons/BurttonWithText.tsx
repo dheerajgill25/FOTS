@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         color:'#fff',
         textAlign:'left',
         flex:1,
-        fontFamily:FontFamilyFoods.POPPINSMEDIUM,
+        fontFamily:FontFamilyFoods.POPPINS,
         textTransform:'capitalize',
         letterSpacing:0.7,
         paddingLeft:10

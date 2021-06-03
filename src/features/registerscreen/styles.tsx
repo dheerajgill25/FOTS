@@ -55,7 +55,12 @@ const styles = StyleSheet.create({
         fontFamily:FontFamilyFoods.POPPINSMEDIUM,
         fontSize:18,
         lineHeight:27
+    },
+    errors:{
+        textAlign:"right",
+        fontSize:14,
+        fontFamily:FontFamilyFoods.POPPINS,
+        color:"#D80000",
     }
-    
 });
 export default styles;

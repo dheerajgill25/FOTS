@@ -18,13 +18,15 @@ import RegisterControllerInstance from './controllers/register-controller';
 import Snackbar from 'react-native-snackbar';
 interface RegisterProps { }
 const registerForm = () => {
-    const [fireDepartmentId, setFireDepartmentId] = useState("");
-    const [fireStationId, setFireStationId] = useState("");
-    const [first_name,setFirst_name] = useState("");
-    const [last_name,setLast_name] = useState("");
-    const [email,setEmail] = useState("");
-    const [mobile,setMobile] = useState("");
-    const [password,setPassword] = useState("");
+    const [fireDepartmentId, setFireDepartmentId] = useState<string>("");
+    const [fireStationId, setFireStationId] = useState<string>("");
+    const [first_name, setFirst_name] = useState<string>("");
+    const [last_name, setLast_name] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [mobile, setMobile] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<string>("")
+    const [passError, setPassError] = useState<string>("")
     useEffect(() => {
         StateControllerInstance.getState();
     }, [])
@@ -41,14 +43,14 @@ const registerForm = () => {
     const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
     const fireStationData = useSelector((state: RootStore) => state.FireStationInState.data?.data);
-    const handleRegisterButton = ()=>{
-        if(first_name!==''&&last_name!==''&&email!==''&&password!==''&&mobile!==''&&fireDepartmentId!==""&&fireStationId!==''){
-            RegisterControllerInstance.reigsterUser(first_name,last_name,email,password,mobile,fireDepartmentId,fireStationId)
-        }else{
+    const handleRegisterButton = () => {
+        if (first_name !== '' && last_name !== '' && email !== '' && password !== '' && mobile !== '' && fireDepartmentId !== "" && fireStationId !== '') { 
+            RegisterControllerInstance.reigsterUser(first_name?.trim(), last_name?.trim(), email?.trim(), password, mobile, fireDepartmentId, fireStationId)
+        } else {
             Snackbar.show({
-                text:'Please fill all required Fields',
-                textColor:"white",
-                duration:3000
+                text: 'Please fill all required Fields',
+                textColor: "white",
+                duration: 3000
             })
         }
     }
@@ -56,19 +58,48 @@ const registerForm = () => {
         <>
             <View style={styles.formGroupBox}>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text)=>setFirst_name(text)} placeholder={'First name'} placeholderTextColor={"#A7A7A7"} />
+                    <TextInput style={styles.formControl} value={first_name} onChangeText={(text) => setFirst_name(text)} placeholder={'First name'} placeholderTextColor={"#A7A7A7"} />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text)=>setLast_name(text)} placeholder={'Last name'} placeholderTextColor={"#A7A7A7"} />
+                    <TextInput style={styles.formControl} value={last_name} onChangeText={(text) => setLast_name(text)} placeholder={'Last name'} placeholderTextColor={"#A7A7A7"} />
                 </View>
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text)=>setEmail(text)} placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
+                    <TextInput value={email} style={styles.formControl} onChangeText={(text) => {
+                        setEmail(text)
+                        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+                            setError("Please enter valid email")
+                        } else {
+                            setError("")
+                        }
+                    }}
+                        placeholder={'Email'} placeholderTextColor={"#A7A7A7"} keyboardType="email-address" autoCompleteType="email" />
                 </View>
+                {
+                    error ? (
+                        <Typography style={styles.errors}>{error}</Typography>
+                    ) : (
+                        <View />
+                    )
+                }
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text)=>setPassword(text)} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
+                    <TextInput style={styles.formControl} value={password} onChangeText={(text) => {
+                        setPassword(text);
+                        if (password?.length < 6) {
+                            setPassError("Password must be at least 6 characters")
+                        } else {
+                            setPassError("")
+                        }
+                    }} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
                 </View>
+                {
+                    passError ? (
+                        <Typography style={styles.errors}>{passError}</Typography>
+                    ) : (
+                        <View />
+                    )
+                }
                 <View style={styles.formGroup}>
-                    <TextInput style={styles.formControl} onChangeText={(text)=>setMobile(text)} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
+                    <TextInput style={styles.formControl} value={mobile} onChangeText={(text) => setMobile(text)} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
                 </View>
                 <View>
                     <DropdownComponent title="State" data={stateData} onPress={(data) => onChangeStateListener(data)} />

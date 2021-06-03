@@ -15,5 +15,5 @@ const styles = StyleSheet.create({
 
 export default function LogoTitle({showOnlyLogo}:LogoTitleProps) {
     const IMAGEURL = require("../../../assets/images/logo.png")
-    return <Image style={[styles.logo,{marginLeft:showOnlyLogo?0:"20%"}]} source={IMAGEURL} />
+    return <Image style={styles.logo} source={IMAGEURL} />
 }

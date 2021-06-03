@@ -25,9 +25,9 @@ const RootStackScreen = () => {
     }, [getToken])
 
     return (
-        <RootStackNavigator.Navigator mode="card" screenOptions={{animationEnabled:false}} initialRouteName={Login.SCREEN_NAME}>
+        <RootStackNavigator.Navigator mode="card" screenOptions={{ animationEnabled: false }} initialRouteName={Login.SCREEN_NAME}>
             {
-                getToken ? (
+                getToken !== '' && getToken !== null && getToken !== undefined && getToken !== {} ? (
                     <>
                         <RootStackNavigator.Screen
                             name={HomeStack.SCREEN_NAME}
@@ -111,16 +111,16 @@ const RootStackScreen = () => {
                             options={{ headerShown: false }}
 
                         />
-                          <RootStackNavigator.Screen
-                        name={ProductScreen.SCREEN_NAME}
-                        component={ProductScreen}
-                        options={ScreenOptionNavigation({
-                            showBackButton: false,
-                            showCartIcon: true,
-                            showOnlyLogo: false
-                        })}
+                        <RootStackNavigator.Screen
+                            name={ProductScreen.SCREEN_NAME}
+                            component={ProductScreen}
+                            options={ScreenOptionNavigation({
+                                showBackButton: false,
+                                showCartIcon: true,
+                                showOnlyLogo: false
+                            })}
 
-                    />
+                        />
                     </>
                 ) : (
                     <>

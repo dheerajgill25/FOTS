@@ -20,10 +20,10 @@ const ScreenOptionNavigation = (props?: ScreenOptionNavigation) => {
     const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo } =
         props || {};
     return {
+        headerTitleAlign:"center",
         headerStyle: {
             backgroundColor: 'white',
         },
-        headerTitleAlign:"center",
         headerLeft: () => {
             if (showBackButton) {
                 return (

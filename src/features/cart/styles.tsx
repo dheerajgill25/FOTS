@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
+        borderRadius:5
     },
     productName: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
