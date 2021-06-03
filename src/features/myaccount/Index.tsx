@@ -1,14 +1,18 @@
 
 import { MyStatusBar } from 'components/statusbar/Index';
 import Typography from 'components/typography/Typography';
+import OrderListControllerInstance from 'features/commonApiCall/orderList/controllers/orderList.controller';
 import SignInControllerInstance from 'features/login/controllers/login.controller';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
+import RootStore from 'reduxModule/store/Index';
 import styles from './styles';
-
+import  moment from "moment";
+import EditProfile from 'features/editProfile/Index';
 interface MyAccountProps { }
 interface OrderDataProps {
     productName: string;
@@ -43,7 +47,7 @@ const renderAccountInfo = (data: any) => {
                         <Typography style={styles.accountEmail}>{data.mobile}   •   {data.email}</Typography>
                     </View>
                     <View style={styles.accountInfoContent}>
-                        <Typography style={styles.editBtn}>Edit</Typography>
+                        <Typography onPress={()=>EditProfile.navigate()} style={styles.editBtn}>Edit</Typography>
                     </View>
                 </View>
             </View>
@@ -87,37 +91,70 @@ const ButtonFood = ({ label, onPress }: ButtonWithIconProps) => {
         </TouchableOpacity>
     )
 }
-const renderItems = (items: OrderDataProps, index: any) => {
+function dates(date: string | number | Date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [day, month, year].join('|');
+}
+
+const renderItems = (items: any, index: any) => {
     const ARROWRIGHT = require('../../../assets/images/rightarrow.png')
+    const deliverDate = moment(items.delivery_date).format("DD|MM|YYYY");
     return (
-        <View style={styles.orderContentbox}>
+        <View key={index} style={styles.orderContentbox}>
             {
                 index == 0 && <View style={styles.myOrderBox}>
                     <Typography style={styles.myOrderText}>MY ORDERS</Typography>
                 </View>
             }
-            <View style={styles.orderContentWrap}>
-                <View style={styles.orderContentInner}>
-                    <View style={styles.orderContentLeft}>
-                        <Typography style={styles.orderProuctName}>{items.productName}</Typography>
-                    </View>
-                    <View style={styles.orderStatusBox}>
-                        <View style={styles.orderStatuswrp}>
-                            <Typography style={styles.orderStatusType}>{items.productStatus == STATUS.PROCESSING ? "In Process" : items.productStatus == STATUS.DISPATCH ? "Dispatch" : items.productStatus == STATUS.DELIVERED ? "Delivered" : "Status Unknown"}</Typography>
-                            <View style={[styles.orderStatus, {
-                                backgroundColor: items.productStatus == STATUS.PROCESSING ? "#FE8E3C" : items.productStatus == STATUS.DISPATCH ? "#FE8E3C" : items.productStatus == STATUS.DELIVERED ? "#77D32F" : "Status Unknown"
-                            }]}>
-                                <Image source={ARROWRIGHT} style={styles.arrowIcon} />
-                            </View>
-                        </View>
+            {
+                items && items.cart_order.length > 0 ? (
+                    items.cart_order.map((foods: any, i: any) => (
+                        < View key={i} style={styles.orderContentWrap}>
+                            <View style={styles.orderContentInner}>
+                                <View style={styles.orderContentLeft}>
+                                    <Typography style={styles.orderProuctName}>{`${foods.product.category_name} (${foods.product.name})`}</Typography>
+                                </View>
+                                <View style={styles.orderStatusBox}>
+                                    <View style={styles.orderStatuswrp}>
+                                        <Typography style={styles.orderStatusType}>{items.status}</Typography>
+                                        <View style={[styles.orderStatus, {
+                                            backgroundColor: items.status == "Scheduled" ? "#FE8E3C" : items.status == "Accepted" ? "#FE8E3C" : items.status == "In Progress" ? "#FE8E3C" : items.status == "Dispatched" ? "#FE8E3C" : "#77D32F"
+                                        }]}>
+                                            <Image source={ARROWRIGHT} style={styles.arrowIcon} />
+                                        </View>
+                                    </View>
 
-                    </View>
-                </View>
-                <View style={styles.buttonBox}>
-                    <ButtonFood onPress={() => { }} label="RATE ORDER" />
-                </View>
-            </View>
-        </View>
+                                </View>
+                            </View>
+                            <View style={[styles.orderContentInner,{paddingTop:15}]}>
+                                <View style={{ flex: 1 }}>
+                                    <Typography style={styles.dateFieldsName}>{'Placed on'}</Typography>
+                                    <Typography style={styles.date}>{dates(foods.created_at)}</Typography>
+                                </View>
+                                <View style={{ flex: 1, }}>
+                                    <Typography style={[styles.dateFieldsName,{textAlign:"right"}]}>{items.status=="Delivered"?"Delivered on":"Arriving on"}</Typography>
+                                    <Typography style={[styles.date,{textAlign:"right"}]}>{deliverDate}</Typography>
+                                </View>
+                            </View>
+                            <View style={styles.buttonBox}>
+                                <ButtonFood onPress={() => { }} label="RATE ORDER" />
+                            </View>
+                        </ View>
+                    ))
+                ) : (
+                    <View />
+                )
+            }
+
+        </View >
     )
 }
 const MyAccount = (props: MyAccountProps) => {
@@ -133,13 +170,17 @@ const MyAccount = (props: MyAccountProps) => {
         }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
         return () => { cancelled = true; }
     }, [userData])
+    React.useEffect(() => {
+        OrderListControllerInstance.getOrderList();
+    }, [])
+    const orderListData = useSelector((state: RootStore) => state.OrderListInState.data?.data);
     return (
         <SafeAreaView style={styles.container}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <ScrollView bounces={false} >
                 {renderAccountInfo(userData)}
                 {renderHelpSection()}
-                <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={orderData} renderItem={({ item, index }) => renderItems(item, index)} keyExtractor={(item, index) => index.toString()} />
+                <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={orderListData} renderItem={({ item, index }) => renderItems(item, index)} keyExtractor={(item, index) => index.toString()} />
             </ScrollView>
         </SafeAreaView>
     );

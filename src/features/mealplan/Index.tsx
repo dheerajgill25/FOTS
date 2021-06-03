@@ -52,7 +52,7 @@ const renderHowItsWorks = (item: any,index:number) => {
 const renderMealButton = (item: any,index: number)=>{
   return(
     <View key={index} style={styles.mealPlanButtons}>
-    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => ProductScreen.navigate(item.category_id,item.id)} />
+    <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => ProductScreen.navigate(item.category_id,item.id,true)} />
   </View>
   )
 }

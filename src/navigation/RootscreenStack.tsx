@@ -17,6 +17,7 @@ import TokenControllerInstance from 'features/login/controllers/token.controller
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import ProductScreen from 'features/products/Index';
+import EditProfile from 'features/editProfile/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -91,6 +92,16 @@ const RootStackScreen = () => {
                             options={HeaderScreenOptionNavigation({
                                 showBackButton: true,
                                 headerTitle: "My Account",
+                                showCartIcon: true
+                            })}
+
+                        />
+                         <RootStackNavigator.Screen
+                            name={EditProfile.SCREEN_NAME}
+                            component={EditProfile}
+                            options={HeaderScreenOptionNavigation({
+                                showBackButton: true,
+                                headerTitle: "Edit Profile",
                                 showCartIcon: true
                             })}
 

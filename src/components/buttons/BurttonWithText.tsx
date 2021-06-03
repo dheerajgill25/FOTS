@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
         flex:1,
         fontFamily:FontFamilyFoods.POPPINSBOLD,
         textTransform:'capitalize',
-        letterSpacing:0.7
+        letterSpacing:0.7,
+        paddingRight:10
     },
     filterButton: {
         display: 'flex',

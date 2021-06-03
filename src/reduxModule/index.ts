@@ -17,6 +17,7 @@ import { productReducer } from 'features/products/reducers/product.reducer';
 import { productDetailReducer } from 'features/productdetail/reducers/productdetail.reducer';
 import { cartListReducer } from 'features/cart/httpCall/reducers/cartList.reducer';
 import { checkoutCartReducer } from 'features/commonApiCall/checkout/reducers/checkout.reducer';
+import { orderListReducer } from 'features/commonApiCall/orderList/reducers/orderList.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -37,7 +38,8 @@ function createReducer(injectedReducers = {}) {
         ProductInState:productReducer,
         ProductDetailInState:productDetailReducer,
         CartListInState:cartListReducer,
-        CheckoutInState:checkoutCartReducer
+        CheckoutInState:checkoutCartReducer,
+        OrderListInState:orderListReducer
     });
     const persistConfig = {
         key: 'root',

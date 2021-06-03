@@ -18,5 +18,6 @@ export const URL={
     REMOVECART:"/remove-cart-product",
     CHECKOUT:"/checkout",
     ORDER:"/order",
-    REMOVECARTOTHERPRODUCT:"/remove-cart-other-product"
+    REMOVECARTOTHERPRODUCT:"/remove-cart-other-product",
+    ORDERLIST:"/order-list"
 }

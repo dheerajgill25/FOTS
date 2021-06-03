@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     bannerImage: {
         height: 115,
         width: 115,
-        borderRadius:5
+        borderRadius:16
     },
     cartBox: {
         marginTop: 10,
@@ -50,13 +50,14 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 0,
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
         paddingHorizontal: 23,
-        paddingVertical: 25 ,
+        paddingVertical: 13,
+        position:"relative",
     },
     borderBox: {
         width: 123,
@@ -71,12 +72,13 @@ const styles = StyleSheet.create({
     productName: {
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
         fontSize: 16, color: '#484848',
-        lineHeight: 24
+        lineHeight: 24,textTransform:"capitalize"
     },
     productPrice: {
         fontFamily: FontFamilyFoods.POPPINSBOLD,
         fontSize: 20, color: '#484848',
-        lineHeight: 30
+        lineHeight: 30,
+        textTransform:"capitalize"
     },
     coupenCodeSection:{
         marginBottom:30
@@ -116,5 +118,10 @@ const styles = StyleSheet.create({
         right: 12,
         maxWidth:40
     },
+    removeIcon:{
+        position:"absolute",
+        right:10,
+        top:10
+    }
 });
 export default styles;

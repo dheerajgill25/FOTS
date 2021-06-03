@@ -35,18 +35,12 @@ const renderCartItems = (data: any) => {
     const handleRemoveCart = () => {
         RemoveCartControllerInstance.RemoveCartProducts(cart_id,product.id)
     }
-    console.log(product)
     return (
         <View style={styles.cartBox}>
             <View style={styles.cartItemWrap}>
-                <View style={{ maxWidth: 50, justifyContent: "flex-end", display: "flex", alignSelf: "flex-end" }}>
-                    <TouchableOpacity onPress={() => handleRemoveCart()}>
-                        <Image source={CLOSEICON} style={{ height: 22, width: 20, }} />
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.shoppingCartBox}>
                     <View style={styles.shoppingCartWrap}>
-                        <View style={[styles.shoppingCartLeft, styles.borderBox]}>
+                        <View style={[styles.shoppingCartLeft]}>
                             <Image style={styles.bannerImage} resizeMode="contain" source={{ uri: product?.thumbnail }} />
                         </View>
                         <View style={styles.shoppingCartRight}>
@@ -56,7 +50,13 @@ const renderCartItems = (data: any) => {
 
                     </View>
                 </View>
+                <View style={[styles.removeIcon]}>
+                    <TouchableOpacity onPress={() => handleRemoveCart()}>
+                        <Image source={CLOSEICON} style={{ height: 22, width: 20, }} />
+                    </TouchableOpacity>
+                </View>
             </View>
+            
         </View>
     )
 }

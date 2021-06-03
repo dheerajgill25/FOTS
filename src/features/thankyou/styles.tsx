@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     successBox:{},
     successWrap:{},
     successImage:{
-        height:110,
-        width:110,
+        height:80,
+        width:80,
         alignSelf:'center',
         marginBottom:23
     },

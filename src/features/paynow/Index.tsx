@@ -4,6 +4,7 @@ import Typography from 'components/typography/Typography';
 import FireDepartmentControllerInstance from 'features/registerscreen/controllers/fireDepartment.controller';
 import FireStationControllerInstance from 'features/registerscreen/controllers/fireStation.controller';
 import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
+import moment from 'moment';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { useState } from 'react';
@@ -74,12 +75,8 @@ function dates() {
 
     return [year, month, day].join('-');
 }
-const renderDateOfDeliverSection = () => {
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var day = days[currentDate.getDay()];
-    var month = months[currentDate.getMonth()];
-
+const renderDateOfDeliverSection = (dateOfDelivery:any) => {
+    const deliverDate = moment(dateOfDelivery).format("DD|MM|YYYY");
     return (
         <View style={styles.descriptionSection}>
             <View style={styles.descriptiongBox}>
@@ -90,7 +87,7 @@ const renderDateOfDeliverSection = () => {
                 <View style={styles.dateBox}>
                     <View style={styles.dateSection}>
                         <View style={styles.dateWrap}>
-                            <Typography style={styles.date}>{dates()}</Typography>
+                            <Typography style={styles.date}>{deliverDate}</Typography>
                         </View>
                     </View>
                 </View>
@@ -120,7 +117,6 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
     const fireStationData = useSelector((state: RootStore) => state.FireStationInState.data?.data);
-
     const handlePayNow = () => {
         const date = dates();
         if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
@@ -167,7 +163,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 <View>
                     <DropdownComponentCheckOut title="Fire Station" data={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
                 </View>
-                {renderDateOfDeliverSection()}
+                {renderDateOfDeliverSection(checkoutData?.delivery_date)}
             </ScrollView>
             <CheckOutBox label="Order Now" totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => handlePayNow()} />
         </SafeAreaView>

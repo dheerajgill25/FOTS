@@ -10,8 +10,8 @@ const style = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: "#484848",
         borderRadius: 90,
-        width: 20,
-        height: 20,
+        width: 16,
+        height: 16,
     },
 });
 
@@ -19,7 +19,7 @@ const CircleNumber = ({ amountCart,cart }: { amountCart: number,cart?:boolean })
   
     return (
         <View style={[style.circleNumber,{backgroundColor:cart?"#D80000":"#484848"}]}>
-            <Typography style={{ fontSize: 10, color: 'white',fontFamily:FontFamilyFoods.POPPINS,marginTop: 3, }}>{amountCart}</Typography>
+            <Typography style={{ fontSize: 9, color: 'white',fontFamily:FontFamilyFoods.POPPINS,lineHeight:18}}>{amountCart}</Typography>
         </View>
     );
 };

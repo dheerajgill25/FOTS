@@ -4,7 +4,8 @@ const { height, width } = Dimensions.get('screen');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingTop:20
     },
     bannerSection: {
         position: 'relative',
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     },
     previewImageSection: {
         maxWidth: "100%",
-        maxHeight: 346
+        maxHeight: 346,
     },
     previewImage: {
         height: 346,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     },
     cartIconSection: {
         position: "absolute",
-        top: 30,
+        top: 20,
         right: 10,
         height: 50,
         width: 50,
@@ -42,11 +43,11 @@ const styles = StyleSheet.create({
     cartImage: {
         height: 20,
         width: 20,
-        marginTop: 10,
+        marginTop: 17,
     },
     headingSection: {
         marginTop: 16,
-        marginBottom: 29,
+        marginBottom: 20,
         marginHorizontal: 21,
     },
     headingBox: {
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
         color: '#D80000'
     },
     descriptionSection: {
-        marginTop: 16,
-        marginBottom: 29,
+        marginTop: 10,
+        marginBottom: 20,
         marginHorizontal: 21,
     },
     descriptiongBox: {},
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     cookingSection: {
         marginHorizontal: 21,
         backgroundColor: "#F2F2F2",
-        padding: 15,
+        padding: 7,
         borderRadius: 5
     },
     cookingSectionWrap: {},
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     },
     cookingSectioContent: {
         flex: 1,
-
+        paddingLeft:14
     },
     cookingSectionTime: {
         backgroundColor: '#DFDFDF',
@@ -218,7 +219,8 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     headerImage: {
-        marginLeft: 5
+        marginLeft: 5,
+        marginTop:10
     },
     backicon: {},
     amountCart: {

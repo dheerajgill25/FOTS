@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Alert, Animated, Dimensions, Image, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
 import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
-import { MyStatusBar } from "@components/statusbar/Index";
 import ButtonWithText from "@components/buttons/BurttonWithText";
 import CartScreen from "@features/cart/Index";
 import ModalComponent from "@components/popup/Index";
@@ -241,7 +240,7 @@ const renderButtonSection = (_data: any, item: any) => {
         </View>
     )
 }
-const handleAddToCart = (item:any) => {
+const handleAddToCart = (item: any) => {
     const products: any[] = [];
     const productId = {
         product_id: item.id, quantity: 1
@@ -258,7 +257,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     const [isShown, setIsShown] = useState<boolean>(false);
     const [cartItems, setCartItems] = useState<number>(0)
     const {
-        route: { params: { id } },
+        route: { params: { id, meal } },
     } = props;
     useEffect(() => {
         ProductDetailControllerInstance.getProductDetails(id)
@@ -272,19 +271,26 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
             setCartItems(0)
         }
     }, [cartData])
-    useEffect(()=>{
-        if(cartAgainAdd){
+    useEffect(() => {
+        if (cartAgainAdd) {
             handleAddToCart(productDetail);
             cartAgainAdd = false;
-        }else{
+        } else {
             return;
         }
-    },[cartAgainAdd])
+    }, [cartAgainAdd])
     return (
         <>
-            <MyStatusBar backgroundColor="#F2F2F2" height={29} barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
-                <ModalComponent label={label} />
+             
+                {
+                    meal ? (
+                        <View />
+                    ) : (
+                        <ModalComponent label={label} />
+                    )
+                }
+
                 <ScrollView bounces={false} stickyHeaderIndices={[2]}
                     onScroll={(event) => {
                         const y = event.nativeEvent.contentOffset.y;
@@ -315,7 +321,7 @@ ProductDetailScreen.SCREEN_NAME = 'ProductDetailScreen';
 ProductDetailScreen.navigationOptions = {
     headerShown: false,
 };
-ProductDetailScreen.navigate = (id?: string) => {
-    RootNavigator.navigate(ProductDetailScreen.SCREEN_NAME, { id: id });
+ProductDetailScreen.navigate = (id?: string, meal?: boolean) => {
+    RootNavigator.navigate(ProductDetailScreen.SCREEN_NAME, { id: id, meal: meal });
 };
 export default ProductDetailScreen;
