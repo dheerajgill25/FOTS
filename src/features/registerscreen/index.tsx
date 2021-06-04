@@ -28,11 +28,9 @@ const registerForm = () => {
     const [error, setError] = useState<string>("")
     const [passError, setPassError] = useState<string>("")
     useEffect(() => {
-        StateControllerInstance.getState();
+        FireDepartmentControllerInstance.getFireDepartment()
     }, [])
-    const onChangeStateListener = (data: any) => {
-        FireDepartmentControllerInstance.getFireDepartment(data.id)
-    }
+  
     const onChangeFireStationListener = (data: any) => {
         setFireStationId(data.id);
     }
@@ -40,7 +38,6 @@ const registerForm = () => {
         setFireDepartmentId(data.id);
         FireStationControllerInstance.getFireStation(data.id)
     }
-    const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
     const fireStationData = useSelector((state: RootStore) => state.FireStationInState.data?.data);
     const handleRegisterButton = () => {
@@ -100,9 +97,6 @@ const registerForm = () => {
                 }
                 <View style={styles.formGroup}>
                     <TextInput style={styles.formControl} value={mobile} onChangeText={(text) => setMobile(text)} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
-                </View>
-                <View>
-                    <DropdownComponent title="State" data={stateData} onPress={(data) => onChangeStateListener(data)} />
                 </View>
                 <View >
                     <DropdownComponent title="Fire Department" data={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />

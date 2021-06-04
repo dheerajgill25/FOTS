@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     bannerImage: {
         height: 115,
         width: 115,
-        borderRadius:16
+        borderRadius:5
     },
     cartBox: {
         marginTop: 10,

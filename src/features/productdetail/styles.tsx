@@ -227,5 +227,12 @@ const styles = StyleSheet.create({
         bottom: 10,
         left: 10
     },
+    text: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginTop: 20,
+        color: 'white',
+        fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
+    },
 });
 export default styles;

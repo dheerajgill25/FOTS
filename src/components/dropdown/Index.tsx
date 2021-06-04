@@ -4,16 +4,17 @@ import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 interface DropdownProps {
     title: string;
-    onPress: (data:any) => void;
+    onPress: (data: any) => void;
     data: DropdownData[];
+    edit?: boolean
 }
 export interface DropdownData { name?: string; id?: any }
 let isShown: boolean = false;
-const DropdownComponent = ({ data, title ,onPress}: DropdownProps) => {
+const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [dropdownValue, setDropdownValue] = useState(title);
+    const [dropdownValue, setDropdownValue] = useState<string>(title);
     const [selectedValue, setSelectedValue] = useState<boolean>(false);
-    const handleValue = (data:any)=>{
+    const handleValue = (data: any) => {
         setDropdownValue(data.name);
         setShowDropdown(false);
         setSelectedValue(true)
@@ -23,7 +24,7 @@ const DropdownComponent = ({ data, title ,onPress}: DropdownProps) => {
             <View style={styles.dropdownBox}>
                 <View>
                     <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : 22 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true }}>
-                        <Typography style={[styles.title,{color:selectedValue?'black':'#A7A7A7'}]}>{dropdownValue}</Typography>
+                        <Typography style={[styles.title, { color: selectedValue ? 'black' : edit ? 'black' : '#A7A7A7' }]}>{dropdownValue?dropdownValue:title}</Typography>
                         <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15 }} />
                     </TouchableOpacity>
                     {
@@ -31,7 +32,7 @@ const DropdownComponent = ({ data, title ,onPress}: DropdownProps) => {
                             data && data.length > 0 && (
                                 data && data.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
-                                        <TouchableOpacity onPress={() =>  {onPress(item);handleValue(item)}} activeOpacity={0.6} style={styles.dropdownInner}>
+                                        <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
                                             <Typography style={styles.values}>{item.name}</Typography>
                                         </TouchableOpacity>
                                     </View>
@@ -81,12 +82,12 @@ const styles = StyleSheet.create({
     title: {
         color: '#A7A7A7',
         fontFamily: FontFamilyFoods.POPPINS,
-        textTransform:'capitalize'
+        textTransform: 'capitalize'
     },
     values: {
         color: '#000',
         fontFamily: FontFamilyFoods.POPPINS,
-        textTransform:'capitalize'
+        textTransform: 'capitalize'
     },
 });
 export default DropdownComponent;

@@ -17,7 +17,7 @@ const PLATFORM_PHOTO_PERMISSIONS = {
     ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
     android: PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
 }
-const REQUEST_PERMISSION_TYPE = {
+const REQUEST_PERMISSION_TYPE:any = {
     camera: PLATFORM_CAMERA_PERMISSIONS,
     photo: PLATFORM_PHOTO_PERMISSIONS
 }
@@ -47,7 +47,7 @@ class AppPermission {
             return false;
         }
     }
-    requestMultiple = async (types): Promise<any> => {
+    requestMultiple = async (types: string[]): Promise<any> => {
         const results: any = [];
         for (const type of types) {
             const permission = REQUEST_PERMISSION_TYPE[type][Platform.OS];

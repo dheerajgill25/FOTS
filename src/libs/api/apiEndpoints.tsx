@@ -19,5 +19,8 @@ export const URL={
     CHECKOUT:"/checkout",
     ORDER:"/order",
     REMOVECARTOTHERPRODUCT:"/remove-cart-other-product",
-    ORDERLIST:"/order-list"
+    ORDERLIST:"/order-list",
+    PROFILE:"/profile",
+    UPLOADIMAGE:"/profile-image",
+    CARTCOUNT:"/cart-count"
 }

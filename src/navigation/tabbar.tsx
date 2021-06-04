@@ -5,6 +5,7 @@ import { StackActions } from '@react-navigation/native';
 import HomeScreen from 'features/home/Index';
 import MyAccount from 'features/myaccount/Index';
 import OrderScreen from 'features/orderScreen/Index';
+import OrderScreenSecond from 'features/orderScreentwo/Index';
 
 const Tab = createBottomTabNavigator();
 
@@ -48,8 +49,8 @@ const BottomTabNavigation = () => {
             
                 >
                 <Tab.Screen
-                    name={OrderScreen.SCREEN_NAME}
-                    component={OrderScreen}
+                    name={OrderScreenSecond.SCREEN_NAME}
+                    component={OrderScreenSecond}
                     listeners={(event) => resetHomeStackOnTabPress(event)}
                     options={{
                         tabBarIcon: ({ color }) => (

@@ -6,6 +6,11 @@ class CrashReporter {
      recordError(error: any){
         crashlytics().recordError(error);
     }
+    executeError (){
+        crashlytics().log('Error on Load');
+        crashlytics().crash();
+    }
+
 }
 const CrashReporterInstance = new CrashReporter();
 export default CrashReporterInstance;

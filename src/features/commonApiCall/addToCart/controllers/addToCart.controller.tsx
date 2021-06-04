@@ -6,23 +6,27 @@ import HttpCall from "libs/http-call/https";
 import { AddToCartAction } from "../actions/addToCart.action";
 import Toast from 'react-native-simple-toast';
 class AddToCartController {
-    async addToCartProducts(request:any,name:string,callback: (success: boolean, msg?: string) => void) {
+    async addToCartProducts(request: any, name: string, callback: (success: boolean, msg?: string) => void) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
-            const URLS = APIENDPOINTS.APIBASEURL+URL.ADDTOCART+`?key=${APIENDPOINTS.APIKEY}`;
-            const addToCart= await HttpCall.post(URLS,request, true);
-            const {data,status}:any = addToCart;
-            const {message,popup} = data;
-            if(data.status&&status){
+            const URLS = APIENDPOINTS.APIBASEURL + URL.ADDTOCART + `?key=${APIENDPOINTS.APIKEY}`;
+            const addToCart = await HttpCall.post(URLS, request, true);
+            const { data, status }: any = addToCart;
+            const { message, popup } = data;
+            if (data.status && status) {
                 useAppDispatch(AddToCartAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(name +" "+ "has been added to your cart", Toast.LONG, Toast.BOTTOM);
+                Toast.showWithGravity(name + " " + "has been added to your cart", Toast.LONG, Toast.BOTTOM);
                 CartScreen.navigate();
-            }else{
+            } else if (popup) {
+                callback(popup, message)
+                useAppDispatch(LoadingAction.showLoading(false));
+            }
+            else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
-                callback(popup,message)
             }
+            useAppDispatch(LoadingAction.showLoading(false));
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
             console.log("error1doConfirm", error);

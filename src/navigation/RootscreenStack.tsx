@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import ProductScreen from 'features/products/Index';
 import EditProfile from 'features/editProfile/Index';
+import ChangePassword from 'features/editProfile/changePassword';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -102,7 +103,7 @@ const RootStackScreen = () => {
                             options={HeaderScreenOptionNavigation({
                                 showBackButton: true,
                                 headerTitle: "Edit Profile",
-                                showCartIcon: true
+                                showCartIcon: false
                             })}
 
                         />
@@ -130,6 +131,17 @@ const RootStackScreen = () => {
                                 showCartIcon: true,
                                 showOnlyLogo: false
                             })}
+
+                        />
+                         <RootStackNavigator.Screen
+                            name={ChangePassword.SCREEN_NAME}
+                            component={ChangePassword}
+                            options={HeaderScreenOptionNavigation({
+                                showBackButton: true,
+                                headerTitle: "Change password",
+                                showCartIcon: false
+                            })}
+
 
                         />
                     </>

@@ -16,7 +16,7 @@ interface ScreenOptionNavigation {
     headerRight?: React.ReactNode;
 }
 
-const ScreenOptionNavigation = (props?: ScreenOptionNavigation) => {
+const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
     const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo } =
         props || {};
     return {

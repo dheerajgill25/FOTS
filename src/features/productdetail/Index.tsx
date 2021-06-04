@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, Dimensions, Image, SafeAreaView, ScrollView, StatusBar, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
 import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
@@ -219,7 +219,7 @@ const callbackAddToCart = async (success: boolean, msg?: any) => {
     const categoryId = await AsyncStorage.getItem("cId");
     if (success) {
         Alert.alert(
-            msg,
+            "Do you want to replace it",
             "",
             [
                 {
@@ -227,8 +227,11 @@ const callbackAddToCart = async (success: boolean, msg?: any) => {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                 },
-                { text: "OK", onPress: () => { RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId); cartAgainAdd = true } }
-            ]
+                { text: "OK", onPress: () => { RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
+                    handleAddToCartAfterRemove()
+                } },
+              
+            ],
         );
     }
 
@@ -251,7 +254,16 @@ const handleAddToCart = (item: any) => {
         meal_id: item.meal_id || "",
         products: products
     };
+    AsyncStorage.setItem("cartRequest",JSON.stringify(item));
     AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
+}
+const handleAddToCartAfterRemove = async ()=>{
+    const success= await RemoveCartControllerInstance.removeProductSuccess();
+    AsyncStorage.getItem('cartRequest').then((val:any)=>{
+        const cartRequest = JSON.parse(val);
+        handleAddToCart(cartRequest)
+    });
+    AsyncStorage.removeItem("cartRequest");
 }
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     const [isShown, setIsShown] = useState<boolean>(false);
@@ -271,14 +283,6 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
             setCartItems(0)
         }
     }, [cartData])
-    useEffect(() => {
-        if (cartAgainAdd) {
-            handleAddToCart(productDetail);
-            cartAgainAdd = false;
-        } else {
-            return;
-        }
-    }, [cartAgainAdd])
     return (
         <>
             <SafeAreaView style={styles.container}>

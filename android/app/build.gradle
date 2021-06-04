@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 import com.android.build.OutputFile
-
+def useIntlJsc = false
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -80,13 +80,14 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
-    bundleAssetName: "index.android.bundle",
-    bundleInRelease: true,
-    bundleInDebug: true
+    enableHermes: true,  // clean and rebuild if changing
+    extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/index.android.js.map")],
+     jsBundleDirRelease: "$buildDir/intermediates/merged_assets/release/mergeReleaseAssets/out",
+      bundleAssetName: "index.android.bundle",
+     bundleInRelease: true,
 ]
 
-//apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native/react.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -133,6 +134,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4G"
+    }
     defaultConfig {
         multiDexEnabled true
         applicationId "com.foodonstoves"
@@ -140,6 +145,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+           renderscriptTargetApi 23
+        renderscriptSupportModeEnabled true
     }
     splits {
         abi {
@@ -156,6 +163,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release{
+            storeFile file('foodonstoves.keystore')
+            storePassword 'Temp123$'
+            keyAlias 'foodonstove'
+            keyPassword 'Temp123$'
+        }
     }
     buildTypes {
         debug {
@@ -164,11 +177,17 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            shrinkResources true
-             minifyEnabled true
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources true
+            minifyEnabled true
+            shrinkResources true
+            crunchPngs false // or true
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
         }
     }
 

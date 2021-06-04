@@ -60,20 +60,20 @@ export function validateRegister(values: any) {
 
 export function validateResetPassword(values: any) {
     var errors: { [k: string]: any } = {};
-    if (!values?.oldPassword) {
-        errors.oldPassword = 'Password Required';
-    } else if (values?.oldPassword?.length < 6) {
-        errors.oldPassword = 'Password must be at least 6 characters';
+    if (!values?.current_password) {
+        errors.current_password = 'Password Required';
+    } else if (values?.current_password?.length < 6) {
+        errors.current_password = 'Password must be at least 6 characters';
     }
-    if (!values?.newPassword) {
-        errors.newPassword = 'New Password Required';
-    } else if (values?.newPassword?.length < 6) {
-        errors.newPassword = 'New Password must be at least 6 characters';
+    if (!values?.password) {
+        errors.password = 'New Password Required';
+    } else if (values?.password?.length < 6) {
+        errors.password = 'New Password must be at least 6 characters';
     }
 
     if (!values?.confirm_password) {
         errors.confirm_password = 'Confirm Password Required';
-    } else if (!(values?.newPassword == values?.confirm_password)) {
+    } else if (!(values?.password == values?.confirm_password)) {
         errors.confirm_password =
             'Your password and confirmation password do not match.';
     }

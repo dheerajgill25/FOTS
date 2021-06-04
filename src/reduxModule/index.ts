@@ -18,6 +18,8 @@ import { productDetailReducer } from 'features/productdetail/reducers/productdet
 import { cartListReducer } from 'features/cart/httpCall/reducers/cartList.reducer';
 import { checkoutCartReducer } from 'features/commonApiCall/checkout/reducers/checkout.reducer';
 import { orderListReducer } from 'features/commonApiCall/orderList/reducers/orderList.reducer';
+import { uploadImageReducer } from 'features/editProfile/reducers/uploadImage.reducer';
+import { cartCountReducer } from 'features/commonApiCall/cartCount/reducers/cartCount.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -39,7 +41,9 @@ function createReducer(injectedReducers = {}) {
         ProductDetailInState:productDetailReducer,
         CartListInState:cartListReducer,
         CheckoutInState:checkoutCartReducer,
-        OrderListInState:orderListReducer
+        OrderListInState:orderListReducer,
+        UploadImageInState:uploadImageReducer,
+        CartCountInState:cartCountReducer
     });
     const persistConfig = {
         key: 'root',

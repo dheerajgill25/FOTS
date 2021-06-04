@@ -18,7 +18,7 @@ interface HeaderScreenOptionNavigationProps {
     headerTitle?: string;
 }
 
-const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps) => {
+const HeaderScreenOptionNavigation: any = (props?: HeaderScreenOptionNavigationProps) => {
     const { showBackButton = false, showCartIcon = false, headerLeft, headerRight, headerTitle } =
         props || {};
     return {
@@ -28,6 +28,7 @@ const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps)
         headerLeftContainerStyle: {
             marginLeft: 10,
         },
+        headerTitleAlign: "center",
         headerLeft: () => {
             if (showBackButton) {
                 return (
@@ -50,7 +51,7 @@ const HeaderScreenOptionNavigation = (props?: HeaderScreenOptionNavigationProps)
         },
         headerTitle: () => {
             return (<View>
-                {!!headerTitle && <Typography style={{fontFamily:FontFamilyFoods.POPPINSMEDIUM,textAlign:'center',fontSize:18,color:'#D80009',marginLeft:-25}}>{headerTitle}</Typography>}
+                {!!headerTitle && <Typography style={{ fontFamily: FontFamilyFoods.POPPINSMEDIUM, textAlign: 'center', fontSize: 18, color: '#D80009', }}>{headerTitle}</Typography>}
             </View>)
         },
         headerRight: () => {

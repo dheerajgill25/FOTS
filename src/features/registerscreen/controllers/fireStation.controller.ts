@@ -5,7 +5,7 @@ import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { FireStationAction } from "../actions/fireStation.action";
 class FireStationController {
     async getFireStation(id:any) {
-
+        console.log(id)
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData:FormData = new FormData();
