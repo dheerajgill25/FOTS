@@ -6,14 +6,13 @@ import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import Toast from 'react-native-simple-toast';
 import { EditProfileAction } from "../actions/editProfile.action";
 class EditProfileController {
-    async updateProfile(first_name: string, last_name: string,mobile: string, profile_photo: string,  fireDepartmentId: string, fireStationId: string) {
+    async updateProfile(first_name: string, last_name: string,mobile: string, fireDepartmentId: string, fireStationId: string) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
             formData.append("first_name", first_name);
             formData.append("last_name", last_name);
             formData.append("mobile", mobile);
-            formData.append("profile_photo", profile_photo);
             formData.append("fire_department", fireDepartmentId);
             formData.append("fire_station", fireStationId);
             const URLS = APIENDPOINTS.APIBASEURL + URL.PROFILE + `?key=${APIENDPOINTS.APIKEY}`

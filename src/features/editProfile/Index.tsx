@@ -102,7 +102,7 @@ const EditProfile = (props: EditProfileProps) => {
         }
     }
     const updateProfile = () => {
-        EditProfileControllerInstance.updateProfile(first_name, last_name, mobile, profileImage, fireDepartmentId || userData.fire_department, fireStationId || userData.fire_station)
+        EditProfileControllerInstance.updateProfile(first_name, last_name, mobile, fireDepartmentId || userData.fire_department, fireStationId || userData.fire_station)
     }
     return (
         <>

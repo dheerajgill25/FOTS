@@ -4,6 +4,7 @@ import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
+import EditProfile from "../Index";
 class ChangePasswordController {
     async ChangePassword(currentPassword: string, password: string, confirmPassword: string) {
         try {
@@ -18,6 +19,8 @@ class ChangePasswordController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
+                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                EditProfile.navigate();
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
