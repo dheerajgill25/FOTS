@@ -5,7 +5,7 @@ import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/cont
 import BeforePayNow from 'features/paynow/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect } from 'react';
-import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import CartListControllerInstance from './httpCall/controllers/cartList.controller';
@@ -41,7 +41,7 @@ const renderCartItems = (data: any) => {
                 <View style={styles.shoppingCartBox}>
                     <View style={styles.shoppingCartWrap}>
                         <View style={[styles.shoppingCartLeft]}>
-                            <Image style={styles.bannerImage} resizeMode="contain" source={{ uri: product?.thumbnail }} />
+                            <ImageBackground style={styles.bannerImage} onLoad={()=>{}} resizeMode="cover" resizeMethod="auto"  source={{ uri: product?.thumbnail, cache: "force-cache"  }} />
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{product?.name}</Typography>

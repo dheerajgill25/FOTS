@@ -63,10 +63,10 @@ const renderHowItsWorks = (item: any) => {
 const OrderScreen = (props: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     const {
-        route: { params, },
+        route: { params:{params:{id}}, },
     } = props;
     useEffect(() => {
-        ProductListControllerInstance.getProductList(params.params,)
+        ProductListControllerInstance.getProductList(id,)
     }, [])
     const productList = useSelector((state: RootStore) => state.ProductInState.data?.data?.data);
     const handleProducts = (item: any, index: number) => {
@@ -103,6 +103,7 @@ OrderScreen.navigationOptions = {
     headerShown: false,
 };
 OrderScreen.navigate = (id: any) => {
-    RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, id);
+    console.log(id)
+    RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, {id:id});
 };
 export default OrderScreen;

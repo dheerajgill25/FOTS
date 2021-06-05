@@ -5,13 +5,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop:20
     },
     bannerSection: {
         position: 'relative',
     },
     bannerPreview: {
-        height: 346,
+        height: 400,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -20,11 +19,11 @@ const styles = StyleSheet.create({
     },
     previewImageSection: {
         maxWidth: "100%",
-        maxHeight: 346,
+        maxHeight: 400,
     },
     previewImage: {
-        height: 346,
-        width: width,
+        height: 400,
+        width: 400,
     },
     cartIconSection: {
         position: "absolute",
@@ -235,5 +234,52 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
     },
+    modal: {
+        margin: 0,
+        zIndex: 9999,
+    },
+    modalcontainer: {
+        padding: 13,
+        height: 225,
+        backgroundColor: "white",
+        width: width * 0.93,
+        zIndex: 99,
+        borderRadius: 10,
+        marginLeft: 14,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    modalSection: {},
+    modalInner: {
+        marginBottom: 15,
+    },
+    label: {
+        textAlign: 'center',
+        paddingHorizontal: 20,
+        fontFamily: FontFamilyFoods.POPPINS,
+        fontSize: 16,
+        lineHeight: 24,
+        color: '#484848'
+    },
+    modalButton: {
+        marginHorizontal: 40,
+        marginTop: 10,
+        display:"flex",
+        flexDirection:"row",
+        alignItems:"center",
+    },
+    buttonText: {
+        fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,
+        fontSize: 14,
+        color: "#000"
+    },
+    btn: {
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingLeft: 50,
+        paddingRight: 50,
+        borderRadius: 50,
+    }
 });
 export default styles;

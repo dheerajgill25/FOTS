@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Dimensions, Image, ImageBackground, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
 import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
@@ -15,7 +15,8 @@ import HTML from "react-native-render-html";
 import AddToCartControllerInstance from "features/commonApiCall/addToCart/controllers/addToCart.controller";
 import RemoveCartControllerInstance from "features/commonApiCall/removeCart/controllers/reomveToCart.controller";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AlertModal from "components/alertModal";
+import ReactNativeModal from 'react-native-modal';
+import HomeScreen from "features/home/Index";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -28,7 +29,7 @@ const bannerSection = (_data: any, length: number) => {
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <Image source={{ uri: BANNERIMAGEURL ,cache:"force-cache"}} style={styles.previewImage} resizeMode="contain" />
+                    <Image source={{ uri: BANNERIMAGEURL, cache: "force-cache" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
@@ -50,7 +51,7 @@ const headingSection = (_data: any) => {
             <View style={styles.headingBox}>
                 <View style={styles.headingInner}>
                     <Typography style={styles.productName}>{_data.heading}</Typography>
-                    <Typography style={[styles.productSubText, { maxWidth: 280 }]}>With Spicy Cilantro Dipping Sauce, Roasted Sweet Potatoes and Roasted Asparagus</Typography>
+                    <Typography style={[styles.productSubText, { maxWidth: 280 }]}>{_data.subTitle}</Typography>
                 </View>
                 <View style={styles.productPrice}>
                     <Typography style={styles.price}>${_data.amount}</Typography>
@@ -169,7 +170,13 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
                                         ingradient && ingradient.map((item: any, index: any) => (
                                             <>
                                                 <View key={index} style={[styles.nutritionContent, { flex: 0, width: 100, marginBottom: 10 }]}>
-                                                    <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
+                                                    {
+                                                        item.quantity == "" && item.quantity == 0 ? (
+                                                            <View />
+                                                        ) : (
+                                                            <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
+                                                        )
+                                                    }
                                                     <Typography style={styles.nutritionType}>{item.name}</Typography>
                                                 </View>
                                             </>
@@ -217,31 +224,9 @@ const scrollHeadingSection = () => {
     )
 }
 const callbackAddToCart = async (success: boolean, msg?: any) => {
-    const categoryId = await AsyncStorage.getItem("cId");
-    if(success){
-        Alert.alert(
-            "Do you want to replace it?",
-            "",
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "OK", onPress: async () => {
-                RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
-                const successfully= await RemoveCartControllerInstance.removeProductSuccess();
-                console.log("successfully",successfully)
-                setTimeout(() => {
-                    if(successfully){
-                        handleAddToCartAfterRemove();
-                    }
-                }, 1000);
-            }}
-            ]
-          );
-    }
+    cartAgainAdd = success
 }
+
 const renderButtonSection = (_data: any, item: any) => {
     return (
         <View style={styles.descriptionSection}>
@@ -260,17 +245,77 @@ const handleAddToCart = (item: any) => {
         meal_id: item.meal_id || "",
         products: products
     };
-    AsyncStorage.setItem("cartRequest",JSON.stringify(item));
+    AsyncStorage.setItem("cartRequest", JSON.stringify(item));
     AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
 }
-const handleAddToCartAfterRemove = async ()=>{
-    AsyncStorage.getItem('cartRequest').then((val:any)=>{
+const handleCartAgainAfterRemove = async () => {
+    const categoryId = await AsyncStorage.getItem("cId");
+    RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
+    const successfully = await RemoveCartControllerInstance.removeProductSuccess();
+    console.log("successfully", successfully)
+    setTimeout(() => {
+        if (successfully) {
+            handleAddToCartAfterRemove();
+        }
+    }, 1000);
+}
+
+const renderModal = (modalizeRef: any, cart: any) => {
+    console.log(modalizeRef?.current)
+
+    const closeModal = () => {
+        modalizeRef?.current?.close();
+        cartAgainAdd = false;
+        cart = {};
+        HomeScreen.navigate()
+    }
+    return (
+        <>
+            {
+                cartAgainAdd ? (
+                    <ReactNativeModal ref={modalizeRef} isVisible={true} onModalHide={() => closeModal()} style={styles.modal}
+                        backdropColor={'black'}
+                        backdropOpacity={0.3}
+                        coverScreen={true}
+                    >
+                        <View style={styles.modalcontainer} >
+                            <View style={styles.modalSection}>
+                                <View style={styles.modalInner}>
+                                    <Typography style={styles.label}>{'Your cart has another product, do you want to discard the previous selection and add new product?'}</Typography>
+                                </View>
+                                <View style={styles.modalButton}>
+                                    <TouchableOpacity
+                                        style={styles.btn}
+                                        onPress={() => closeModal()}
+                                    >
+                                        <Typography style={styles.buttonText}>{'Cancel'}</Typography>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={styles.btn}
+                                        onPress={() => handleCartAgainAfterRemove()}
+                                    >
+                                        <Typography style={styles.buttonText}>{'OK'}</Typography>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </ReactNativeModal>
+                ) : (
+                    <View />
+                )
+            }
+        </>
+    )
+}
+const handleAddToCartAfterRemove = async () => {
+    AsyncStorage.getItem('cartRequest').then((val: any) => {
         const cartRequest = JSON.parse(val);
         handleAddToCart(cartRequest)
     });
     AsyncStorage.removeItem("cartRequest");
 }
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
+    const modalizeRef = React.useRef<ReactNativeModal>(null);
     const [isShown, setIsShown] = useState<boolean>(false);
     const [cartItems, setCartItems] = useState<number>(0)
     const {
@@ -281,6 +326,8 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     }, []);
     const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
+    const addCart = useSelector((state: any) => state.AddToCartInState.data);
+
     useEffect(() => {
         if (cartData?.data && cartData?.data?.length > 0) {
             setCartItems(cartData?.data[0]?.cart_item?.length);
@@ -288,10 +335,15 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
             setCartItems(0)
         }
     }, [cartData])
+    useEffect(() => {
+        if (addCart?.popup) {
+            renderModal(modalizeRef, addCart);
+        }
+    }, [addCart])
     return (
         <>
             <SafeAreaView style={styles.container}>
-             
+
                 {
                     meal ? (
                         <View />
@@ -300,29 +352,26 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     )
                 }
 
-                <ScrollView bounces={false} stickyHeaderIndices={[2]}
-                    onScroll={(event) => {
-                        const y = event.nativeEvent.contentOffset.y;
-                        if (y >= height / 2) {
-                            setIsShown(true);
-                        } else {
-                            setIsShown(false)
-                        }
-                    }}
+                <ScrollView bounces={false}
                     nestedScrollEnabled={false}>
 
                     {bannerSection(productDetail?.image, cartItems)}
-                    {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.amount })}
-                    {
+                    {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.amount, subTitle: productDetail?.sub_title })}
+                    {/* {
                         isShown && scrollHeadingSection()
-                    }
+                    } */}
                     {renderDescriptionSection(productDetail?.description)}
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {cookingSection(productDetail?.cooking_time)}
                     {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient)}
                     {renderButtonSection(productDetail?.amount, productDetail)}
+                    {
+                        addCart?.popup ? renderModal(modalizeRef, addCart) : null
+                    }
                 </ScrollView>
+
             </SafeAreaView>
+
         </>
     )
 }

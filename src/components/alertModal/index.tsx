@@ -12,13 +12,14 @@ interface AlertModalProps {
     subTitle?: string;
 }
 
-const AlertModal = ({ label, }: AlertModalProps) => {
+const AlertModal = ({ label,isVisiable }: AlertModalProps) => {
+    console.log(label)
     const [isShown, setIsShown] = React.useState(true);
     const closeModal = () => {
         setIsShown(false);
     }
     return (
-        <ReactNativeModal isVisible={isShown} onModalHide={() => closeModal()} style={styles.modal}
+        <ReactNativeModal isVisible={true}  style={styles.modal}
             backdropColor={'black'}
             backdropOpacity={0.3}
             coverScreen={true}
@@ -28,18 +29,18 @@ const AlertModal = ({ label, }: AlertModalProps) => {
 
                 <View style={styles.modalSection}>
                     <View style={styles.modalInner}>
-                        <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
+                        <Typography  style={styles.label}>{label}</Typography>
                     </View>
                     <View style={styles.modalButton}>
                         <TouchableOpacity
                             style={styles.btn}
-                            onPress={closeModal}
+                         
                         >
                             <Typography style={styles.buttonText}>{'Cancel'}</Typography>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.btn}
-                            onPress={closeModal}
+                           
                         >
                             <Typography style={styles.buttonText}>{'OK'}</Typography>
                         </TouchableOpacity>
@@ -83,7 +84,10 @@ const styles = StyleSheet.create({
     },
     modalButton: {
         marginHorizontal: 40,
-        marginTop: 10
+        marginTop: 10,
+        display:"flex",
+        flexDirection:"row",
+        alignItems:"center",
     },
     buttonText: {
         fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,

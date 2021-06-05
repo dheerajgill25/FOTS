@@ -14,6 +14,7 @@ import { CheckoutInState } from "features/commonApiCall/checkout/reducers/checko
 import { OrderListInState } from "features/commonApiCall/orderList/reducers/orderList.reducer";
 import { UploadImageInState } from "features/editProfile/reducers/uploadImage.reducer";
 import { CartCountInState } from "features/commonApiCall/cartCount/reducers/cartCount.reducer";
+import { AddToCartInState } from "features/commonApiCall/addToCart/reducers/addToCart.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -31,5 +32,6 @@ export default interface RootStore {
     CheckoutInState:CheckoutInState;
     OrderListInState:OrderListInState;
     UploadImageInState:UploadImageInState;
-    CartCountInState:CartCountInState
+    CartCountInState:CartCountInState;
+    AddToCartInState:AddToCartInState
 };

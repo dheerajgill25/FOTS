@@ -6,9 +6,11 @@ import HomeScreen from 'features/home/Index';
 import MyAccount from 'features/myaccount/Index';
 import OrderScreen from 'features/orderScreen/Index';
 import OrderScreenSecond from 'features/orderScreentwo/Index';
+import { createStackNavigator } from '@react-navigation/stack';
+import ScreenOptionNavigation from './NavigationBar';
 
 const Tab = createBottomTabNavigator();
-
+const OrderStack = createStackNavigator();
 const resetHomeStackOnTabPress = ({ navigation }: any) => ({
     tabPress: (e: any) => {
         const state = navigation.dangerouslyGetState();
@@ -27,7 +29,18 @@ const resetHomeStackOnTabPress = ({ navigation }: any) => ({
         }
     },
 });
-
+const orderScreenStack = () => {
+    return (
+        <OrderStack.Navigator initialRouteName={OrderScreenSecond.SCREEN_NAME}>
+            <OrderStack.Screen name={OrderScreenSecond.SCREEN_NAME}
+                component={OrderScreenSecond}
+                options={{ headerShown: false }} />
+            <OrderStack.Screen name={OrderScreen.SCREEN_NAME}
+                component={OrderScreen}
+                options={{ headerShown: false }} />
+        </OrderStack.Navigator>
+    )
+}
 const BottomTabNavigation = () => {
     const SEARCHURL = require("../../assets/images/searchvector.png");
     const HOMEURL = require("../../assets/images/homevector.png");
@@ -40,17 +53,17 @@ const BottomTabNavigation = () => {
                     activeTintColor: "white",
                     inactiveTintColor: "gray",
                     activeBackgroundColor: "#D80000",
-                    showLabel:false,
-                    tabStyle:{borderRadius:100,maxWidth:40,width:40,height:40,marginLeft:'18%',marginTop:4},
-                    style:{width:'100%',backgroundColor:'#fff',paddingBottom:5}
+                    showLabel: false,
+                    tabStyle: { borderRadius: 100, maxWidth: 40, width: 40, height: 40, marginLeft: '18%', marginTop: 4 },
+                    style: { width: '100%', backgroundColor: '#fff', paddingBottom: 5 }
                 }}
-            
+
                 initialRouteName={HomeScreen.SCREEN_NAME}
-            
-                >
+
+            >
                 <Tab.Screen
-                    name={OrderScreenSecond.SCREEN_NAME}
-                    component={OrderScreenSecond}
+                    name={OrderScreen.SCREEN_NAME}
+                    component={orderScreenStack}
                     listeners={(event) => resetHomeStackOnTabPress(event)}
                     options={{
                         tabBarIcon: ({ color }) => (
@@ -64,9 +77,9 @@ const BottomTabNavigation = () => {
                             />
                         ),
                         unmountOnBlur: true,
-                    
+
                     }}
-                
+
                 />
                 <Tab.Screen
                     name={HomeScreen.SCREEN_NAME}

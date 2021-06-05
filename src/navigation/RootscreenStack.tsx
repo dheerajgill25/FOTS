@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Register from '@features/registerscreen';
 import ScreenOptionNavigation from './NavigationBar';
-import OrderScreen from '@features/orderScreen/Index';
 import CartScreen from 'features/cart/Index';
 import HeaderScreenOptionNavigation from './header';
 import BeforePayNow from 'features/paynow/Index';
@@ -10,7 +9,6 @@ import ThankYouScreen from 'features/thankyou/Index';
 import MyAccount from 'features/myaccount/Index';
 import HomeStack from './homestack';
 import Login from 'features/login/Index';
-import OrderScreenSecond from 'features/orderScreentwo/Index';
 import MealPlan from 'features/mealplan/Index';
 import ProductDetailScreen from 'features/productdetail/Index';
 import TokenControllerInstance from 'features/login/controllers/token.controller';
@@ -41,7 +39,7 @@ const RootStackScreen = () => {
                             })}
                         />
 
-                        <RootStackNavigator.Screen
+                        {/* <RootStackNavigator.Screen
                             name={OrderScreen.SCREEN_NAME}
                             component={OrderScreen}
                             options={ScreenOptionNavigation({
@@ -58,7 +56,7 @@ const RootStackScreen = () => {
                                 showCartIcon: true,
                                 showOnlyLogo: false
                             })}
-                        />
+                        /> */}
                         <RootStackNavigator.Screen
                             name={CartScreen.SCREEN_NAME}
                             component={CartScreen}
@@ -120,7 +118,11 @@ const RootStackScreen = () => {
                         <RootStackNavigator.Screen
                             name={ProductDetailScreen.SCREEN_NAME}
                             component={ProductDetailScreen}
-                            options={{ headerShown: false }}
+                            options={HeaderScreenOptionNavigation({
+                                showBackButton: true,
+                                headerTitle: "",
+                                showCartIcon: false
+                            })}
 
                         />
                         <RootStackNavigator.Screen

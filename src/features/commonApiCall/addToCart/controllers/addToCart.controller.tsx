@@ -19,9 +19,11 @@ class AddToCartController {
                 Toast.showWithGravity(name + " " + "has been added to your cart", Toast.LONG, Toast.BOTTOM);
                 CartScreen.navigate();
             } else if (popup) {
-                callback(popup, message)
+                callback(popup, message);
+                const _data ={popup,message}
+                useAppDispatch(AddToCartAction.requestSuccess(_data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toast.showWithGravity("Your cart has another product, do you want to discard the previous selection and add new product?", Toast.LONG, Toast.BOTTOM);
             }
             else {
                 useAppDispatch(LoadingAction.showLoading(false));
