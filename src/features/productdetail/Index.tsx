@@ -248,21 +248,19 @@ const handleAddToCart = (item: any) => {
     AsyncStorage.setItem("cartRequest", JSON.stringify(item));
     AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
 }
-const handleCartAgainAfterRemove = async () => {
+const handleCartAgainAfterRemove = async (cart: {}) => {
     const categoryId = await AsyncStorage.getItem("cId");
     RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
     const successfully = await RemoveCartControllerInstance.removeProductSuccess();
-    console.log("successfully", successfully)
     setTimeout(() => {
         if (successfully) {
-            handleAddToCartAfterRemove();
+            handleAddToCartAfterRemove(cart);
+            cart={}
         }
     }, 1000);
 }
 
-const renderModal = (modalizeRef: any, cart: any) => {
-    console.log(modalizeRef?.current)
-
+const renderModal = (modalizeRef: any, cart: {}) => {
     const closeModal = () => {
         modalizeRef?.current?.close();
         cartAgainAdd = false;
@@ -292,7 +290,7 @@ const renderModal = (modalizeRef: any, cart: any) => {
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         style={styles.btn}
-                                        onPress={() => handleCartAgainAfterRemove()}
+                                        onPress={() => handleCartAgainAfterRemove(cart)}
                                     >
                                         <Typography style={styles.buttonText}>{'OK'}</Typography>
                                     </TouchableOpacity>
@@ -307,14 +305,16 @@ const renderModal = (modalizeRef: any, cart: any) => {
         </>
     )
 }
-const handleAddToCartAfterRemove = async () => {
+const handleAddToCartAfterRemove = async (cart: {}) => {
     AsyncStorage.getItem('cartRequest').then((val: any) => {
         const cartRequest = JSON.parse(val);
         handleAddToCart(cartRequest)
     });
     AsyncStorage.removeItem("cartRequest");
+    cart={}
 }
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
+    let addCart: { popup?: any; };
     const modalizeRef = React.useRef<ReactNativeModal>(null);
     const [isShown, setIsShown] = useState<boolean>(false);
     const [cartItems, setCartItems] = useState<number>(0)
@@ -322,13 +322,14 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
         route: { params: { id, meal } },
     } = props;
     useEffect(() => {
+        addCart ={popup:false}
         ProductDetailControllerInstance.getProductDetails(id)
     }, []);
     const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
-    const addCart = useSelector((state: any) => state.AddToCartInState.data);
-
+    addCart = useSelector((state: any) => state.AddToCartInState.data);
     useEffect(() => {
+        addCart={};
         if (cartData?.data && cartData?.data?.length > 0) {
             setCartItems(cartData?.data[0]?.cart_item?.length);
         } else {
@@ -339,6 +340,8 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
         if (addCart?.popup) {
             renderModal(modalizeRef, addCart);
         }
+        cartAgainAdd = false;
+        addCart={}
     }, [addCart])
     return (
         <>
