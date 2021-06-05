@@ -15,6 +15,7 @@ import HTML from "react-native-render-html";
 import AddToCartControllerInstance from "features/commonApiCall/addToCart/controllers/addToCart.controller";
 import RemoveCartControllerInstance from "features/commonApiCall/removeCart/controllers/reomveToCart.controller";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AlertModal from "components/alertModal";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -27,7 +28,7 @@ const bannerSection = (_data: any, length: number) => {
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <Image source={{ uri: BANNERIMAGEURL }} style={styles.previewImage} resizeMode="contain" />
+                    <Image source={{ uri: BANNERIMAGEURL ,cache:"force-cache"}} style={styles.previewImage} resizeMode="contain" />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
@@ -217,24 +218,29 @@ const scrollHeadingSection = () => {
 }
 const callbackAddToCart = async (success: boolean, msg?: any) => {
     const categoryId = await AsyncStorage.getItem("cId");
-    if (success) {
+    if(success){
         Alert.alert(
-            "Do you want to replace it",
+            "Do you want to replace it?",
             "",
             [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                { text: "OK", onPress: () => { RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
-                    handleAddToCartAfterRemove()
-                } },
-              
-            ],
-        );
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "OK", onPress: async () => {
+                RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
+                const successfully= await RemoveCartControllerInstance.removeProductSuccess();
+                console.log("successfully",successfully)
+                setTimeout(() => {
+                    if(successfully){
+                        handleAddToCartAfterRemove();
+                    }
+                }, 1000);
+            }}
+            ]
+          );
     }
-
 }
 const renderButtonSection = (_data: any, item: any) => {
     return (
@@ -258,7 +264,6 @@ const handleAddToCart = (item: any) => {
     AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
 }
 const handleAddToCartAfterRemove = async ()=>{
-    const success= await RemoveCartControllerInstance.removeProductSuccess();
     AsyncStorage.getItem('cartRequest').then((val:any)=>{
         const cartRequest = JSON.parse(val);
         handleAddToCart(cartRequest)

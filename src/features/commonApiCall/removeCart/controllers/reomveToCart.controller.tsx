@@ -44,7 +44,6 @@ class RemoveCartController {
             const { data, status }: any = removeCart;
             const { message } = data;
             if (data.status && status) {
-                success = true;
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
             } else {
@@ -60,7 +59,7 @@ class RemoveCartController {
 
     }
     async  removeProductSuccess() {
-        if (success) return success;
+       return true;
     }
 }
 const RemoveCartControllerInstance = new RemoveCartController();

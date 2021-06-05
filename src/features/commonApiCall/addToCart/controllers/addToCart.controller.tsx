@@ -21,6 +21,7 @@ class AddToCartController {
             } else if (popup) {
                 callback(popup, message)
                 useAppDispatch(LoadingAction.showLoading(false));
+                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
             }
             else {
                 useAppDispatch(LoadingAction.showLoading(false));

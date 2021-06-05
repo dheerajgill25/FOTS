@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         lineHeight: 30,
         fontFamily: FontFamilyFoods.POPPINS,
-        color: '#404040'
+        color: '#404040',
+        textTransform:"capitalize"
     },
     productSubText: {
         fontSize: 12,
