@@ -15,6 +15,7 @@ import { OrderListInState } from "features/commonApiCall/orderList/reducers/orde
 import { UploadImageInState } from "features/editProfile/reducers/uploadImage.reducer";
 import { CartCountInState } from "features/commonApiCall/cartCount/reducers/cartCount.reducer";
 import { AddToCartInState } from "features/commonApiCall/addToCart/reducers/addToCart.reducer";
+import { TestimonialsInState } from "features/home/reducers/testimonials.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -33,5 +34,6 @@ export default interface RootStore {
     OrderListInState:OrderListInState;
     UploadImageInState:UploadImageInState;
     CartCountInState:CartCountInState;
-    AddToCartInState:AddToCartInState
+    AddToCartInState:AddToCartInState;
+    TestimonialsInState:TestimonialsInState
 };

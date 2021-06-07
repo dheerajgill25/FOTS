@@ -7,7 +7,7 @@ import styles from "./styles";
 import FoodItemsComponent from "components/foodItems/Index";
 import Typography from "components/typography/Typography";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
-import { foodItemData, groceryItemData, testimonialData } from "./data";
+import { foodItemData, groceryItemData,  } from "./data";
 import TestimonialComponent from "components/testimonial/Index";
 import BannerComponent from "components/banner/Index";
 import { MyStatusBar } from "components/statusbar/Index";
@@ -19,6 +19,7 @@ import OrderScreen from "features/orderScreen/Index";
 import ProductListControllerInstance from "features/products/controllers/product.controller";
 import StorageService from "libs/storage/Storage";
 import SearchScreen from "features/searchScreen/Index";
+import TestimonialsControllerInstance from "./controllers/testimonials.controller";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
@@ -30,8 +31,10 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const [text, setText] = useState<string>('');
     useEffect(() => {
         CategoryControllerInstance.getCategory();
+        TestimonialsControllerInstance.getTestimonials()
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
+    const testimonialData = useSelector((state:RootStore)=>state.TestimonialsInState.data?.data);
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>

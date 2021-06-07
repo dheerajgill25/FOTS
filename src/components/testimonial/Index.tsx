@@ -1,9 +1,10 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import React, { useRef, useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import HTML from 'react-native-render-html';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-
+const { height, width } = Dimensions.get('screen');
 function wp(percentage: number) {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
@@ -45,7 +46,8 @@ const TestimonialComponent = ({ data }: any) => {
                                 <Typography style={styles.colon}>“</Typography>
                             </View>
                             <View style={styles.contentText}>
-                                <Typography style={styles.text}>{item.description}</Typography>
+                                {/* <Typography style={styles.text}>{item.description}</Typography> */}
+                                <HTML source={{ html: item.description }} containerStyle={{paddingHorizontal:15}} baseFontStyle={styles.text} contentWidth={width} />
                             </View>
                             <View style={[styles.colonBox,{display:"flex",justifyContent:'flex-end', alignItems:'flex-end'}]}>
                                 <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10,transform: [{ rotate: '180deg'}], }]}>“</Typography>
@@ -53,10 +55,10 @@ const TestimonialComponent = ({ data }: any) => {
                         </View>
                     <View style={styles.clientSection}>
                         <View style={styles.clientBox}>
-                            <Image source={item.imageUrl} style={styles.clientImage} />
+                            <Image source={{uri:item.image}} style={styles.clientImage} />
                             <View style={styles.clientDetail}>
                                 <Typography style={styles.clientName}>{item.name}</Typography>
-                                <Typography style={styles.clientDesgination}>{item.designation}r</Typography>
+                                <Typography style={styles.clientDesgination}>{item.sub_title}r</Typography>
                             </View>
                         </View>
                     </View>
@@ -132,7 +134,8 @@ const styles = StyleSheet.create({
         fontSize: 13,
         lineHeight: 18,
         textAlign: 'center',
-        paddingHorizontal: 15
+        paddingHorizontal: 25,
+        fontFamily:FontFamilyFoods.POPPINS
     },
     foodItemRatingBox: {
         display: 'flex',

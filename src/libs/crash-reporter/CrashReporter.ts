@@ -3,12 +3,14 @@ class CrashReporter {
     async setUserId(uid: string){
         await crashlytics().setUserId(uid);
     }
-     recordError(error: any){
-        crashlytics().recordError(error);
+     recordError(error:string, jsErrorName?: string){
+        crashlytics().recordError(new Error(error), jsErrorName);
     }
-    executeError (){
-        crashlytics().log('Error on Load');
+    executeError(){
         crashlytics().crash();
+    }
+    async setAttribute(key:string,value:string){
+        await crashlytics().setAttribute(key,value);
     }
 
 }

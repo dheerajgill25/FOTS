@@ -21,6 +21,7 @@ import { orderListReducer } from 'features/commonApiCall/orderList/reducers/orde
 import { uploadImageReducer } from 'features/editProfile/reducers/uploadImage.reducer';
 import { cartCountReducer } from 'features/commonApiCall/cartCount/reducers/cartCount.reducer';
 import { addToCartReducer } from 'features/commonApiCall/addToCart/reducers/addToCart.reducer';
+import { testimonialsReducer } from 'features/home/reducers/testimonials.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -45,7 +46,8 @@ function createReducer(injectedReducers = {}) {
         OrderListInState:orderListReducer,
         UploadImageInState:uploadImageReducer,
         CartCountInState:cartCountReducer,
-        AddToCartInState:addToCartReducer
+        AddToCartInState:addToCartReducer,
+        TestimonialsInState:testimonialsReducer
     });
     const persistConfig = {
         key: 'root',

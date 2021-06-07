@@ -22,7 +22,8 @@ export const URL={
     ORDERLIST:"/order-list",
     PROFILE:"/profile",
     UPLOADIMAGE:"/profile-image",
-    CARTCOUNT:"/cart-count"
+    CARTCOUNT:"/cart-count",
+    TESTIMONIALS:"/testimonials"
 }
 export const RAZORPAYAPIKEY={
     APIKEY:"rzp_test_hYEx31l1dXV60A",
