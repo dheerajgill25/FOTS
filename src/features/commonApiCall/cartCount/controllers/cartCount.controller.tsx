@@ -4,7 +4,7 @@ import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
-import { CartListAction } from "features/cart/httpCall/actions/cartList.action";
+import { CartCountAction } from "../actions/cartCount.action";
 class CartCountController {
     async getCartCount() {
         try {
@@ -14,7 +14,7 @@ class CartCountController {
             const { data, status }: any = count;
             const { message } = data;
             if (data.status && status) {
-                useAppDispatch(CartListAction.requestSuccess(data));
+                useAppDispatch(CartCountAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));

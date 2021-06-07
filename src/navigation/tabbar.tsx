@@ -8,9 +8,11 @@ import OrderScreen from 'features/orderScreen/Index';
 import OrderScreenSecond from 'features/orderScreentwo/Index';
 import { createStackNavigator } from '@react-navigation/stack';
 import ScreenOptionNavigation from './NavigationBar';
+import SearchScreen from 'features/searchScreen/Index';
 
 const Tab = createBottomTabNavigator();
-const OrderStack = createStackNavigator();
+const SearchStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 const resetHomeStackOnTabPress = ({ navigation }: any) => ({
     tabPress: (e: any) => {
         const state = navigation.dangerouslyGetState();
@@ -29,16 +31,26 @@ const resetHomeStackOnTabPress = ({ navigation }: any) => ({
         }
     },
 });
-const orderScreenStack = () => {
+const searchScreenStack = () => {
     return (
-        <OrderStack.Navigator initialRouteName={OrderScreenSecond.SCREEN_NAME}>
-            <OrderStack.Screen name={OrderScreenSecond.SCREEN_NAME}
-                component={OrderScreenSecond}
+        <SearchStack.Navigator initialRouteName={SearchScreen.SCREEN_NAME}>
+            <SearchStack.Screen name={SearchScreen.SCREEN_NAME}
+                component={SearchScreen}
+                options={{ headerShown: false }} 
+                />
+        </SearchStack.Navigator>
+    )
+}
+const homeScreenStack = () => {
+    return (
+        <HomeStack.Navigator initialRouteName={HomeScreen.SCREEN_NAME}>
+            <HomeStack.Screen name={HomeScreen.SCREEN_NAME}
+                component={HomeScreen}
                 options={{ headerShown: false }} />
-            <OrderStack.Screen name={OrderScreen.SCREEN_NAME}
+            <HomeStack.Screen name={OrderScreen.SCREEN_NAME}
                 component={OrderScreen}
                 options={{ headerShown: false }} />
-        </OrderStack.Navigator>
+        </HomeStack.Navigator>
     )
 }
 const BottomTabNavigation = () => {
@@ -62,8 +74,8 @@ const BottomTabNavigation = () => {
 
             >
                 <Tab.Screen
-                    name={OrderScreen.SCREEN_NAME}
-                    component={orderScreenStack}
+                    name={SearchScreen.SCREEN_NAME}
+                    component={searchScreenStack}
                     listeners={(event) => resetHomeStackOnTabPress(event)}
                     options={{
                         tabBarIcon: ({ color }) => (
@@ -83,7 +95,7 @@ const BottomTabNavigation = () => {
                 />
                 <Tab.Screen
                     name={HomeScreen.SCREEN_NAME}
-                    component={HomeScreen}
+                    component={homeScreenStack}
                     listeners={(event) => resetHomeStackOnTabPress(event)}
                     options={{
                         tabBarIcon: ({ color }) => (

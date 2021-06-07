@@ -4,10 +4,8 @@ import RootNavigator from "@navigation/rootnavigation";
 import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
 import ButtonWithText from "@components/buttons/BurttonWithText";
-import CartScreen from "@features/cart/Index";
 import ModalComponent from "@components/popup/Index";
 import { label } from "@features/home/data";
-import CircleNumber from "components/circleNumber";
 import ProductDetailControllerInstance from "./controllers/productdetail.controller";
 import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
@@ -17,29 +15,25 @@ import RemoveCartControllerInstance from "features/commonApiCall/removeCart/cont
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeModal from 'react-native-modal';
 import HomeScreen from "features/home/Index";
+import CartIcon from "components/carticon/Index";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
     route: any
 };
-const bannerSection = (_data: any, length: number) => {
+const bannerSection = (_data: any) => {
     const BANNERIMAGEURL = _data && _data.length > 0 ? _data[0].image : "";
     const CARTIMAGEURL = require('../../../assets/images/cartwhite.png');
     return (
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <Image source={{ uri: BANNERIMAGEURL, cache: "force-cache" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
+                    <ImageBackground source={{ uri: BANNERIMAGEURL, cache: "force-cache" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
                 <View style={{ position: 'relative' }}>
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => CartScreen.navigate()}>
-                        <Image source={CARTIMAGEURL} style={styles.cartImage} />
-                        <View style={styles.amountCart}>
-                            <CircleNumber amountCart={length} />
-                        </View>
-                    </TouchableOpacity>
+                    <CartIcon onDetailPage={true} whiteCartIcon={CARTIMAGEURL} />
                 </View>
             </View>
         </View>
@@ -169,7 +163,8 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
                                     ingradient && ingradient.length > 0 ? (
                                         ingradient && ingradient.map((item: any, index: any) => (
                                             <>
-                                                <View key={index} style={[styles.nutritionContent, { flex: 0, width: 100, marginBottom: 10 }]}>
+                                                <View key={index} style={[styles.nutritionContent, { flex: 0, width: 100,minHeight: 120,
+                                                     marginBottom: 10,overflow:"visible" }]}>
                                                     {
                                                         item.quantity == "" && item.quantity == 0 ? (
                                                             <View />
@@ -317,7 +312,6 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     let addCart: { popup?: any; };
     const modalizeRef = React.useRef<ReactNativeModal>(null);
     const [isShown, setIsShown] = useState<boolean>(false);
-    const [cartItems, setCartItems] = useState<number>(0)
     const {
         route: { params: { id, meal } },
     } = props;
@@ -326,16 +320,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
         ProductDetailControllerInstance.getProductDetails(id)
     }, []);
     const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
-    const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
     addCart = useSelector((state: any) => state.AddToCartInState.data);
-    useEffect(() => {
-        addCart={};
-        if (cartData?.data && cartData?.data?.length > 0) {
-            setCartItems(cartData?.data[0]?.cart_item?.length);
-        } else {
-            setCartItems(0)
-        }
-    }, [cartData])
     useEffect(() => {
         if (addCart?.popup) {
             renderModal(modalizeRef, addCart);
@@ -358,7 +343,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                 <ScrollView bounces={false}
                     nestedScrollEnabled={false}>
 
-                    {bannerSection(productDetail?.image, cartItems)}
+                    {bannerSection(productDetail?.image)}
                     {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.amount, subTitle: productDetail?.sub_title })}
                     {/* {
                         isShown && scrollHeadingSection()

@@ -8,13 +8,16 @@ import moment from 'moment';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { useState } from 'react';
-import { Text, View, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Image, FlatList, Alert } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import PayNowControllerInstance from './controllers/paynow.controller';
 import styles from './styles';
-
+import RazorpayCheckout from 'react-native-razorpay';
+import { RAZORPAYAPIKEY } from 'libs/api/apiEndpoints';
+import StorageService from 'libs/storage/Storage';
+import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 interface BeforePayNowProps { route: any }
 interface ElementData {
     imageUrlLeft: any;
@@ -75,7 +78,7 @@ function dates() {
 
     return [year, month, day].join('-');
 }
-const renderDateOfDeliverSection = (dateOfDelivery:any) => {
+const renderDateOfDeliverSection = (dateOfDelivery: any) => {
     const deliverDate = moment(dateOfDelivery).format("DD|MM|YYYY");
     return (
         <View style={styles.descriptionSection}>
@@ -99,6 +102,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     const [stateId, setStateId] = useState("");
     const [fireDepartmentId, setFireDepartmentId] = useState("");
     const [fireStationId, setFireStationId] = useState("");
+    const [userData, setUserData] = React.useState<any>({});
     React.useEffect(() => {
         StateControllerInstance.getState();
     }, [])
@@ -113,34 +117,45 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         setFireDepartmentId(data.id);
         FireStationControllerInstance.getFireStation(data.id)
     }
+
+    React.useEffect(() => {
+        let cancelled = false;
+        StorageService.getItem('user').then((values: any) => {
+            if (!cancelled) {
+                const currentUser = JSON.parse(values);
+                setUserData(currentUser);
+            }
+        }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
+        return () => { cancelled = true; }
+    }, [userData])
     const checkoutData = useSelector((state: RootStore) => state.CheckoutInState.data?.data);
     const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
     const fireStationData = useSelector((state: RootStore) => state.FireStationInState.data?.data);
-    const handlePayNow = () => {
+    const handlePayNowWithOutPay = (paymentMethod?: string, paymentId?: string) => {
         const date = dates();
         if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
-            PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date)
+            PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, paymentMethod, paymentId)
         } else {
-            if (stateId == '' && fireDepartmentId == '' && fireStationId == ''){
+            if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
                 Snackbar.show({
                     text: 'State id or Fire Deparment id or Fire station id required ',
                     textColor: "white",
                     duration: 3000
                 })
-            } else if (stateId == ''){
+            } else if (stateId == '') {
                 Snackbar.show({
                     text: 'State id required ',
                     textColor: "white",
                     duration: 3000
                 })
-            }else if (fireDepartmentId == ''){
+            } else if (fireDepartmentId == '') {
                 Snackbar.show({
                     text: 'Fire department id required ',
                     textColor: "white",
                     duration: 3000
                 })
-            }else if (fireStationId == ''){
+            } else if (fireStationId == '') {
                 Snackbar.show({
                     text: 'Fire station id required ',
                     textColor: "white",
@@ -149,6 +164,64 @@ const BeforePayNow = (props: BeforePayNowProps) => {
             }
         }
 
+    }
+    const handleRazorPay = () => {
+        if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
+            var options = {
+                description: 'FOTS PAY',
+                image: require("../../../assets/images/app.png"),
+                currency: 'INR',
+                key: RAZORPAYAPIKEY.APIKEY,
+                amount: checkoutData?.total_amount + '00',
+                name: `${userData.first_name} ${userData.last_name}`,
+                prefill: {
+                    email: userData?.email,
+                    contact: userData?.mobile,
+                    name: `${userData.first_name} ${userData.last_name}`
+                },
+                theme: { color: '#d80000' }
+            }
+            RazorpayCheckout.open(options).then((data: { org_name: string | undefined; razorpay_payment_id: string | undefined; }) => {
+                handlePayNowWithOutPay(data?.org_name, data?.razorpay_payment_id)
+            }).catch((error: { code: any; description: any; }) => {
+                // handle failure
+                console.log(`Error: ${error.code} | ${error.description}`);
+            });
+        }
+        else {
+            if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
+                Snackbar.show({
+                    text: 'State id or Fire Deparment id or Fire station id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            } else if (stateId == '') {
+                Snackbar.show({
+                    text: 'State id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            } else if (fireDepartmentId == '') {
+                Snackbar.show({
+                    text: 'Fire department id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            } else if (fireStationId == '') {
+                Snackbar.show({
+                    text: 'Fire station id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            }
+        }
+    }
+    const orderNow = () => {
+        if (checkoutData?.total_amount > 0) {
+            handleRazorPay()
+        } else {
+            handlePayNowWithOutPay()
+        }
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -165,7 +238,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 </View>
                 {renderDateOfDeliverSection(checkoutData?.delivery_date)}
             </ScrollView>
-            <CheckOutBox label="Order Now" totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => handlePayNow()} />
+            <CheckOutBox label="Order Now" totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => orderNow()} />
         </SafeAreaView>
     );
 };

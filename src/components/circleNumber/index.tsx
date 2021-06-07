@@ -1,5 +1,5 @@
 
-import {StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
 
@@ -15,12 +15,22 @@ const style = StyleSheet.create({
     },
 });
 
-const CircleNumber = ({ amountCart,cart }: { amountCart: number,cart?:boolean }) => {
-  
+const CircleNumber = ({ amountCart, cart, onDetailPage=false }: { amountCart: number, cart?: boolean, onDetailPage?: boolean }) => {
     return (
-        <View style={[style.circleNumber,{backgroundColor:cart?"#D80000":"#484848"}]}>
-            <Typography style={{ fontSize: 9, color: 'white',fontFamily:FontFamilyFoods.POPPINS,lineHeight:18}}>{amountCart}</Typography>
-        </View>
+        <>
+            {
+                onDetailPage ? (
+                    <View style={[style.circleNumber, { backgroundColor:"#484848" }]}>
+                        <Typography style={{ fontSize: 9, color: 'white', fontFamily: FontFamilyFoods.POPPINS, lineHeight: 18 }}>{amountCart}</Typography>
+                    </View>
+                ) : (
+                    <View style={[style.circleNumber, { backgroundColor:"#d80000"  }]}>
+                        <Typography style={{ fontSize: 9, color: 'white', fontFamily: FontFamilyFoods.POPPINS, lineHeight: 18 }}>{amountCart}</Typography>
+                    </View>
+                )
+            }
+
+        </>
     );
 };
 

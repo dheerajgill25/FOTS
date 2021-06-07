@@ -17,11 +17,14 @@ import RootStore from 'reduxModule/store/Index';
 import ProductScreen from 'features/products/Index';
 import EditProfile from 'features/editProfile/Index';
 import ChangePassword from 'features/editProfile/changePassword';
+import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
     const getToken = useSelector((state: RootStore) => state.TokenInState.data);
     useEffect(() => {
+        if(getToken !== '' && getToken !== null && getToken !== undefined && getToken !== {})
+        CartCountControllerInstance.getCartCount();
     }, [getToken])
 
     return (

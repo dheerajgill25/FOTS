@@ -47,7 +47,7 @@ const renderCartItems = (data: any,meal:boolean) => {
                             <View style={styles.ratingComp}>
                                 {ratingComponent()}
                             </View>
-                            <Typography style={[styles.shoppingCartSubText]}>{"With roasted baby"}</Typography>
+                            <Typography style={[styles.shoppingCartSubText]}>{data?.sub_title}</Typography>
 
                         </View>
                         <View style={{ flex: 1, maxWidth: 60 }}>

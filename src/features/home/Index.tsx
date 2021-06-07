@@ -18,31 +18,36 @@ import MealPlan from "features/mealplan/Index";
 import OrderScreen from "features/orderScreen/Index";
 import ProductListControllerInstance from "features/products/controllers/product.controller";
 import StorageService from "libs/storage/Storage";
+import SearchScreen from "features/searchScreen/Index";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     return (
-        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index}   />
+        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index} />
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
     const HOMEBANNERIMAGEURL = require('../../../assets/images/homeBanner.png');
-    const [text,setText] = useState<string>('');
+    const [text, setText] = useState<string>('');
     useEffect(() => {
         CategoryControllerInstance.getCategory();
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
-    const handleCategory = (item: any, index: number) => {  
+    const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
-                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() =>{
+                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() => {
                     item.status == 'free' ? OrderScreen.navigate(item.id) : item.status == "meal" ?
-                    MealPlan.navigate(item.id) :null ;StorageService.setItem("cId",item.id)}} />
+                        MealPlan.navigate(item.id) : null; StorageService.setItem("cId", item.id)
+                }} />
             </View>
         )
     }
-    const handleTextInput = (text: string)=>{
-       setText(text);
-       ProductListControllerInstance.getProductList("","",text)
+    const handleTextInput = (text: string) => {
+        setText(text);
+        if (text && text.length >= 3) {
+            SearchScreen.navigate(text);
+            ProductListControllerInstance.getProductList("", "", text.trim())
+        }
     }
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>

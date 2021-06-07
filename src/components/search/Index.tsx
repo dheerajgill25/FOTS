@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
         paddingLeft: 40,
         fontFamily: FontFamilyFoods.POPPINS,
         color: 'black',
-        paddingRight: 10
+        paddingRight: 10,
+        fontSize:14,lineHeight:20
     },
     searchIcon: {
         position: 'absolute',

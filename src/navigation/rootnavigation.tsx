@@ -14,7 +14,7 @@ class RootNavigatorClass {
     }
     navigation(routeName: string, screenName: string, params?: {}) {
         if (this.isReadyRef && navigationRef.current) {
-            navigationRef.current?.navigate(routeName, { screen: screenName, params:{params} });
+            navigationRef.current?.navigate(routeName, { screen: screenName, params: { params } });
         }
     }
     replace(navigation: StackNavigationProp<any>, screen: string, params?: Record<string, any>) {

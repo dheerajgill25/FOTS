@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     previewImage: {
         height: 400,
-        width: 400,
+        width: width,
     },
     cartIconSection: {
         position: "absolute",

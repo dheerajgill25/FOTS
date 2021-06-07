@@ -24,3 +24,7 @@ export const URL={
     UPLOADIMAGE:"/profile-image",
     CARTCOUNT:"/cart-count"
 }
+export const RAZORPAYAPIKEY={
+    APIKEY:"rzp_test_hYEx31l1dXV60A",
+    APIKEYS:"FUPSiNJTi4lfCA5P1LWKhVCy"
+}

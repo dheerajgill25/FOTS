@@ -7,11 +7,7 @@ import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
 import Typography from "components/typography/Typography";
 import ProductDetailScreen from "features/productdetail/Index";
 import BannerComponent from "components/banner/Index";
-import MealPlan from "features/mealplan/Index";
-import OrderScreenSecond from "features/orderScreentwo/Index";
 import { MyStatusBar } from "components/statusbar/Index";
-import ModalComponent from "components/popup/Index";
-import { label } from "features/home/data";
 import ProductListControllerInstance from "features/products/controllers/product.controller";
 import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
@@ -63,7 +59,7 @@ const renderHowItsWorks = (item: any) => {
 const OrderScreen = (props: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     const {
-        route: { params:{params:{id}}, },
+        route: { params:{params:{params:{id}}}, },
     } = props;
     useEffect(() => {
         ProductListControllerInstance.getProductList(id,)
@@ -103,7 +99,6 @@ OrderScreen.navigationOptions = {
     headerShown: false,
 };
 OrderScreen.navigate = (id: any) => {
-    console.log(id)
     RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, {id:id});
 };
 export default OrderScreen;

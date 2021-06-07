@@ -1,3 +1,4 @@
+import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import ThankYouScreen from "features/thankyou/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
@@ -22,6 +23,7 @@ class PayNowController {
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity("Your order has been placed", Toast.LONG, Toast.BOTTOM);
+                CartCountControllerInstance.getCartCount();
                 ThankYouScreen.navigate()
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));

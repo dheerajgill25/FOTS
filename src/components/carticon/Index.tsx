@@ -1,36 +1,41 @@
 import CircleNumber from 'components/circleNumber';
 import React, { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from '@reduxModule/store/Index';
-import CartListControllerInstance from 'features/cart/httpCall/controllers/cartList.controller';
-
-const CartIcon = ({ }) => {
+const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
     const IMAGEURL = require('../../../assets/images/cart.png');
-    const [cartItems,setCartItems] = useState<number>(0)
-    useEffect(()=>{
-        CartListControllerInstance.getCartProducts();
-    },[])
-    const cartData = useSelector((state:RootStore)=>state.CartListInState.data?.data);
-    useEffect(()=>{
-        if(cartData?.data&&cartData?.data?.length>0){
-            setCartItems(cartData?.data[0]?.cart_item?.length)
-        }else{
-            setCartItems(0)
+    const [cartItems, setCartItems] = useState<number>(0)
+    const countNumber = useSelector((state: RootStore) => state.CartCountInState.data?.data)
+    useEffect(() => {
+        if (countNumber && countNumber.length > 0) {
+            countNumber.map((obj: { carts_count: number; }) => {
+                setCartItems(obj.carts_count)
+            })
         }
-    },[cartData])
+    }, [countNumber, cartItems])
     return (
         <>
-            <View style={{ position: "relative",right:10,top:10 }}>
-                <Image source={IMAGEURL} style={{ height: 20, width: 20 }} />
+            <View style={[styles.cartFix, onDetailPage && styles.cartIconOnDetail]}>
+                <Image source={onDetailPage ? whiteCartIcon : IMAGEURL} style={{ height: 20, width: 20 }} />
                 <View style={{
                     bottom: 10,
                     left: 10,
                 }}>
-                    <CircleNumber amountCart={cartItems} cart />
+                    <CircleNumber amountCart={cartItems} onDetailPage={onDetailPage}  />
                 </View>
             </View>
         </>
     )
 }
 export default CartIcon;
+const styles = StyleSheet.create({
+    cartFix: {
+        position: "relative",
+        right: 10,
+        top: 10
+    },
+    cartIconOnDetail: {
+        right: 0
+    }
+})

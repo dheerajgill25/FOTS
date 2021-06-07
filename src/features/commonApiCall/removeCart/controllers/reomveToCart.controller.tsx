@@ -1,4 +1,5 @@
 import CartListControllerInstance from "features/cart/httpCall/controllers/cartList.controller";
+import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
 import HomeScreen from "features/home/Index";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
@@ -20,8 +21,8 @@ class RemoveCartController {
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                CartCountControllerInstance.getCartCount();
                 HomeScreen.navigate();
-                CartListControllerInstance.getCartProducts()
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);

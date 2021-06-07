@@ -14,12 +14,13 @@ declare const global: { HermesInternal: null | {} };
 const App = () => {
   let previousRouteName: string | undefined;
   enableScreens(true)
-  TokenControllerInstance.setInitialTokens();
   useEffect(() => {
+    TokenControllerInstance.setInitialTokens();
     Permission.requestMultiple([
       PERMISSIONS_TYPE.photo,
       PERMISSIONS_TYPE.camera,
     ]);
+   
     return () => {
       RootNavigator.isReadyRef = false;
     };

@@ -85,7 +85,6 @@ const CartScreen = ({ }: CartProps) => {
         CartListControllerInstance.getCartProducts();
     }, []);
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
-    const {data} = cartData;
     const handleCheckout = ()=>{
         CheckOutControllerInstance.Checkout();
     }
@@ -93,7 +92,7 @@ const CartScreen = ({ }: CartProps) => {
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
-                <FlatList data={data&&data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
+                <FlatList data={cartData?.data&&cartData?.data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
                 {cartData?.total_mrp>0?coupenCodeSection():<View/>}
             </ScrollView>
             {
