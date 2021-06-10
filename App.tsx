@@ -19,6 +19,7 @@ import DeviceInfo from 'react-native-device-info';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 declare const global: { HermesInternal: null | {} };
 const App = () => {
   let previousRouteName: string | undefined;
@@ -77,6 +78,9 @@ const App = () => {
       PERMISSIONS_TYPE.photo,
       PERMISSIONS_TYPE.camera,
     ]);
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 3000);
     return () => {
       RootNavigator.isReadyRef = false;
     };
