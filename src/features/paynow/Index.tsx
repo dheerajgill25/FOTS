@@ -25,46 +25,6 @@ interface ElementData {
     rightIcon: any;
     leftIcon: boolean;
 }
-const data: ElementData[] = [
-    {
-        imageUrlLeft: require('../../../assets/images/location.png'),
-        title: 'Washington DC',
-        rightIcon: require('../../../assets/images/arrowdown.png'),
-        leftIcon: true
-    },
-    {
-        imageUrlLeft: require('../../../assets/images/firehydrant.png'),
-        title: 'DC FEMS',
-        rightIcon: require('../../../assets/images/arrowdown.png'),
-        leftIcon: true
-    },
-    {
-        imageUrlLeft: require('../../../assets/images/firehydrant.png'),
-        title: 'Engine 12',
-        rightIcon: require('../../../assets/images/arrowdown.png'),
-        leftIcon: false
-    },
-]
-const renderItems = (items: ElementData) => {
-    return (
-        <View style={styles.deliveryContentbox}>
-            <View style={styles.deliveryContentWrap}>
-                <View style={styles.deliveryContentInner}>
-                    <View style={[styles.deliveryContentContent, { maxWidth: 50 }]}>
-                        <Image source={items.leftIcon ? items.imageUrlLeft : ''} style={styles.iconLeft} />
-                    </View>
-                    <View style={styles.deliveryContentContent}>
-                        <Typography style={styles.title}>{items.title}</Typography>
-                    </View>
-                    <View style={[styles.deliveryContentContent, { maxWidth: 50 }]}>
-                        <Image source={items.rightIcon} style={styles.arrowdownIcon} />
-                    </View>
-                </View>
-            </View>
-        </View>
-    )
-}
-var currentDate: Date = new Date()
 function dates() {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),
@@ -226,7 +186,6 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
-                {/* <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={data} renderItem={({ item }) => renderItems(item)} keyExtractor={(item, index) => index.toString()} /> */}
                 <View>
                     <DropdownComponentCheckOut title="State" imageLeftUrl={require('../../../assets/images/location.png')} data={stateData} onPress={(data) => onChangeStateListener(data)} />
                 </View>
@@ -238,7 +197,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 </View>
                 {renderDateOfDeliverSection(checkoutData?.delivery_date)}
             </ScrollView>
-            <CheckOutBox label="Order Now" totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.total_amount == 0 ? "Free" : "Paid"} tax="$0" onPress={() => orderNow()} />
+            <CheckOutBox label="Order Now" couponDiscount={`$${checkoutData?.coupon_discount}`} totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.delivery_fee == 0 ? "Free" : `$${checkoutData?.delivery_fee}`} tax={`$${checkoutData?.tax_amount}`} onPress={() => orderNow()} />
         </SafeAreaView>
     );
 };

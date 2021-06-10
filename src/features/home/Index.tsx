@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, ScrollView, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import SearchComponent from "@components/search/Index";
 import RootNavigator from "navigation/rootnavigation";
@@ -7,7 +7,7 @@ import styles from "./styles";
 import FoodItemsComponent from "components/foodItems/Index";
 import Typography from "components/typography/Typography";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
-import { foodItemData, groceryItemData,  } from "./data";
+import { foodItemData, groceryItemData, } from "./data";
 import TestimonialComponent from "components/testimonial/Index";
 import BannerComponent from "components/banner/Index";
 import { MyStatusBar } from "components/statusbar/Index";
@@ -22,8 +22,9 @@ import SearchScreen from "features/searchScreen/Index";
 import TestimonialsControllerInstance from "./controllers/testimonials.controller";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
+    const { index } = item;
     return (
-        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} key={item.index} />
+        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} index={index} />
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
@@ -34,7 +35,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         TestimonialsControllerInstance.getTestimonials()
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
-    const testimonialData = useSelector((state:RootStore)=>state.TestimonialsInState.data?.data);
+    const testimonialData = useSelector((state: RootStore) => state.TestimonialsInState.data?.data);
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
@@ -76,8 +77,6 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                         <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
                         <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
-
-
                     <View>
                         <View>
                             <Typography style={styles.foodItemPopluar} >Testimonials</Typography>

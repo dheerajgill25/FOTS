@@ -5,6 +5,7 @@ import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
+import HomeStack from "navigation/homestack";
 import Toast from 'react-native-simple-toast';
 let success: boolean = false;
 class RemoveCartController {
@@ -22,7 +23,7 @@ class RemoveCartController {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
                 CartCountControllerInstance.getCartCount();
-                HomeScreen.navigate();
+                HomeStack.navigate();
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);

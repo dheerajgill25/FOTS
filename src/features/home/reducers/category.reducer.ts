@@ -21,7 +21,6 @@ export const categoriesReducer: Reducer<CategoryInState, ActionType<CategoryActi
             return { ...state, loading: true,error:undefined };
         }
         case CategoryAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

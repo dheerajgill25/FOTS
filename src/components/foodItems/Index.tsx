@@ -4,7 +4,7 @@ import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "reac
 interface FoodItemsProps {
     text: string;
     imageUrl: ImageSourcePropType;
-    key?:any
+    index?:number
 }
 const ratingComponent = () => {
     return (
@@ -25,9 +25,9 @@ const ratingComponent = () => {
         </View>
     )
 }
-const FoodItemsComponent = ({ imageUrl, text,key }: FoodItemsProps) => {
+const FoodItemsComponent = ({ imageUrl, text,index }: FoodItemsProps) => {
     return (
-        <View key={key} style={styles.foodItemSection}>
+        <View key={index} style={styles.foodItemSection}>
             <View style={styles.foodItemBox}>
                 <View style={styles.foodItemContent}>
                     <View style={styles.foodItemImageSection}>

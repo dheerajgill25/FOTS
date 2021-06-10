@@ -1,6 +1,6 @@
 import { FontFamilyFoods } from "components/typography/Typography";
 import { Dimensions, StyleSheet } from "react-native";
-const { height, width } = Dimensions.get('screen');
+const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     bannerPreview: {
-        height: 400,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -18,11 +17,10 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     previewImageSection: {
-        maxWidth: "100%",
-        maxHeight: 400,
+        maxHeight: height * 0.46,
     },
     previewImage: {
-        height: 400,
+        height:'100%',
         width: width,
     },
     cartIconSection: {
@@ -62,7 +60,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
         fontFamily: FontFamilyFoods.POPPINS,
         color: '#404040',
-        textTransform:"capitalize"
+        textTransform: "capitalize"
     },
     productSubText: {
         fontSize: 12,
@@ -128,6 +126,15 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center"
     },
+    inYourBox:{
+        borderWidth: 1,
+        borderColor: '#484848',
+        marginLeft: 10,
+        padding: 10,
+        borderRadius: 3,
+        alignItems:"center",
+        justifyContent:"center"
+    },
     nutritionQuantity: {
         textAlign: 'center',
         color: '#D80000',
@@ -158,7 +165,7 @@ const styles = StyleSheet.create({
     },
     cookingSectioContent: {
         flex: 1,
-        paddingLeft:14
+        paddingLeft: 14
     },
     cookingSectionTime: {
         backgroundColor: '#DFDFDF',
@@ -220,7 +227,7 @@ const styles = StyleSheet.create({
     },
     headerImage: {
         marginLeft: 5,
-        marginTop:10
+        marginTop: 10
     },
     backicon: {},
     amountCart: {
@@ -264,9 +271,9 @@ const styles = StyleSheet.create({
     modalButton: {
         marginHorizontal: 40,
         marginTop: 10,
-        display:"flex",
-        flexDirection:"row",
-        alignItems:"center",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
     },
     buttonText: {
         fontFamily: FontFamilyFoods.POPPINSSEMIBOLD,

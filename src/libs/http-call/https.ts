@@ -1,7 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import StorageService from "libs/storage/Storage";
 import * as AxiosLogger from 'axios-logger';
-import Register from "features/registerscreen";
 import { setGlobalConfig } from "axios-logger";
 import { APIENDPOINTS } from "libs/api/apiEndpoints";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -36,14 +34,14 @@ class HttpCallClass {
                 const token = await AsyncStorage.getItem("token");
                 return await instance.post<T>(url, params, {
                     headers: {
-                        Authorization: "Bearer " + token,
+                        Authorization: "Bearer " + token||"",
                     },
                 });
             }
             return await instance.post<T>(url, params, {
             });
         } catch (error) {
-            console.log(' error --', error);
+            console.debug(' error --', error);
             return this.errorHandler(error, url, HttpMethod.POST, params, useAccessToken);
         }
     }

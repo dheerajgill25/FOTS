@@ -21,7 +21,6 @@ export const productDetailReducer: Reducer<ProductDetailInState, ActionType<Prod
             return { ...state, loading: true, error: undefined };
         }
         case ProductsDetailAction.EVENT_SUCCESS(): {
-            console.log("state.data", state.data)
             return { ...state, loading: false, data: { ...state.data, ...payload }, error: undefined };
         }
 

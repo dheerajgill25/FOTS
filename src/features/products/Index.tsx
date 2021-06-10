@@ -40,7 +40,7 @@ const renderCartItems = (data: any,meal:boolean) => {
                 <View style={styles.shoppingCartBox}>
                     <TouchableOpacity activeOpacity={0.6} onPress={() => ProductDetailScreen.navigate(data.product_id,meal)} style={styles.shoppingCartWrap}>
                         <View style={styles.shoppingCartLeft}>
-                            <Image style={styles.bannerImage} source={{ uri: BANNERIMAGEURL }} resizeMode="center" />
+                            <Image style={styles.bannerImage} source={{ uri: BANNERIMAGEURL,cache: 'only-if-cached'  }} resizeMode="center" />
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{data.name}</Typography>

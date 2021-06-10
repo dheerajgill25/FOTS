@@ -3,7 +3,7 @@ import { StoreState } from 'libs/redux/reducers';
 import { Reducer } from 'react';
 import { CartCountAction } from '../actions/cartCount.action';
 
-export type CartCountInState = StoreState<{ data: any }>;
+export type CartCountInState = StoreState<any>;
 
 const initialState = {
     loading: false,
@@ -21,8 +21,8 @@ export const cartCountReducer: Reducer<CartCountInState, ActionType<CartCountAct
             return { ...state, loading: true, error: undefined };
         }
         case CartCountAction.EVENT_SUCCESS(): {
-            console.log("state.data", state.data)
-            return { ...state, loading: false, data: { ...state.data, ...payload }, error: undefined };
+            const { data = [] } = payload;
+            return { ...state, loading: false, data: data, error: undefined };
         }
 
         case CartCountAction.EVENT_ERROR(): {

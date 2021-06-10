@@ -21,7 +21,6 @@ export const editProfileReducer: Reducer<EditProfileInState, ActionType<EditProf
             return { ...state, loading: true,error:undefined };
         }
         case EditProfileAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

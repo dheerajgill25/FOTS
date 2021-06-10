@@ -21,7 +21,6 @@ export const fireStationReducer: Reducer<FireStationInState, ActionType<FireStat
             return { ...state, loading: true,error:undefined };
         }
         case FireStationAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

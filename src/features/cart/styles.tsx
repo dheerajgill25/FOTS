@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
         height: 115,
         width: 115,
         borderRadius:5,
+        overflow:"hidden"
     },
     cartBox: {
         marginTop: 10,

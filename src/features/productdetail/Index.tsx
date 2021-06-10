@@ -24,11 +24,12 @@ interface ProductDetailScreenProps {
 const bannerSection = (_data: any) => {
     const BANNERIMAGEURL = _data && _data.length > 0 ? _data[0].image : "";
     const CARTIMAGEURL = require('../../../assets/images/cartwhite.png');
+    console.log("BANNERIMAGEURL", BANNERIMAGEURL)
     return (
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <ImageBackground source={{ uri: BANNERIMAGEURL, cache: "force-cache" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
+                    <ImageBackground source={{ uri: BANNERIMAGEURL, cache: "only-if-cached" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
@@ -152,9 +153,7 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
                     {
                         accrodien == 'box' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
                             <View style={{
-                                display: 'flex',
                                 flexDirection: 'row',
-                                alignItems: 'center',
                                 marginLeft: -10,
                                 marginTop: 10,
                                 flexWrap: 'wrap'
@@ -163,8 +162,10 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
                                     ingradient && ingradient.length > 0 ? (
                                         ingradient && ingradient.map((item: any, index: any) => (
                                             <>
-                                                <View key={index} style={[styles.nutritionContent, { flex: 0, width: 100,minHeight: 120,
-                                                     marginBottom: 10,overflow:"visible" }]}>
+                                                <View key={index} style={[styles.inYourBox, {
+                                                    width: 100,
+                                                    marginBottom: 10,
+                                                }]}>
                                                     {
                                                         item.quantity == "" && item.quantity == 0 ? (
                                                             <View />
@@ -250,7 +251,7 @@ const handleCartAgainAfterRemove = async (cart: {}) => {
     setTimeout(() => {
         if (successfully) {
             handleAddToCartAfterRemove(cart);
-            cart={}
+            cart = {}
         }
     }, 1000);
 }
@@ -306,7 +307,7 @@ const handleAddToCartAfterRemove = async (cart: {}) => {
         handleAddToCart(cartRequest)
     });
     AsyncStorage.removeItem("cartRequest");
-    cart={}
+    cart = {}
 }
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     let addCart: { popup?: any; };
@@ -316,7 +317,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
         route: { params: { id, meal } },
     } = props;
     useEffect(() => {
-        addCart ={popup:false}
+        addCart = { popup: false }
         ProductDetailControllerInstance.getProductDetails(id)
     }, []);
     const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
@@ -326,7 +327,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
             renderModal(modalizeRef, addCart);
         }
         cartAgainAdd = false;
-        addCart={}
+        addCart = {}
     }, [addCart])
     return (
         <>

@@ -24,14 +24,14 @@ const App = () => {
   let previousRouteName: string | undefined;
   enableScreens(true)
 
-  const allowInDevMode = true;
+  const allowInDevMode = false;
 
   const setCrashanalyticsAttributes = async () => {
-    const userData = await AsyncStorage.getItem('user');
-    console.log("userData", userData)
-    if (userData) {
-      // CrashReporterInstance.setUserId("userId", userData.id),
-      //   CrashReporterInstance.setAttribute('email', userData.emailAddress);
+    const userData: any = await AsyncStorage.getItem('user');
+    const user = JSON.parse(userData);
+    if (user) {
+      CrashReporterInstance.setUserId(user?.id?.toString()),
+      CrashReporterInstance.setAttribute('email', user?.emailAddress?.toString());
     }
     CrashReporterInstance.setAttribute('deviceType', DeviceInfo.getDeviceType());
     DeviceInfo.getBaseOs().then((baseOs: string) => {
@@ -77,11 +77,11 @@ const App = () => {
       PERMISSIONS_TYPE.photo,
       PERMISSIONS_TYPE.camera,
     ]);
-
     return () => {
       RootNavigator.isReadyRef = false;
     };
   }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

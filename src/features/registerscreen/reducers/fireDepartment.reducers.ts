@@ -16,13 +16,11 @@ export const fireDepartmentReducer: Reducer<FireDepartmentInState, ActionType<Fi
     action
 ) => {
     const { payload, type, error } = action;
-    console.log('type', type);
     switch (type) {
         case FireDepartmentAction.EVENT_REQUEST(): {
             return { ...state, loading: true,error:undefined };
         }
         case FireDepartmentAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

@@ -5,12 +5,13 @@ import { View, Text, StyleSheet } from 'react-native';
 interface CheckoutProps {
 	total: string;
 	deliveryFee: string;
-	tax: string;
+	tax: string | number;
 	onPress: () => void,
 	label: string;
-	totalMrp?: any
+	totalMrp?: any;
+	couponDiscount?: number | string
 }
-export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp }: CheckoutProps) => {
+export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp, couponDiscount }: CheckoutProps) => {
 	return (
 		<View style={styles.checkoutSection}>
 			<View style={styles.checkoutBox}>
@@ -20,9 +21,33 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp 
 							<Typography style={styles.checkoutTitle}>Subtotal</Typography>
 						</View>
 						<View style={styles.checkoutPriceSection}>
-							<Typography style={styles.checkoutPrice}>{total}</Typography>
+							<Typography style={styles.checkoutPrice}>{totalMrp}</Typography>
 						</View>
 					</View>
+					{
+						couponDiscount !== 0 && (
+							<View style={styles.checkoutSectionFlex}>
+								<View style={styles.checkoutTitleSection}>
+									<Typography style={styles.checkoutTitle}>Coupon Discount</Typography>
+								</View>
+								<View style={styles.checkoutPriceSection}>
+									<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{couponDiscount}</Typography>
+								</View>
+							</View>
+						)
+					}
+
+					{
+						tax !== 0 && (<View style={styles.checkoutSectionFlex}>
+							<View style={styles.checkoutTitleSection}>
+								<Typography style={styles.checkoutTitle}>TAX</Typography>
+							</View>
+							<View style={styles.checkoutPriceSection}>
+								<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{tax}</Typography>
+							</View>
+						</View>
+						)
+					}
 					<View style={styles.checkoutSectionFlex}>
 						<View style={styles.checkoutTitleSection}>
 							<Typography style={styles.checkoutTitle}>Delivery Fee</Typography>
@@ -31,17 +56,7 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp 
 							<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{deliveryFee}</Typography>
 						</View>
 					</View>
-					{
-						totalMrp == 0 && (<View style={styles.checkoutSectionFlex}>
-							<View style={styles.checkoutTitleSection}>
-								<Typography style={styles.checkoutTitle}>TAX (6.17%)</Typography>
-							</View>
-							<View style={styles.checkoutPriceSection}>
-								<Typography style={styles.checkoutPrice}>{tax}</Typography>
-							</View>
-						</View>
-						)
-					}
+
 
 				</View>
 				<View style={{ justifyContent: 'center', display: "flex" }}>

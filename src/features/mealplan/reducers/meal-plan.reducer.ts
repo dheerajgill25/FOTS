@@ -21,7 +21,6 @@ export const mealPlanReducer: Reducer<MealPlanInState, ActionType<MealPlanAction
             return { ...state, loading: true, error: undefined };
         }
         case MealPlanAction.EVENT_SUCCESS(): {
-            console.log("state.data", state.data)
             return { ...state, loading: false, data: { ...state.data, ...payload }, error: undefined };
         }
 

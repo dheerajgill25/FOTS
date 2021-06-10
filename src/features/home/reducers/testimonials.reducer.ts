@@ -21,7 +21,6 @@ export const testimonialsReducer: Reducer<TestimonialsInState, ActionType<Testim
             return { ...state, loading: true,error:undefined };
         }
         case TestimonialsAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

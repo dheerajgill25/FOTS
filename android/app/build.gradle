@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 import com.android.build.OutputFile
@@ -219,8 +218,6 @@ dependencies {
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
     implementation project(':react-native-razorpay')
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'

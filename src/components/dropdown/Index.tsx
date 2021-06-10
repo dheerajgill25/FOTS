@@ -33,7 +33,7 @@ const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
                                 data && data.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
-                                            <Typography style={styles.values}>{item.name}</Typography>
+                                            <Typography style={styles.values}>{item.name!==''&&item.name}</Typography>
                                         </TouchableOpacity>
                                     </View>
                                 ))

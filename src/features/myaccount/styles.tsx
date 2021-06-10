@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     orderContentWrap: {
         marginHorizontal: 23,
         paddingBottom: 20,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
     orderContentInner: {
         display: 'flex',
@@ -109,17 +109,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        maxWidth:150
+        maxWidth:250,
     },
     orderStatuswrp: {
-        display: 'flex', flexDirection: 'row',
+        display: 'flex',
+         flexDirection: 'row',
         alignItems: 'center',
     },
     orderStatusType: {
         paddingRight: 5,
         fontFamily: FontFamilyFoods.POPPINS,
         fontSize: 13,
-        lineHeight: 20
+        lineHeight: 20,
+        textAlign:"right"
     },
     orderStatus: {
         height: 20,
@@ -129,7 +131,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        backgroundColor: '#77D32F'
+        backgroundColor: '#77D32F',
+        alignSelf:"flex-end"
     },
     arrowIcon: {
         height: 10,

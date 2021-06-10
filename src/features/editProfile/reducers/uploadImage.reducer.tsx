@@ -21,7 +21,6 @@ export const uploadImageReducer: Reducer<UploadImageInState, ActionType<UploadIm
             return { ...state, loading: true,error:undefined };
         }
         case UploadImageAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 

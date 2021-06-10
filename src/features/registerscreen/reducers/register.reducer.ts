@@ -21,7 +21,6 @@ export const registerReducer: Reducer<RegisterInState, ActionType<RegisterAction
             return { ...state, loading: true,error:undefined };
         }
         case RegisterAction.EVENT_SUCCESS(): {
-            console.log("state.data",state.data)
             return { ...state, loading: false, data: {...state.data, ...payload},error:undefined };
         }
 
