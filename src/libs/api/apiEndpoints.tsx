@@ -23,9 +23,10 @@ export const URL={
     PROFILE:"/profile",
     UPLOADIMAGE:"/profile-image",
     CARTCOUNT:"/cart-count",
-    TESTIMONIALS:"/testimonials"
+    TESTIMONIALS:"/testimonials",
+    GENERALSETTING:"/general-setting",
 }
-export const RAZORPAYAPIKEY={
-    APIKEY:"rzp_test_hYEx31l1dXV60A",
-    APIKEYS:"FUPSiNJTi4lfCA5P1LWKhVCy"
+export const STRIPEENDPOINTS={
+    APIURL:"https://api.stripe.com/v1",
+    APIKEY:"pk_test_51J1542SEkCalu2LdKMzfSPwnAGZvgBQqgG22UUgzDDHPVCXKvrywuQMjTCOZbhOA0yN6lRkrUqzjWEGuUDPLMfMc00f1kxAzHG",
 }

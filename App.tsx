@@ -19,20 +19,22 @@ import DeviceInfo from 'react-native-device-info';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
+import { StripeProvider ,initStripe } from '@stripe/stripe-react-native';
+import { STRIPEENDPOINTS } from 'libs/api/apiEndpoints';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
   let previousRouteName: string | undefined;
   enableScreens(true)
 
-  const allowInDevMode = false;
-
+  const allowInDevMode = true;
+ 
   const setCrashanalyticsAttributes = async () => {
     const userData: any = await AsyncStorage.getItem('user');
     const user = JSON.parse(userData);
     if (user) {
       CrashReporterInstance.setUserId(user?.id?.toString()),
-      CrashReporterInstance.setAttribute('email', user?.emailAddress?.toString());
+        CrashReporterInstance.setAttribute('email', user?.email?.toString());
     }
     CrashReporterInstance.setAttribute('deviceType', DeviceInfo.getDeviceType());
     DeviceInfo.getBaseOs().then((baseOs: string) => {
@@ -41,6 +43,7 @@ const App = () => {
     CrashReporterInstance.setAttribute('OSVersion', DeviceInfo.getReadableVersion());
     CrashReporterInstance.setAttribute('appBuildNo', DeviceInfo.getBuildNumber());
   }
+
   const alertView = () => {
     Alert.alert(
       'Sorry for that',
@@ -60,7 +63,7 @@ const App = () => {
     await setCrashanalyticsAttributes();
     console.log(" JS Error ", error);
     CrashReporterInstance.recordError(error);
-    alertView();
+    //alertView();
   };
 
   setJSExceptionHandler(exceptionhandler, allowInDevMode);
@@ -78,6 +81,10 @@ const App = () => {
       PERMISSIONS_TYPE.photo,
       PERMISSIONS_TYPE.camera,
     ]);
+    initStripe({
+      publishableKey:STRIPEENDPOINTS.APIKEY,
+      merchantIdentifier: 'merchant.identifier',
+    })
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
@@ -103,12 +110,14 @@ const App = () => {
             );
           }}
         >
-          <NetworkInfo>
-            <RootStackScreen />
-            <AnalyticsWatcher />
-            <NotificationWatcher />
-            <LoadingScreen />
-          </NetworkInfo>
+          <StripeProvider publishableKey={STRIPEENDPOINTS.APIKEY}>
+            <NetworkInfo>
+              <RootStackScreen />
+              <AnalyticsWatcher />
+              <NotificationWatcher />
+              <LoadingScreen />
+            </NetworkInfo>
+          </StripeProvider>
         </NavigationContainer>
       </PersistGate>
     </Provider>

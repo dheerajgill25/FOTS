@@ -18,6 +18,7 @@ import ProductScreen from 'features/products/Index';
 import EditProfile from 'features/editProfile/Index';
 import ChangePassword from 'features/editProfile/changePassword';
 import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
+import GeneralSettingControllerInstance from 'features/commonApiCall/generalSetting/controllers/generalSetting.controller';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -25,6 +26,7 @@ const RootStackScreen = () => {
     useEffect(() => {
         if(getToken !== '' && getToken !== null && getToken !== undefined && getToken !== {})
         CartCountControllerInstance.getCartCount();
+        GeneralSettingControllerInstance.generalSetting();
     }, [getToken])
 
     return (

@@ -14,10 +14,10 @@ import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import PayNowControllerInstance from './controllers/paynow.controller';
 import styles from './styles';
-import RazorpayCheckout from 'react-native-razorpay';
-import { RAZORPAYAPIKEY } from 'libs/api/apiEndpoints';
 import StorageService from 'libs/storage/Storage';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
+import { PaymentSheet, useStripe } from '@stripe/stripe-react-native';
+import { STRIPEENDPOINTS } from 'libs/api/apiEndpoints';
 interface BeforePayNowProps { route: any }
 interface ElementData {
     imageUrlLeft: any;
@@ -63,6 +63,13 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     const [fireDepartmentId, setFireDepartmentId] = useState("");
     const [fireStationId, setFireStationId] = useState("");
     const [userData, setUserData] = React.useState<any>({});
+    const {
+        initPaymentSheet,
+        presentPaymentSheet,
+        confirmPaymentSheetPayment,
+    } = useStripe();
+    const [paymentMethod, setPaymentMethod] = useState<any>()
+    const [loading, setLoading] = useState(true);
     React.useEffect(() => {
         StateControllerInstance.getState();
     }, [])
@@ -125,60 +132,134 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         }
 
     }
-    const handleRazorPay = () => {
-        if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
-            var options = {
-                description: 'FOTS PAY',
-                image: require("../../../assets/images/app.png"),
-                currency: 'INR',
-                key: RAZORPAYAPIKEY.APIKEY,
-                amount: checkoutData?.total_amount + '00',
-                name: `${userData.first_name} ${userData.last_name}`,
-                prefill: {
-                    email: userData?.email,
-                    contact: userData?.mobile,
-                    name: `${userData.first_name} ${userData.last_name}`
-                },
-                theme: { color: '#d80000' }
-            }
-            RazorpayCheckout.open(options).then((data: { org_name: string | undefined; razorpay_payment_id: string | undefined; }) => {
-                handlePayNowWithOutPay(data?.org_name, data?.razorpay_payment_id)
-            }).catch((error: { code: any; description: any; }) => {
-                // handle failure
-                console.log(`Error: ${error.code} | ${error.description}`);
-            });
+    // const handleRazorPay = () => {
+    //     if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
+    //         var options = {
+    //             description: 'FOTS PAY',
+    //             image: require("../../../assets/images/app.png"),
+    //             currency: 'INR',
+    //             key: RAZORPAYAPIKEY.APIKEY,
+    //             amount: checkoutData?.total_amount + '00',
+    //             name: `${userData.first_name} ${userData.last_name}`,
+    //             prefill: {
+    //                 email: userData?.email,
+    //                 contact: userData?.mobile,
+    //                 name: `${userData.first_name} ${userData.last_name}`
+    //             },
+    //             theme: { color: '#d80000' }
+    //         }
+    //         RazorpayCheckout.open(options).then((data: { org_name: string | undefined; razorpay_payment_id: string | undefined; }) => {
+    //             handlePayNowWithOutPay(data?.org_name, data?.razorpay_payment_id)
+    //         }).catch((error: { code: any; description: any; }) => {
+    //             // handle failure
+    //             console.log(`Error: ${error.code} | ${error.description}`);
+    //         });
+    //     }
+    //     else {
+    //         if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
+    //             Snackbar.show({
+    //                 text: 'State id or Fire Deparment id or Fire station id required ',
+    //                 textColor: "white",
+    //                 duration: 3000
+    //             })
+    //         } else if (stateId == '') {
+    //             Snackbar.show({
+    //                 text: 'State id required ',
+    //                 textColor: "white",
+    //                 duration: 3000
+    //             })
+    //         } else if (fireDepartmentId == '') {
+    //             Snackbar.show({
+    //                 text: 'Fire department id required ',
+    //                 textColor: "white",
+    //                 duration: 3000
+    //             })
+    //         } else if (fireStationId == '') {
+    //             Snackbar.show({
+    //                 text: 'Fire station id required ',
+    //                 textColor: "white",
+    //                 duration: 3000
+    //             })
+    //         }
+    //     }
+    // }
+    const fetchPaymentSheetParams = async () => {
+        const response = await fetch(`${STRIPEENDPOINTS.APIURL}/payment-sheet`, {
+            method: 'POST',
+            headers: {
+                Authorization: "Bearer " + STRIPEENDPOINTS.APIKEY||"",
+                'Content-Type': 'application/json',
+            },
+        });
+        const { paymentIntent, ephemeralKey, customer } = await response.json();
+        console.log("paymentIntent====",paymentIntent)
+        return {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+        };
+    };
+
+    const initializePaymentSheet = async () => {
+        const {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+        } = await fetchPaymentSheetParams();
+
+        const { error, paymentOption } = await initPaymentSheet({
+            customerId: customer,
+            customerEphemeralKeySecret: ephemeralKey,
+            paymentIntentClientSecret: paymentIntent,
+            customFlow: true,
+            merchantDisplayName: 'Example Inc.',
+            style: 'alwaysDark',
+        });
+        setLoading(false);
+        if (!error) {
+            console.log(error)
         }
-        else {
-            if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
-                Snackbar.show({
-                    text: 'State id or Fire Deparment id or Fire station id required ',
-                    textColor: "white",
-                    duration: 3000
-                })
-            } else if (stateId == '') {
-                Snackbar.show({
-                    text: 'State id required ',
-                    textColor: "white",
-                    duration: 3000
-                })
-            } else if (fireDepartmentId == '') {
-                Snackbar.show({
-                    text: 'Fire department id required ',
-                    textColor: "white",
-                    duration: 3000
-                })
-            } else if (fireStationId == '') {
-                Snackbar.show({
-                    text: 'Fire station id required ',
-                    textColor: "white",
-                    duration: 3000
-                })
-            }
+        updateButtons(paymentOption);
+    };
+
+    const updateButtons = (paymentOption: PaymentSheet.PaymentOption | undefined) => {
+        if (paymentOption) {
+            setPaymentMethod({
+                label: paymentOption.label,
+                image: paymentOption.image,
+            });
+        } else {
+            setPaymentMethod(null);
         }
     }
+    const choosePaymentOption = async () => {
+        const { error, paymentOption } = await presentPaymentSheet({
+            confirmPayment: false,
+        });
+
+        if (error) {
+            Alert.alert(`Error code: ${error.code}`, error.message);
+        }
+        updateButtons(paymentOption);
+    };
+
+    const onPressBuy = async () => {
+        const { error, paymentOption } = await presentPaymentSheet({
+            confirmPayment: false,
+        });
+
+        if (error) {
+            Alert.alert(`Error code: ${error.code}`, error.message);
+        }
+        updateButtons(paymentOption);
+    };
+    React.useEffect(() => {
+        initializePaymentSheet()
+    },[])
     const orderNow = () => {
         if (checkoutData?.total_amount > 0) {
-            handleRazorPay()
+            choosePaymentOption()
+            onPressBuy()
         } else {
             handlePayNowWithOutPay()
         }
@@ -197,7 +278,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 </View>
                 {renderDateOfDeliverSection(checkoutData?.delivery_date)}
             </ScrollView>
-            <CheckOutBox label="Order Now" couponDiscount={`$${checkoutData?.coupon_discount}`} totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.delivery_fee == 0 ? "Free" : `$${checkoutData?.delivery_fee}`} tax={`$${checkoutData?.tax_amount}`} onPress={() => orderNow()} />
+            <CheckOutBox label="Order Now" totalDiscount={`$${checkoutData?.total_discount}`} couponDiscount={`$${checkoutData?.coupon_discount}`} totalMrp={`$${checkoutData?.total_mrp}`} total={`$${checkoutData?.total_amount}`} deliveryFee={checkoutData?.delivery_fee == 0 ? "Free" : `$${checkoutData?.delivery_fee}`} tax={`$${checkoutData?.tax_amount}`} onPress={() => orderNow()} />
         </SafeAreaView>
     );
 };

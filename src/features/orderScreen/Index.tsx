@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Image, SafeAreaView, ScrollView, View } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import RootNavigator from "navigation/rootnavigation";
@@ -58,6 +58,7 @@ const renderHowItsWorks = (item: any) => {
 
 const OrderScreen = (props: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
+    const [homePageBanner, setHomePageBanner] = useState<string>("");
     const {
         route: { params:{params:{params:{id}}}, },
     } = props;
@@ -72,13 +73,21 @@ const OrderScreen = (props: OrderScreenProps) => {
             </View>
         )
     }
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any,i: any)=>(
+                setHomePageBanner(obj.category_banner)
+            ))
+        }
+    }, [generalSettingData])
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                        <BannerComponent label BANNERIMAGEURL={BANNERIMAGEURL} />
+                        <BannerComponent label BANNERIMAGEURL={homePageBanner} />
                         <View>
                             <FlatList data={productList} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleProducts(item, index)} />
                         </View>

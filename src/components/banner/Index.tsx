@@ -4,13 +4,13 @@ import { View, StyleSheet, Image, ImageSourcePropType, ImageBackground } from 'r
 
 interface BannerComponentProps {
     label?: any;
-    BANNERIMAGEURL: ImageSourcePropType;
+    BANNERIMAGEURL: any;
 }
 
 const BannerComponent = (props: BannerComponentProps) => {
     return (
         <View style={styles.homeBannerSection}>
-            <ImageBackground source={props.BANNERIMAGEURL} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" >
+            <ImageBackground source={{uri:props.BANNERIMAGEURL}} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" >
                 {
                     props.label && (
                         <View style={styles.textBox}>
@@ -26,7 +26,7 @@ const BannerComponent = (props: BannerComponentProps) => {
     );
 };
 
-export default BannerComponent;
+export default React.memo(BannerComponent);
 
 const styles = StyleSheet.create({
     homeBannerSection: {

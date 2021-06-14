@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import React, { useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import HTML from 'react-native-render-html';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -18,6 +18,14 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 1.7;
 const TestimonialComponent = ({ data }: any) => {
     const _carousal = useRef(null);
     const [activeSlides, setactiveSlides] = useState<number>(0);
+    const [sliderData, setSliderData] = useState<[]>([]);
+    useEffect(() => {
+        if (data && data.length > 0) {
+            setSliderData(data);
+        } else {
+            setSliderData([])
+        }
+    }, [data])
     const ratingComponent = () => {
         return (
             <View style={styles.foodItemRatingBox}>
@@ -37,25 +45,25 @@ const TestimonialComponent = ({ data }: any) => {
             </View>
         )
     }
-    const renderItem = ({item,index}:any) => {
+    const renderItem = ({ item, index }: any) => {
         return (
-            <View  key={index} style={styles.testimonialSection}>
+            <View key={index} style={styles.testimonialSection}>
                 <View style={styles.testimonialWrap}>
-                        <View style={styles.testimonialBox}>
-                            <View style={styles.colonBox}>
-                                <Typography style={styles.colon}>“</Typography>
-                            </View>
-                            <View style={styles.contentText}>
-                                {/* <Typography style={styles.text}>{item.description}</Typography> */}
-                                <HTML source={{ html: item.description }} containerStyle={{paddingHorizontal:15}} baseFontStyle={styles.text} contentWidth={width} />
-                            </View>
-                            <View style={[styles.colonBox,{display:"flex",justifyContent:'flex-end', alignItems:'flex-end'}]}>
-                                <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10,transform: [{ rotate: '180deg'}], }]}>“</Typography>
-                            </View>
+                    <View style={styles.testimonialBox}>
+                        <View style={styles.colonBox}>
+                            <Typography style={styles.colon}>“</Typography>
                         </View>
+                        <View style={styles.contentText}>
+                            {/* <Typography style={styles.text}>{item.description}</Typography> */}
+                            <HTML source={{ html: item.description }} containerStyle={{ paddingHorizontal: 15 }} baseFontStyle={styles.text} contentWidth={width} />
+                        </View>
+                        <View style={[styles.colonBox, { display: "flex", justifyContent: 'flex-end', alignItems: 'flex-end' }]}>
+                            <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10, transform: [{ rotate: '180deg' }], }]}>“</Typography>
+                        </View>
+                    </View>
                     <View style={styles.clientSection}>
                         <View style={styles.clientBox}>
-                            <Image source={{uri:item.image}} style={styles.clientImage} />
+                            <Image source={{ uri: item.image }} style={styles.clientImage} />
                             <View style={styles.clientDetail}>
                                 <Typography style={styles.clientName}>{item.name}</Typography>
                                 <Typography style={styles.clientDesgination}>{item.sub_title}r</Typography>
@@ -69,17 +77,17 @@ const TestimonialComponent = ({ data }: any) => {
     function pagination() {
         return (
             <Pagination
-                dotsLength={data&&data.length>0?data.length:0}
+                dotsLength={sliderData && sliderData.length > 0 ? sliderData.length : 0}
                 activeDotIndex={activeSlides}
-                containerStyle={{ backgroundColor: '#fff' ,}}
+                containerStyle={{ backgroundColor: '#fff', }}
                 dotStyle={{
                     width: 10,
                     height: 10,
                     borderRadius: 5,
                     marginHorizontal: 0,
                     backgroundColor: '#D80000',
-                    bottom:40,
-                    paddingHorizontal:0
+                    bottom: 40,
+                    paddingHorizontal: 0
                 }}
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
@@ -91,7 +99,7 @@ const TestimonialComponent = ({ data }: any) => {
             <View>
                 <Carousel
                     ref={_carousal}
-                    data={ data }
+                    data={sliderData}
                     renderItem={renderItem}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
@@ -99,32 +107,32 @@ const TestimonialComponent = ({ data }: any) => {
                     autoplayInterval={6000}
                     onSnapToItem={(index) => setactiveSlides(index)}
                     loop={true}
-                    style={{marginRight:50}}
+                    style={{ marginRight: 50 }}
                 />
                 {pagination()}
             </View>
         </>
     )
 }
-export default TestimonialComponent;
+export default memo(TestimonialComponent);
 const styles = StyleSheet.create({
     testimonialSection: {
     },
     testimonialWrap: {
         position: 'relative',
         marginBottom: 120,
-        backgroundColor:"#D80000",
-        borderRadius:6
+        backgroundColor: "#D80000",
+        borderRadius: 6
     },
     testimonialBox: {},
     colonBox: {},
     colon: {
-        fontSize:40,
+        fontSize: 40,
         lineHeight: 50,
         color: "white",
         paddingLeft: 10,
         paddingTop: 8,
-        fontFamily:FontFamilyFoods.POLLERONE
+        fontFamily: FontFamilyFoods.POLLERONE
     },
     contentText: {
 
@@ -135,7 +143,7 @@ const styles = StyleSheet.create({
         lineHeight: 18,
         textAlign: 'center',
         paddingHorizontal: 25,
-        fontFamily:FontFamilyFoods.POPPINS
+        fontFamily: FontFamilyFoods.POPPINS
     },
     foodItemRatingBox: {
         display: 'flex',
@@ -158,10 +166,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        left:0,
-        right:0,
-        top:"100%",
-        marginTop:-30
+        left: 0,
+        right: 0,
+        top: "100%",
+        marginTop: -30
     },
     clientImage: {
         height: 80,

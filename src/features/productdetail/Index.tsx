@@ -345,7 +345,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     nestedScrollEnabled={false}>
 
                     {bannerSection(productDetail?.image)}
-                    {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.amount, subTitle: productDetail?.sub_title })}
+                    {headingSection({ heading: productDetail?.name, slug: productDetail?.slug, amount: productDetail?.net_amount, subTitle: productDetail?.sub_title })}
                     {/* {
                         isShown && scrollHeadingSection()
                     } */}

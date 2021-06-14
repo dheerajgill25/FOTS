@@ -9,6 +9,8 @@ import Typography from "components/typography/Typography";
 import ProductDetailScreen from "features/productdetail/Index";
 import BannerComponent from "components/banner/Index";
 import MealPlan from "features/mealplan/Index";
+import RootStore from "reduxModule/store/Index";
+import { useSelector } from "react-redux";
 interface OrderScreenSecondProps { }
 const orderData: any[] = [
     {
@@ -29,16 +31,16 @@ const orderData: any[] = [
     },
 ];
 
-const renderHowItsWorks = (item: any,index:number) => {
+const renderHowItsWorks = (item: any, index: number) => {
     return (
         <>
             <View key={item.index} style={styles.howWorkSection}>
                 <View style={styles.worksFlex}>
                     <View style={styles.howWorkBox}>
                         <View style={styles.howWorkwrap}>
-                            <Image style={[styles.icon,index==0&&styles.itemImg]} source={item.imageUrl} />
+                            <Image style={[styles.icon, index == 0 && styles.itemImg]} source={item.imageUrl} />
                         </View>
-                        <Typography onPress={()=>MealPlan.navigate()} style={styles.title}>{item.title}</Typography>
+                        <Typography onPress={() => MealPlan.navigate("")} style={styles.title}>{item.title}</Typography>
                     </View>
                 </View>
             </View>
@@ -56,18 +58,27 @@ const renderFooterItem = () => {
 }
 const OrderScreenSecond = ({ }: OrderScreenSecondProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    const [homePageBanner, setHomePageBanner] = React.useState<string>("");
+    React.useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any, i: any) => (
+                setHomePageBanner(obj.category_banner)
+            ))
+        }
+    }, [generalSettingData])
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                    <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL}/>
+                        <BannerComponent BANNERIMAGEURL={homePageBanner} />
                         <View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'breakfast'} buttonStyle={styles.buttonText}  onPress={() => ProductDetailScreen.navigate()} />
+                                <RenderButtonWithIcon label={'breakfast'} buttonStyle={styles.buttonText} onPress={() => ProductDetailScreen.navigate()} />
                             </View>
                             <View style={styles.buttonsGroup}>
-                                <RenderButtonWithIcon label={'lunch'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate()}} />
+                                <RenderButtonWithIcon label={'lunch'} buttonStyle={styles.buttonText} onPress={() => { OrderScreenSecond.navigate() }} />
                             </View>
                             <View style={styles.buttonsGroup}>
                                 <RenderButtonWithIcon label={'dinner'} buttonStyle={styles.buttonText} onPress={() => { }} />
@@ -75,7 +86,7 @@ const OrderScreenSecond = ({ }: OrderScreenSecondProps) => {
                         </View>
                         <View>
                             <Typography style={styles.foodItemPopluar}>How It Works</Typography>
-                            <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({item,index})=>renderHowItsWorks(item,index)} />
+                            <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({ item, index }) => renderHowItsWorks(item, index)} />
                         </View>
                         {renderFooterItem()}
                     </View>

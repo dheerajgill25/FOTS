@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 interface DropdownProps {
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
         flex:1
     },
 });
-export default DropdownComponentCheckOut;
+export default memo(DropdownComponentCheckOut);

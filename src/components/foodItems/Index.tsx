@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
-import React from "react";
+import React, { memo } from "react";
 import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "react-native";
 interface FoodItemsProps {
     text: string;
@@ -45,7 +45,7 @@ const FoodItemsComponent = ({ imageUrl, text,index }: FoodItemsProps) => {
         </View>
     )
 }
-export default FoodItemsComponent;
+export default memo(FoodItemsComponent);
 const styles = StyleSheet.create({
     foodItemSection: {},
     foodItemBox: {

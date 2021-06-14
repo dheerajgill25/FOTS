@@ -65,17 +65,25 @@ const MealPlan = (props: MealPlanProps) => {
   const {
     route: { params,  },
 } = props;
-
+const [homePageBanner, setHomePageBanner] = React.useState<string>("");
   const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
   useEffect(()=>{
     MealPlanControllerInstance.getMealPlan(params.id);
   },[]);
   const mealPlanData = useSelector((state:RootStore)=>state.MealPlanInState.data?.data);
+  const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+  React.useEffect(() => {
+      if (generalSettingData && generalSettingData.length > 0) {
+          generalSettingData.map((obj: any,i: any)=>(
+              setHomePageBanner(obj.category_banner)
+          ))
+      }
+  }, [generalSettingData])
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView bounces={false}>
         <View style={{ marginHorizontal: 21 }}>
-          <BannerComponent BANNERIMAGEURL={BANNERIMAGEURL} />
+          <BannerComponent BANNERIMAGEURL={homePageBanner} />
           <View style={styles.mealPlanSection}>
             <Typography style={styles.mealPlanText}>Meal Plan</Typography>
             <View>

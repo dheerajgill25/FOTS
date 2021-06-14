@@ -28,6 +28,17 @@ const styles = StyleSheet.create({
     buttonsGroup:{
         marginHorizontal:20,
         marginBottom:20
-    }
+    },
+    customScrollBar: {
+        backgroundColor: '#ccc',
+        borderRadius: 3,
+        width: 6,
+      },
+      customScrollBarBackground: {
+        backgroundColor: '#232323',
+        borderRadius: 3,
+        height: '100%',
+        width: 6,
+      },
 });
 export default styles;

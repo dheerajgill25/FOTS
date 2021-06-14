@@ -28,8 +28,8 @@ const renderFoodItems = (item: any) => {
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
-    const HOMEBANNERIMAGEURL = require('../../../assets/images/homeBanner.png');
     const [text, setText] = useState<string>('');
+    const [homePageBanner, setHomePageBanner] = useState<string>("");
     useEffect(() => {
         CategoryControllerInstance.getCategory();
         TestimonialsControllerInstance.getTestimonials()
@@ -53,14 +53,22 @@ const HomeScreen = ({ }: HomeScreenProps) => {
             ProductListControllerInstance.getProductList("", "", text.trim())
         }
     }
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any,i: any)=>(
+                setHomePageBanner(obj.home_banner)
+            ))
+        }
+    }, [generalSettingData])
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
-                <ScrollView bounces={false}>
+                <ScrollView bounces={false} removeClippedSubviews nestedScrollEnabled>
                     <View style={styles.homeSection}>
                         <SearchComponent text={text} action={(text) => handleTextInput(text)} />
-                        <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
+                        <BannerComponent BANNERIMAGEURL={homePageBanner} />
                         <View>
                             <FlatList data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>

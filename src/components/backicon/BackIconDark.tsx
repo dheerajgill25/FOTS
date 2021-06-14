@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, View } from 'react-native';
 
 const BackIconDark = ({ }) => {
@@ -12,4 +12,4 @@ const BackIconDark = ({ }) => {
         </>
     )
 }
-export default BackIconDark;
+export default memo(BackIconDark);

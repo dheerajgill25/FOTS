@@ -33,7 +33,6 @@ const ratingComponent = () => {
 }
 const renderCartItems = (data: any,meal:boolean) => {
     const BANNERIMAGEURL = data.image && data?.image?.length > 0 ? data?.image[0]?.image : "";
-    console.log(meal)
     return (
         <View style={styles.cartBox}>
             <View style={styles.cartItemWrap}>
@@ -51,7 +50,7 @@ const renderCartItems = (data: any,meal:boolean) => {
 
                         </View>
                         <View style={{ flex: 1, maxWidth: 60 }}>
-                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{`$${data.amount}`}</Typography>
+                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{`$${data.net_amount}`}</Typography>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -65,7 +64,7 @@ const renderEmptyCom = () => {
     )
 }
 const ProductScreen = (props: ProductScreenProps) => {
-    const HOMEBANNERIMAGEURL = require('../../../assets/images/banner2.png');
+    const [homePageBanner, setHomePageBanner] = React.useState<string>("");
     const {
         route: { params: { cId, id ,meal} },
     } = props;
@@ -73,12 +72,20 @@ const ProductScreen = (props: ProductScreenProps) => {
         ProductListControllerInstance.getProductList(cId, id)
     }, [])
     const productList = useSelector((state: RootStore) => state.ProductInState.data?.data?.data);
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    React.useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any,i: any)=>(
+                setHomePageBanner(obj.product_banner)
+            ))
+        }
+    }, [generalSettingData])
     return (
         <SafeAreaView style={styles.container}>
             <ModalComponent label={"Orders must be placed by 12pm Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
             <ScrollView bounces={false}>
                 <View style={{ marginHorizontal: 20 }}>
-                    <BannerComponent BANNERIMAGEURL={HOMEBANNERIMAGEURL} />
+                    <BannerComponent BANNERIMAGEURL={homePageBanner} />
                 </View>
                 <FlatList data={productList} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginBottom: 23 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item,meal)} />
             </ScrollView>

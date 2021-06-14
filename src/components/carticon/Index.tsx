@@ -1,5 +1,5 @@
 import CircleNumber from 'components/circleNumber';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from '@reduxModule/store/Index';
@@ -34,7 +34,7 @@ const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
         </>
     )
 }
-export default CartIcon;
+export default memo(CartIcon);
 const styles = StyleSheet.create({
     cartFix: {
         position: "relative",

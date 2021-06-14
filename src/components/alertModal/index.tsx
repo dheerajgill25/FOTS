@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import { Text, View, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
@@ -51,7 +51,7 @@ const AlertModal = ({ label,isVisiable }: AlertModalProps) => {
     );
 };
 
-export default AlertModal;
+export default memo(AlertModal);
 
 const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({

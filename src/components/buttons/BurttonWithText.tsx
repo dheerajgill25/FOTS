@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 interface ButtonWithTextProps{
     label:string;
@@ -14,7 +14,7 @@ const ButtonWithText = ({label,onPress,subText}:ButtonWithTextProps) => {
             </TouchableOpacity>
     )
 }
-export default ButtonWithText;
+export default memo(ButtonWithText);
 
 const styles = StyleSheet.create({
     filterText: {

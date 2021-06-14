@@ -62,7 +62,7 @@ const ModalComponent = ({ label, isVisiable, mealPlan, subTitle }: ModalComponen
     );
 };
 
-export default ModalComponent;
+export default React.memo(ModalComponent);
 const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     modal: {

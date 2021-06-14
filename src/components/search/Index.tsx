@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
-import React from "react";
+import React, { memo } from "react";
 import { SafeAreaView, View, StyleSheet, TextInput, Image } from "react-native";
 interface SearchProps {
     action: (text: string) => void
@@ -28,7 +28,7 @@ const SearchComponent = ({ action,text}: SearchProps) => {
         </View>
     )
 }
-export default SearchComponent;
+export default memo(SearchComponent);
 const styles = StyleSheet.create({
     searchBox: {
         borderWidth: 1,

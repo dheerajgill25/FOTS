@@ -1,5 +1,5 @@
 import Typography, { FontFamilyFoods } from '@components/typography/Typography';
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -74,4 +74,4 @@ const ButtonFood = ({
     );
 };
 
-export default ButtonFood;
+export default memo(ButtonFood);

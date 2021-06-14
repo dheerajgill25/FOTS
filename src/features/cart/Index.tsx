@@ -1,8 +1,7 @@
-import { CheckOutBox } from 'components/checkoutbox/Index';
+import CheckOutBox from 'components/checkoutbox/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import CheckOutControllerInstance from 'features/commonApiCall/checkout/controllers/checkout.controller';
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
-import BeforePayNow from 'features/paynow/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
@@ -83,7 +82,7 @@ const CartScreen = ({ }: CartProps) => {
                     <View style={styles.coupenCodeBox}  >
                         <View style={styles.coupenForm}>
                             <TextInput placeholder="Have Coupen Code?"
-                                editable={cartData?.total_mrp > 0 ? true : false}
+                                editable={cartData?.type =="meal" ? true : false}
                                 style={styles.formControl}
                                 onChangeText={(code: string) => setCoupenCode(code)}
                                 placeholderTextColor={"#A3A3A3"} />
@@ -99,11 +98,13 @@ const CartScreen = ({ }: CartProps) => {
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
                 <FlatList data={cartData?.data && cartData?.data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
-                {cartData?.total_mrp > 0 ? coupenCodeSection() : <View />}
+                {cartData?.type == "meal" && coupenCodeSection()}
             </ScrollView>
             {
-                cartData?.total_mrp >= 0 ? (
-                    <CheckOutBox totalMrp={`$${cartData?.total_mrp}`} total={`$${cartData?.total_amount}`} label="Checkout" deliveryFee={cartData?.delivery_fee == 0 ? "Free" : `$${cartData?.delivery_fee}`} tax={`$${cartData?.tax_amount}`} onPress={() => handleCheckout()} />
+                cartData?.type == "meal"|| cartData?.type == "free" ? (
+                    <CheckOutBox totalMrp={`$${cartData?.total_mrp}`}
+                        totalDiscount={`$${cartData?.total_discount}`}
+                        total={`$${cartData?.total_amount}`} label="Checkout" deliveryFee={cartData?.delivery_fee == 0 ? "Free" : `$${cartData?.delivery_fee}`} tax={`$${cartData?.tax_amount}`} onPress={() => handleCheckout()} />
                 ) : (
                     <View />
                 )
@@ -120,3 +121,5 @@ CartScreen.navigate = () => {
     RootNavigator.navigate(CartScreen.SCREEN_NAME);
 };
 export default CartScreen
+
+

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, View } from 'react-native';
 
 const BackIcon = ({ }) => {
@@ -11,4 +11,4 @@ const BackIcon = ({ }) => {
         </>
     )
 }
-export default BackIcon;
+export default memo(BackIcon);

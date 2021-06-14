@@ -1,6 +1,6 @@
 import ButtonWithText from 'components/buttons/BurttonWithText';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 interface CheckoutProps {
 	total: string;
@@ -9,9 +9,10 @@ interface CheckoutProps {
 	onPress: () => void,
 	label: string;
 	totalMrp?: any;
-	couponDiscount?: number | string
+	couponDiscount?: any,
+	totalDiscount?: any
 }
-export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp, couponDiscount }: CheckoutProps) => {
+const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp, couponDiscount, totalDiscount }: CheckoutProps) => {
 	return (
 		<View style={styles.checkoutSection}>
 			<View style={styles.checkoutBox}>
@@ -25,7 +26,21 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp,
 						</View>
 					</View>
 					{
-						couponDiscount !== 0 && (
+						totalDiscount !== "" && totalDiscount !== undefined ? (
+							<View style={styles.checkoutSectionFlex}>
+								<View style={styles.checkoutTitleSection}>
+									<Typography style={styles.checkoutTitle}>Discount</Typography>
+								</View>
+								<View style={styles.checkoutPriceSection}>
+									<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{totalDiscount}</Typography>
+								</View>
+							</View>
+						) : (
+							<View />
+						)
+					}
+					{
+						couponDiscount !== "" && couponDiscount !== undefined ? (
 							<View style={styles.checkoutSectionFlex}>
 								<View style={styles.checkoutTitleSection}>
 									<Typography style={styles.checkoutTitle}>Coupon Discount</Typography>
@@ -34,11 +49,13 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp,
 									<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{couponDiscount}</Typography>
 								</View>
 							</View>
+						) : (
+							<View />
 						)
 					}
 
 					{
-						tax !== 0 && (<View style={styles.checkoutSectionFlex}>
+						tax !== 0 && tax !== undefined ? (<View style={styles.checkoutSectionFlex}>
 							<View style={styles.checkoutTitleSection}>
 								<Typography style={styles.checkoutTitle}>TAX</Typography>
 							</View>
@@ -46,6 +63,8 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp,
 								<Typography style={[styles.checkoutPrice, { fontFamily: FontFamilyFoods.POPPINSMEDIUM }]}>{tax}</Typography>
 							</View>
 						</View>
+						) : (
+							<View />
 						)
 					}
 					<View style={styles.checkoutSectionFlex}>
@@ -66,6 +85,7 @@ export const CheckOutBox = ({ total, deliveryFee, tax, onPress, label, totalMrp,
 		</View>
 	);
 }
+export default memo(CheckOutBox)
 const styles = StyleSheet.create({
 	checkoutSection: {},
 	checkoutBox: {
