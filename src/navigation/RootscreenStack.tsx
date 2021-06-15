@@ -19,16 +19,17 @@ import EditProfile from 'features/editProfile/Index';
 import ChangePassword from 'features/editProfile/changePassword';
 import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
 import GeneralSettingControllerInstance from 'features/commonApiCall/generalSetting/controllers/generalSetting.controller';
+import WebhookPaymentScreen from 'features/paynow/payment/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
     const getToken = useSelector((state: RootStore) => state.TokenInState.data);
     useEffect(() => {
-        if(getToken !== '' && getToken !== null && getToken !== undefined && getToken !== {})
-        CartCountControllerInstance.getCartCount();
-        GeneralSettingControllerInstance.generalSetting();
+        if (getToken !== '' && getToken !== null && getToken !== undefined && getToken !== {}) {
+            CartCountControllerInstance.getCartCount();
+            GeneralSettingControllerInstance.generalSetting();
+        }
     }, [getToken])
-
     return (
         <RootStackNavigator.Navigator mode="card" screenOptions={{ animationEnabled: false }} initialRouteName={Login.SCREEN_NAME}>
             {
@@ -43,25 +44,6 @@ const RootStackScreen = () => {
                                 showOnlyLogo: false
                             })}
                         />
-
-                        {/* <RootStackNavigator.Screen
-                            name={OrderScreen.SCREEN_NAME}
-                            component={OrderScreen}
-                            options={ScreenOptionNavigation({
-                                showBackButton: false,
-                                showCartIcon: true,
-                                showOnlyLogo: false
-                            })}
-                        />
-                        <RootStackNavigator.Screen
-                            name={OrderScreenSecond.SCREEN_NAME}
-                            component={OrderScreenSecond}
-                            options={ScreenOptionNavigation({
-                                showBackButton: false,
-                                showCartIcon: true,
-                                showOnlyLogo: false
-                            })}
-                        /> */}
                         <RootStackNavigator.Screen
                             name={CartScreen.SCREEN_NAME}
                             component={CartScreen}
@@ -100,7 +82,7 @@ const RootStackScreen = () => {
                             })}
 
                         />
-                         <RootStackNavigator.Screen
+                        <RootStackNavigator.Screen
                             name={EditProfile.SCREEN_NAME}
                             component={EditProfile}
                             options={HeaderScreenOptionNavigation({
@@ -140,12 +122,23 @@ const RootStackScreen = () => {
                             })}
 
                         />
-                         <RootStackNavigator.Screen
+                        <RootStackNavigator.Screen
                             name={ChangePassword.SCREEN_NAME}
                             component={ChangePassword}
                             options={HeaderScreenOptionNavigation({
                                 showBackButton: true,
                                 headerTitle: "Change password",
+                                showCartIcon: false
+                            })}
+
+
+                        />
+                          <RootStackNavigator.Screen
+                            name={WebhookPaymentScreen.SCREEN_NAME}
+                            component={WebhookPaymentScreen}
+                            options={HeaderScreenOptionNavigation({
+                                showBackButton: true,
+                                headerTitle: "Payment",
                                 showCartIcon: false
                             })}
 

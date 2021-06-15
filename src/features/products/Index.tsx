@@ -1,12 +1,14 @@
 import BannerComponent from 'components/banner/Index';
+import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
 import ModalComponent from 'components/popup/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import ProductDetailScreen from 'features/productdetail/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity, } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
+import { window } from 'themes/functions';
 import ProductListControllerInstance from './controllers/product.controller';
 import styles from './styles';
 
@@ -39,7 +41,7 @@ const renderCartItems = (data: any,meal:boolean) => {
                 <View style={styles.shoppingCartBox}>
                     <TouchableOpacity activeOpacity={0.6} onPress={() => ProductDetailScreen.navigate(data.product_id,meal)} style={styles.shoppingCartWrap}>
                         <View style={styles.shoppingCartLeft}>
-                            <Image style={styles.bannerImage} source={{ uri: BANNERIMAGEURL,cache: 'only-if-cached'  }} resizeMode="center" />
+                        <ImageComponent uri={BANNERIMAGEURL} imageStyle={styles.bannerImage} priority={Priority.low} resizeMode={ResizeMode.cover} />
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{data.name}</Typography>
@@ -79,7 +81,12 @@ const ProductScreen = (props: ProductScreenProps) => {
                 setHomePageBanner(obj.product_banner)
             ))
         }
-    }, [generalSettingData])
+    }, [generalSettingData]);
+    const getItemLayout = (data: any, index: any) => ({
+        length: window.width / 5,
+        offset: window.width / 5 * index,
+        index,
+      })
     return (
         <SafeAreaView style={styles.container}>
             <ModalComponent label={"Orders must be placed by 12pm Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
@@ -87,7 +94,7 @@ const ProductScreen = (props: ProductScreenProps) => {
                 <View style={{ marginHorizontal: 20 }}>
                     <BannerComponent BANNERIMAGEURL={homePageBanner} />
                 </View>
-                <FlatList data={productList} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginBottom: 23 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item,meal)} />
+                <FlatList getItemLayout={getItemLayout} data={productList} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginBottom: 23 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item,meal)} />
             </ScrollView>
         </SafeAreaView>
     );

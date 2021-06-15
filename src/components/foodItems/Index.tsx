@@ -1,9 +1,10 @@
+import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
 import React, { memo } from "react";
 import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "react-native";
 interface FoodItemsProps {
     text: string;
-    imageUrl: ImageSourcePropType;
+    imageUrl: string;
     index?:number
 }
 const ratingComponent = () => {
@@ -31,7 +32,7 @@ const FoodItemsComponent = ({ imageUrl, text,index }: FoodItemsProps) => {
             <View style={styles.foodItemBox}>
                 <View style={styles.foodItemContent}>
                     <View style={styles.foodItemImageSection}>
-                        <Image source={imageUrl} style={styles.foodImage} resizeMode="contain" />
+                        <ImageComponent uri={imageUrl} priority={Priority.high} imageStyle={styles.foodImage} resizeMode={ResizeMode.cover}/>
                     </View>
                     <View style={styles.foodItemDetail}>
                         <Typography style={styles.text}>{text}</Typography>

@@ -16,7 +16,6 @@ export const stateReducer: Reducer<StateInState, ActionType<StateAction>> = (
     action
 ) => {
     const { payload, type, error } = action;
-    console.log('payload', payload);
     switch (type) {
         case StateAction.EVENT_REQUEST(): {
             return { ...state, loading: true,error:undefined };

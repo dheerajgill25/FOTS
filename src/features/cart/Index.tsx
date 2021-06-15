@@ -1,4 +1,5 @@
 import CheckOutBox from 'components/checkoutbox/Index';
+import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import CheckOutControllerInstance from 'features/commonApiCall/checkout/controllers/checkout.controller';
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
@@ -7,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
+import { window } from 'themes/functions';
 import CartListControllerInstance from './httpCall/controllers/cartList.controller';
 import styles from './styles';
 interface CartProps { }
@@ -28,19 +30,19 @@ const renderShoppingCartSection = () => {
         </View>
     )
 }
-const renderCartItems = (data: any) => {
+const renderCartItems = (data: any,i:number) => {
     const CLOSEICON = require('../../../assets/images/cut.png');
     const { product, id, cart_id } = data;
     const handleRemoveCart = () => {
         RemoveCartControllerInstance.RemoveCartProducts(cart_id, product.id)
     }
     return (
-        <View style={styles.cartBox}>
+        <View key={i} style={styles.cartBox}>
             <View style={styles.cartItemWrap}>
                 <View style={styles.shoppingCartBox}>
                     <View style={styles.shoppingCartWrap}>
                         <View style={[styles.shoppingCartLeft]}>
-                            <ImageBackground style={styles.bannerImage} onLoad={() => { }} resizeMode="cover" resizeMethod="auto" source={{ uri: product?.thumbnail, cache: 'only-if-cached' }} />
+                            <ImageComponent imageStyle={styles.bannerImage} uri={product?.thumbnail} resizeMode={ResizeMode.cover} priority={Priority.low} />
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{product?.name}</Typography>
@@ -93,11 +95,16 @@ const CartScreen = ({ }: CartProps) => {
             </View>
         )
     }
+    const getItemLayout = (data: any, index: any) => ({
+        length: window.width / 5,
+        offset: window.width / 5 * index,
+        index,
+    })
     return (
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection()}
-                <FlatList data={cartData?.data && cartData?.data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => renderCartItems(item)} />
+                <FlatList getItemLayout={getItemLayout} data={cartData?.data && cartData?.data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item ,index}) => renderCartItems(item,index)} />
                 {cartData?.type == "meal" && coupenCodeSection()}
             </ScrollView>
             {

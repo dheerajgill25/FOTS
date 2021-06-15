@@ -6,16 +6,11 @@ import PushNotification from 'react-native-push-notification';
 import { Platform } from 'react-native';
 interface NotificationWatcherProps {
 }
-
-interface NotificationWatcherState {
-}
-
 async function requestPermission() {
     const authStatus = await messaging().requestPermission();
     const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-    console.log("enabled---", enabled)
     return enabled;
 }
 
@@ -49,11 +44,7 @@ const NotificationWatcher = ({ }: NotificationWatcherProps) => {
     useEffect(() => {
         requestUserPermission();
         const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-            console.debug('remoteMessage', remoteMessage);
             const { notification: { body, title } = {}, data } = remoteMessage;
-            console.log(data)
-            console.log("remoteMessage body", body)
-            console.log("remoteMessage title", title)
             if (body && title) {
                 PushNotification.localNotification({
                     message: body,

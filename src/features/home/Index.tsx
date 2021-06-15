@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
+import { Dimensions, FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import SearchComponent from "@components/search/Index";
 import RootNavigator from "navigation/rootnavigation";
@@ -20,6 +20,7 @@ import ProductListControllerInstance from "features/products/controllers/product
 import StorageService from "libs/storage/Storage";
 import SearchScreen from "features/searchScreen/Index";
 import TestimonialsControllerInstance from "./controllers/testimonials.controller";
+import { window } from "themes/functions";
 interface HomeScreenProps { }
 const renderFoodItems = (item: any) => {
     const { index } = item;
@@ -56,11 +57,16 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
     useEffect(() => {
         if (generalSettingData && generalSettingData.length > 0) {
-            generalSettingData.map((obj: any,i: any)=>(
+            generalSettingData.map((obj: any, i: any) => (
                 setHomePageBanner(obj.home_banner)
             ))
         }
     }, [generalSettingData])
+    const getItemLayout = (data: any, index: any) => ({
+        length: window.width / 5,
+        offset: window.width / 5 * index,
+        index,
+    })
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
@@ -70,20 +76,20 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                         <SearchComponent text={text} action={(text) => handleTextInput(text)} />
                         <BannerComponent BANNERIMAGEURL={homePageBanner} />
                         <View>
-                            <FlatList data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
+                            <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>
                     </View>
                     <View >
                         <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
-                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
                     <View>
                         <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meals </Typography>
-                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
                     <View>
                         <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
-                        <FlatList style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
                     </View>
                     <View>
                         <View>

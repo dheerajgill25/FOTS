@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeModal from 'react-native-modal';
 import HomeScreen from "features/home/Index";
 import CartIcon from "components/carticon/Index";
+import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -24,12 +25,11 @@ interface ProductDetailScreenProps {
 const bannerSection = (_data: any) => {
     const BANNERIMAGEURL = _data && _data.length > 0 ? _data[0].image : "";
     const CARTIMAGEURL = require('../../../assets/images/cartwhite.png');
-    console.log("BANNERIMAGEURL", BANNERIMAGEURL)
     return (
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                    <ImageBackground source={{ uri: BANNERIMAGEURL, cache: "only-if-cached" }} style={styles.previewImage} resizeMethod="auto" resizeMode="cover" />
+                <ImageComponent uri={BANNERIMAGEURL} imageStyle={styles.previewImage} priority={Priority.low} resizeMode={ResizeMode.cover} />
                 </View>
             </View>
             <View style={styles.cartIconSection}>

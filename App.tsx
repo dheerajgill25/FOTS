@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import React, { useEffect, useRef, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator, { navigationRef } from '@navigation/rootnavigation';
