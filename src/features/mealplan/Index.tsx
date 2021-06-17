@@ -96,11 +96,12 @@ const MealPlan = (props: MealPlanProps) => {
               <FlatList getItemLayout={getItemLayout} scrollEnabled={false} ListEmptyComponent={() => renderEmptyCom()} keyExtractor={(item, index) => index.toString()} data={mealPlanData} renderItem={({ item, index }) => renderMealButton(item, index)} />
             </View>
           </View>
-          <View style={{ marginTop: 21, paddingBottom: 30 }}>
-            <Typography style={styles.foodItemPopluar}>How It Works</Typography>
-            <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({ item, index }) => renderHowItsWorks(item, index)} />
-          </View>
         </View>
+        <View style={{ marginTop: 21, paddingBottom: 30,paddingHorizontal:20 }}>
+          <Typography style={styles.foodItemPopluar}>How It Works</Typography>
+          <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({ item, index }) => renderHowItsWorks(item, index)} />
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );

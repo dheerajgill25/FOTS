@@ -9,13 +9,12 @@ interface Props {
 
 const PaymentScreen: React.FC<Props> = ({ paymentMethod, children }) => {
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     async function initialize() {
-      const publishableKey = await fetchPublishableKey(paymentMethod);
-      if (publishableKey) {
+      const {key} = await fetchPublishableKey();
+      if (key) {
         await initStripe({
-          publishableKey,
+          publishableKey:key,
           merchantIdentifier: 'merchant.com.stripe.react.native',
           urlScheme: 'stripe-example',
           setUrlSchemeOnAndroid: true,
@@ -35,6 +34,7 @@ const PaymentScreen: React.FC<Props> = ({ paymentMethod, children }) => {
         accessibilityLabel="payment-screen"
         style={styles.container}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{justifyContent:'center',flex:0}}
       >
         {children}
         {/* eslint-disable-next-line react-native/no-inline-styles */}

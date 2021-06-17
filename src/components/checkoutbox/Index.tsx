@@ -5,7 +5,7 @@ import { View, Text, StyleSheet } from 'react-native';
 interface CheckoutProps {
 	total: string;
 	deliveryFee: string;
-	tax: string | number;
+	tax: string | number|any;
 	onPress: () => void,
 	label: string;
 	totalMrp?: any;

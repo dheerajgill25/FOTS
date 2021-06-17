@@ -1,5 +1,6 @@
 import { FontFamilyFoods } from "components/typography/Typography";
 import { StyleSheet } from "react-native";
+import { window } from "themes/functions";
 
 const styles = StyleSheet.create({
     container: {
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
         color:'#fff',
     },
     howWorkSection: {
-        flex: 1,
+       width:window.width/4.39,
+       flex:1
     },
     worksFlex:{
         display: "flex",

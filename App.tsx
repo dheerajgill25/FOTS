@@ -21,7 +21,7 @@ import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { StripeProvider ,initStripe } from '@stripe/stripe-react-native';
+import { StripeProvider, initStripe } from '@stripe/stripe-react-native';
 import { STRIPEENDPOINTS } from 'libs/api/apiEndpoints';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
@@ -29,7 +29,7 @@ const App = () => {
   enableScreens(true)
 
   const allowInDevMode = true;
- 
+
   const setCrashanalyticsAttributes = async () => {
     const userData: any = await AsyncStorage.getItem('user');
     const user = JSON.parse(userData);
@@ -83,7 +83,7 @@ const App = () => {
       PERMISSIONS_TYPE.camera,
     ]);
     initStripe({
-      publishableKey:STRIPEENDPOINTS.APIKEY,
+      publishableKey: STRIPEENDPOINTS.APIKEY,
       merchantIdentifier: 'merchant.identifier',
     })
     setTimeout(() => {
@@ -96,31 +96,29 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <NavigationContainer
-          ref={navigationRef}
-          onReady={() => {
-            RootNavigator.isReadyRef = true;
-            previousRouteName = navigationRef.current?.getCurrentRoute()?.name;
-          }}
-          onStateChange={async () => {
-            const screenName = navigationRef.current?.getCurrentRoute()?.name;
-            AnalyticsFunction.functionScreenTracking(
-              previousRouteName,
-              screenName
-            );
-          }}
-        >
-          <StripeProvider publishableKey={STRIPEENDPOINTS.APIKEY}>
-            <NetworkInfo>
-              <RootStackScreen />
-              <AnalyticsWatcher />
-              <NotificationWatcher />
-              <LoadingScreen />
-            </NetworkInfo>
-          </StripeProvider>
-        </NavigationContainer>
-      </PersistGate>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer
+            ref={navigationRef}
+            onReady={() => {
+              RootNavigator.isReadyRef = true;
+              previousRouteName = navigationRef.current?.getCurrentRoute()?.name;
+            }}
+            onStateChange={async () => {
+              const screenName = navigationRef.current?.getCurrentRoute()?.name;
+              AnalyticsFunction.functionScreenTracking(
+                previousRouteName,
+                screenName
+              );
+            }}
+          >
+              <NetworkInfo>
+                <RootStackScreen />
+                <AnalyticsWatcher />
+                <NotificationWatcher />
+                <LoadingScreen />
+              </NetworkInfo>
+          </NavigationContainer>
+        </PersistGate>
     </Provider>
   );
 };

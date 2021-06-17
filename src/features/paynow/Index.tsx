@@ -124,11 +124,31 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         }
 
     }
-   
- 
+
+
     const orderNow = () => {
-        if (checkoutData?.type =="meal") {
-            WebhookPaymentScreen.navigate()
+        if (checkoutData?.type == "meal") {
+            if (stateId !== "" && fireDepartmentId !== '' && fireStationId !== '') {
+                WebhookPaymentScreen.navigate(stateId, fireDepartmentId, fireStationId, dates())
+            } else if (stateId == '') {
+                Snackbar.show({
+                    text: 'State id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            } else if (fireDepartmentId == '') {
+                Snackbar.show({
+                    text: 'Fire department id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            } else if (fireStationId == '') {
+                Snackbar.show({
+                    text: 'Fire station id required ',
+                    textColor: "white",
+                    duration: 3000
+                })
+            }
         } else {
             handlePayNowWithOutPay()
         }
@@ -149,12 +169,12 @@ const BeforePayNow = (props: BeforePayNowProps) => {
             </ScrollView>
             <CheckOutBox
                 label="Order Now"
-                totalDiscount={`$${checkoutData?.total_discount}`}
-                couponDiscount={`$${checkoutData?.coupon_discount}`}
-                totalMrp={`$${checkoutData?.total_mrp}`}
-                total={`$${checkoutData?.total_amount}`}
+                totalDiscount={`$${parseInt(checkoutData?.total_discount)}`}
+                couponDiscount={`$${parseInt(checkoutData?.coupon_discount)}`}
+                totalMrp={`$${parseInt(checkoutData?.total_mrp)}`}
+                total={`$${parseInt(checkoutData?.total_amount)}`}
                 deliveryFee={checkoutData?.delivery_fee == 0 ? "Free" : `$${checkoutData?.delivery_fee}`}
-                tax={`$${checkoutData?.tax_amount}`}
+                tax={`$${parseInt(checkoutData?.tax_amount)}`}
                 onPress={() => orderNow()} />
         </SafeAreaView>
     );

@@ -76,6 +76,7 @@ const CartScreen = ({ }: CartProps) => {
     const handleCheckout = () => {
         CheckOutControllerInstance.Checkout(coupenCode);
     }
+  
     const coupenCodeSection = () => {
         const COUPENURL = require('../../../assets/images/coupencode.png');
         return (
@@ -109,9 +110,9 @@ const CartScreen = ({ }: CartProps) => {
             </ScrollView>
             {
                 cartData?.type == "meal"|| cartData?.type == "free" ? (
-                    <CheckOutBox totalMrp={`$${cartData?.total_mrp}`}
-                        totalDiscount={`$${cartData?.total_discount}`}
-                        total={`$${cartData?.total_amount}`} label="Checkout" deliveryFee={cartData?.delivery_fee == 0 ? "Free" : `$${cartData?.delivery_fee}`} tax={`$${cartData?.tax_amount}`} onPress={() => handleCheckout()} />
+                    <CheckOutBox totalMrp={`$${parseInt(cartData?.total_mrp)}`}
+                        totalDiscount={`$${parseInt(cartData?.total_discount)}`}
+                        total={`$${parseInt(cartData?.total_amount)}`} label="Checkout" deliveryFee={cartData?.delivery_fee == 0 ? "Free" : `$${cartData?.delivery_fee}`} tax={`$${parseInt(cartData?.tax_amount)}`} onPress={() => handleCheckout()} />
                 ) : (
                     <View />
                 )

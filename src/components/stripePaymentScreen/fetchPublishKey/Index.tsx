@@ -3,9 +3,10 @@ import { APIENDPOINTS } from 'libs/api/apiEndpoints';
 
 export async function fetchPublishableKey(
     paymentMethod?: string
-): Promise<string | null> {
+): Promise<any | null> {
     const token = await AsyncStorage.getItem("token");
     let key: any;
+    let clientSecret: any
     try {
         const response = await fetch(
             `${APIENDPOINTS.APIBASEURL}/payment-methods?key=${APIENDPOINTS.APIKEY}`,
@@ -21,17 +22,12 @@ export async function fetchPublishableKey(
         if (data && data.length > 0) {
             data && data.forEach((obj: any) => {
                 if (obj.payment_method == "stripe") {
-                    if (obj.paymentmethod && obj.paymentmethod.length > 0) {
-                        obj.paymentmethod && obj.paymentmethod.forEach((item: any) => {
-                            if (item.key == 'publishable_key') {
-                                key = item.value
-                            }
-                        })
-                    }
+                    key = obj.paymentmethod?.publishable_key?.value;
+                    clientSecret = obj.paymentmethod?.secret_key?.value
                 }
             })
         }
-        return key;
+        return { key, clientSecret };
     } catch (e) {
         console.warn('Unable to fetch publishable key. Is your server running?');
         console.log(

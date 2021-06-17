@@ -353,7 +353,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {cookingSection(productDetail?.cooking_time)}
                     {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient)}
-                    {renderButtonSection(productDetail?.amount, productDetail)}
+                    {renderButtonSection(productDetail?.net_amount, productDetail)}
                     {
                         addCart?.popup ? renderModal(modalizeRef, addCart) : null
                     }

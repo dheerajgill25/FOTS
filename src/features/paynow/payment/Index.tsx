@@ -1,152 +1,223 @@
-import type {
+import {
     CardFieldInput,
-    PaymentMethodCreateParams,
+    useConfirmPayment,
+    useStripe,
 } from '@stripe/stripe-react-native';
-import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View, Switch } from 'react-native';
-import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
-import ButtonFoods from 'components/buttons/ButtonFoods';
+import React, { useEffect, useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, View, Image } from 'react-native';
 import PaymentScreen from 'components/stripePaymentScreen/Index';
-import { APIENDPOINTS } from 'libs/api/apiEndpoints';   
+import { APIENDPOINTS } from 'libs/api/apiEndpoints';
 import RootNavigator from 'navigation/rootnavigation';
-import { FontFamilyFoods } from 'components/typography/Typography';
+import Button from 'components/stripeButton/Index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { fetchPublishableKey } from 'components/stripePaymentScreen/fetchPublishKey/Index';
+import Snackbar from 'react-native-snackbar';
+import PayNowControllerInstance from '../controllers/paynow.controller';
+import { useSelector } from 'react-redux';
+import RootStore from 'reduxModule/store/Index';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 
-const WebhookPaymentScreen=() =>{
-    const [email, setEmail] = useState('');
-    const [saveCard, setSaveCard] = useState(false);
-
-    const { confirmPayment, loading } = useConfirmPayment();
-
-    const fetchPaymentIntentClientSecret = async () => {
-        const response = await fetch(`${APIENDPOINTS.APIBASEURL}/create-payment-intent`, {
+const WebhookPaymentScreen = (props: { route: any; }) => {
+    const { params: { date, fireDepartmentId, fireStationId, stateId } } = props.route
+    const [paymentSheetEnabled, setPaymentSheetEnabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [clientSc, setClientSc] = useState<string>("");
+    const [logo,setLogo] = useState<string>("")
+    const [paymentMethod, setPaymentMethod] = useState<{
+        image: string;
+        label: string;
+    } | null>(null);
+    const {
+        initPaymentSheet,
+        presentPaymentSheet,
+        confirmPaymentSheetPayment,
+        retrievePaymentIntent
+    } = useStripe();
+    const fetchPaymentSheetParams = async () => {
+        const token = await AsyncStorage.getItem("token");
+        const url = `${APIENDPOINTS.APIBASEURL}/payment-sheet?key=${APIENDPOINTS.APIKEY}`;
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: "Bearer " + token || "",
             },
-            body: JSON.stringify({
-                email,
-                currency: 'usd',
-                items: [{ id: 'id' }],
-                // request_three_d_secure: 'any',
-            }),
         });
-        const { clientSecret } = await response.json();
-
-        return clientSecret;
+        const { data: { paymentIntent, ephemeralKey, customer } } = await response.json();
+        setClientSc(paymentIntent)
+        return {
+            paymentIntent,
+            ephemeralKey,
+            customer,
+        };
     };
-
-    const handlePayPress = async () => {
-        // 1. fetch Intent Client Secret from backend
-        const clientSecret = await fetchPaymentIntentClientSecret();
-
-        // 2. Gather customer billing information (ex. email)
-        const billingDetails: PaymentMethodCreateParams.BillingDetails = {
-            email: 'email@stripe.com',
-            phone: '+48888000888',
-            addressCity: 'Houston',
-            addressCountry: 'US',
-            addressLine1: '1459  Circle Drive',
-            addressLine2: 'Texas',
-            addressPostalCode: '77063',
-        }; // mocked data for tests
-
-        // 3. Confirm payment with card details
-        // The rest will be done automatically using webhooks
-        const { error, paymentIntent } = await confirmPayment(clientSecret, {
-            type: 'Card',
-            billingDetails,
-            setupFutureUsage: saveCard ? 'OffSession' : undefined,
-        });
-
-        if (error) {
-            console.log('Payment confirmation error', error.message);
-        } else if (paymentIntent) {
-            Alert.alert(
-                'Success',
-                `The payment was confirmed successfully! currency: ${paymentIntent.currency}`
-            );
-            console.log('Success from promise', paymentIntent);
+    const initialisePaymentSheet = async () => {
+        setLoading(true);
+        const { key } = await fetchPublishableKey();
+        try {
+            const {
+                paymentIntent,
+                ephemeralKey,
+                customer,
+            } = await fetchPaymentSheetParams();
+            const { error, paymentOption } = await initPaymentSheet({
+                customerId: customer,
+                customerEphemeralKeySecret: ephemeralKey,
+                paymentIntentClientSecret: paymentIntent,
+                customFlow: true,
+                merchantDisplayName: 'Food on Stoves',
+                merchantCountryCode: 'US',
+                style: 'alwaysDark',
+                googlePay: false,
+                testEnv: true,
+            });
+            if (!error) {
+                setPaymentSheetEnabled(true);
+            }
+            if (paymentOption) {
+                setPaymentMethod(paymentOption);
+            }
+        } catch (error) {
+            console.log('error', error);
+        } finally {
+            setLoading(false);
         }
     };
-
+    const choosePaymentOption = async () => {
+        const { clientSecret } = await fetchPublishableKey();
+        const { error, paymentOption } = await presentPaymentSheet({
+            confirmPayment: false,
+            clientSecret: clientSecret
+        });
+        if (error) {
+            console.log('error', error);
+        } else if (paymentOption) {
+            setPaymentMethod({
+                label: paymentOption.label,
+                image: paymentOption.image,
+            });
+        } else {
+            setPaymentMethod(null);
+        }
+    };
+    const onPressBuy = async () => {
+        setLoading(true);
+        const { error } = await confirmPaymentSheetPayment();
+        if (error) {
+            Snackbar.show({
+                text: error.message,
+                textColor: "white",
+                duration: 3000
+            })
+        } else {
+            const { paymentIntent, error } = await retrievePaymentIntent(clientSc);
+            Snackbar.show({
+                text: '"Success The payment was confirmed successfully!"',
+                textColor: "white",
+                duration: 3000
+            })
+            PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, 'stripe', paymentIntent?.id,paymentIntent)
+            setPaymentSheetEnabled(false);
+            setLoading(false);
+        }
+    };
+    React.useEffect(() => {
+        initialisePaymentSheet();
+    }, []);
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any, i: any) => (
+                setLogo(obj.logo)
+            ))
+        }
+    }, [generalSettingData])
     return (
         <PaymentScreen>
-            <TextInput
-                autoCapitalize="none"
-                placeholder="E-mail"
-                keyboardType="email-address"
-                onChange={(value) => setEmail(value.nativeEvent.text)}
-                style={styles.input}
-            />
-            <CardField
-                postalCodeEnabled={false}
-                autofocus
-                placeholder={{
-                    number: '4242 4242 4242 4242',
-                    postalCode: '12345',
-                    cvc: 'CVC',
-                    expiration: 'MM|YY',
-                }}
-                onCardChange={(cardDetails) => {
-                    console.log('cardDetails', cardDetails);
-                }}
-                onFocus={(focusedField) => {
-                    console.log('focusField', focusedField);
-                }}
-                cardStyle={inputStyles}
-                style={styles.cardField}
-            />
-            <View style={styles.row}>
-                <Switch
-                    onValueChange={(value) => setSaveCard(value)}
-                    value={saveCard}
+              <View style={{marginBottom:20}}>
+                    <Image source={require("../../../../assets/images/appsquare.png")} style={styles.logo} />
+                </View>
+            <View>
+            <View>
+                <Button
+                    variant="primary"
+                    loading={loading}
+                    title={
+                        paymentMethod ? (
+                            <View style={styles.row}>
+                                <Image
+                                    source={{
+                                        uri: `data:image/png;base64,${paymentMethod.image}`,
+                                    }}
+                                    style={styles.image}
+                                />
+                                <Typography style={styles.text}>{paymentMethod.label}</Typography>
+                            </View>
+                        ) : (
+                            'Choose payment method'
+                        )
+                    }
+                    disabled={!paymentSheetEnabled}
+                    onPress={choosePaymentOption}
                 />
-                <Text style={styles.text}>Save card during payment</Text>
             </View>
-            <ButtonFoods
-                onPress={handlePayPress}
-                label="Pay"
-            />
+
+            <View style={styles.section}>
+                <Button
+                    variant="primary"
+                    loading={loading}
+                    disabled={!paymentMethod || !paymentSheetEnabled}
+                    title="Buy"
+                    onPress={onPressBuy}
+                />
+            </View>
+            </View>
         </PaymentScreen>
     );
 }
 
 const styles = StyleSheet.create({
-    cardField: {
-        width: '100%',
-        height: 50,
-        marginVertical: 30,
-        fontFamily:FontFamilyFoods.POPPINS
+    flex: {
+        flex: 1,
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    section: {
+        marginTop: 20,
+    },
+    title: {
+        fontSize: 18,
         marginBottom: 20,
+        fontWeight: 'bold',
+    },
+    paymentMethodTitle: {
+        color: "#0A2540",
+        fontWeight: 'bold',
+    },
+    image: {
+        width: 26,
+        height: 20,
     },
     text: {
+        color: 'white',
+        fontSize: 16,
         marginLeft: 12,
+        fontFamily:FontFamilyFoods.POPPINSSEMIBOLD
     },
-    input: {
-        height: 44,
-        borderBottomColor: '#0A2540',
-        borderBottomWidth: 1.5,
-        fontFamily:FontFamilyFoods.POPPINS
-    },
+    logo:{
+        height:150,
+        width:400,
+        alignSelf:"center",
+        overflow:"hidden"
+    }
 });
-
-const inputStyles: CardFieldInput.Styles = {
-    borderWidth: 1,
-    backgroundColor: '#FFFFFF',
-    borderColor: '#000000',
-    borderRadius: 8,
-    fontSize: 14,
-    placeholderColor: '#999999',
-};
 WebhookPaymentScreen.SCREEN_NAME = 'WebhookPaymentScreen';
 WebhookPaymentScreen.navigationOptions = {
     headerShown: false,
 };
-WebhookPaymentScreen.navigate = () => {
-    RootNavigator.navigate(WebhookPaymentScreen.SCREEN_NAME);
+WebhookPaymentScreen.navigate = (stateId: string, fireDepartmentId: string, fireStationId: string, date: string) => {
+    RootNavigator.navigate(WebhookPaymentScreen.SCREEN_NAME, { stateId: stateId, fireDepartmentId: fireDepartmentId, fireStationId: fireStationId, date: date });
 };
 export default WebhookPaymentScreen;

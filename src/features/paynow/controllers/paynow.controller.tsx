@@ -6,7 +6,7 @@ import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
 class PayNowController {
-    async paynowProducts(stateId: any, fdId: any, fsID: any, date: any, paymentMethod?: any, pId?: any) {
+    async paynowProducts(stateId: any, fdId: any, fsID: any, date: any, paymentMethod?: any, pId?: any,orderJson?:any) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
@@ -16,6 +16,7 @@ class PayNowController {
             formData.append('delivery_date', date);
             formData.append('payment_method', paymentMethod||"");
             formData.append('payment_id', pId||"");
+            formData.append('order_json', JSON.stringify(orderJson)||{});
             const URLS = APIENDPOINTS.APIBASEURL + URL.ORDER + `?key=${APIENDPOINTS.APIKEY}`;
             const orderNow = await HttpCall.post(URLS, formData, true);
             const { data, status }: any = orderNow;
