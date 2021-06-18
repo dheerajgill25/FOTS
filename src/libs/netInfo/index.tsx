@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import Snackbar from 'react-native-snackbar';
+import { FontFamilyFoods } from 'components/typography/Typography';
 interface NetworkInfoProps {
     children: React.ReactNode;
 }
@@ -22,8 +23,9 @@ const NetworkInfo = (props: NetworkInfoProps) => {
     }, [isConnected])
     const handleSnackBar = () => {
         Snackbar.show({
-            text: "No Internet Connection",
+            text: "Please check your internet connection or try again later",
             duration: Snackbar.LENGTH_INDEFINITE,
+            fontFamily: FontFamilyFoods.POPPINS
         })
 
     }

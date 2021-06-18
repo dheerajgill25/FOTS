@@ -1,5 +1,5 @@
 import ButtonFood from 'components/buttons/ButtonFoods';
-import Typography from 'components/typography/Typography';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import Register from 'features/registerscreen';
 import { validateLogin } from 'libs/functions/validation';
 import StorageService from 'libs/storage/Storage';
@@ -59,7 +59,8 @@ const loginForm = () => {
             Snackbar.show({
                 text: 'Please fill all required Fields',
                 textColor: "white",
-                duration: 3000
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
             })
         }
     }

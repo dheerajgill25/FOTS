@@ -44,6 +44,7 @@
     "react-native-modalize": "^2.0.8",
     "react-native-permissions": "^3.0.4",
     "react-native-push-notification": "^7.3.1",
+    "react-native-ratings": "^8.1.0",
     "react-native-razorpay": "^2.2.6",
     "react-native-reanimated": "^2.1.0",
     "react-native-render-html": "^5.1.0",

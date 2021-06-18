@@ -7,6 +7,7 @@ import CartIcon from 'components/carticon/Index';
 import LogoTitle from '@components/logotitle/Index';
 import MenusIcons from 'components/menusicon/Index';
 import CartScreen from 'features/cart/Index';
+import BackIconDark from 'components/backicon/BackIconDark';
 
 interface ScreenOptionNavigation {
     showBackButton: boolean;
@@ -17,7 +18,7 @@ interface ScreenOptionNavigation {
 }
 
 const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
-    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo } =
+    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo, } =
         props || {};
     return {
         headerTitleAlign:"center",
@@ -36,7 +37,7 @@ const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
                         }}
                         onPress={() => RootNavigator.pop()}
                     >
-                        <MenusIcons />
+                        <BackIconDark />
                     </TouchableOpacity>
                 );
             } else if (headerLeft) {

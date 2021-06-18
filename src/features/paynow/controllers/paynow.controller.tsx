@@ -16,7 +16,7 @@ class PayNowController {
             formData.append('delivery_date', date);
             formData.append('payment_method', paymentMethod||"");
             formData.append('payment_id', pId||"");
-            formData.append('order_json', JSON.stringify(orderJson)||{});
+            formData.append('order_json', JSON.stringify(orderJson)||"");
             const URLS = APIENDPOINTS.APIBASEURL + URL.ORDER + `?key=${APIENDPOINTS.APIKEY}`;
             const orderNow = await HttpCall.post(URLS, formData, true);
             const { data, status }: any = orderNow;

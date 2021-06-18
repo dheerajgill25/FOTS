@@ -13,6 +13,7 @@ import RootStore from 'reduxModule/store/Index';
 import styles from './styles';
 import  moment from "moment";
 import EditProfile from 'features/editProfile/Index';
+import ProductRating from 'features/rating/Index';
 interface MyAccountProps { }
 interface OrderDataProps {
     productName: string;
@@ -145,7 +146,7 @@ const renderItems = (items: any, index: any) => {
                                 </View>
                             </View>
                             <View style={styles.buttonBox}>
-                                <ButtonFood onPress={() => { }} label="RATE ORDER" />
+                                <ButtonFood onPress={() => { ProductRating.navigate(items.id,foods?.product?.id)}} label="RATE ORDER" />
                             </View>
                         </ View>
                     ))

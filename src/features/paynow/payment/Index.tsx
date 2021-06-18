@@ -107,14 +107,16 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
             Snackbar.show({
                 text: error.message,
                 textColor: "white",
-                duration: 3000
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
             })
         } else {
             const { paymentIntent, error } = await retrievePaymentIntent(clientSc);
             Snackbar.show({
                 text: '"Success The payment was confirmed successfully!"',
                 textColor: "white",
-                duration: 3000
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
             })
             PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, 'stripe', paymentIntent?.id,paymentIntent)
             setPaymentSheetEnabled(false);

@@ -226,7 +226,7 @@ const callbackAddToCart = async (success: boolean, msg?: any) => {
 const renderButtonSection = (_data: any, item: any) => {
     return (
         <View style={styles.descriptionSection}>
-            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => handleAddToCart(item)} />
+            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() =>{ handleAddToCart(item)}} />
         </View>
     )
 }
@@ -243,6 +243,7 @@ const handleAddToCart = (item: any) => {
     };
     AsyncStorage.setItem("cartRequest", JSON.stringify(item));
     AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
+
 }
 const handleCartAgainAfterRemove = async (cart: {}) => {
     const categoryId = await AsyncStorage.getItem("cId");
@@ -312,7 +313,6 @@ const handleAddToCartAfterRemove = async (cart: {}) => {
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     let addCart: { popup?: any; };
     const modalizeRef = React.useRef<ReactNativeModal>(null);
-    const [isShown, setIsShown] = useState<boolean>(false);
     const {
         route: { params: { id, meal } },
     } = props;

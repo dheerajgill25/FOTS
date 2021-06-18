@@ -20,6 +20,7 @@ import ChangePassword from 'features/editProfile/changePassword';
 import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
 import GeneralSettingControllerInstance from 'features/commonApiCall/generalSetting/controllers/generalSetting.controller';
 import WebhookPaymentScreen from 'features/paynow/payment/Index';
+import ProductRating from 'features/rating/Index';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -67,18 +68,17 @@ const RootStackScreen = () => {
                             name={ThankYouScreen.SCREEN_NAME}
                             component={ThankYouScreen}
                             options={HeaderScreenOptionNavigation({
-                                showBackButton: true,
+                                showBackButton: false,
                                 headerTitle: "Order Confirmed",
                             })}
 
                         />
                         <RootStackNavigator.Screen
-                            name={MyAccount.SCREEN_NAME}
-                            component={MyAccount}
-                            options={HeaderScreenOptionNavigation({
+                            name={ProductRating.SCREEN_NAME}
+                            component={ProductRating}
+                            options={ScreenOptionNavigation({
                                 showBackButton: true,
-                                headerTitle: "My Account",
-                                showCartIcon: true
+                                showCartIcon: true,
                             })}
 
                         />

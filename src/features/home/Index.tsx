@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
+import {  FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import SearchComponent from "@components/search/Index";
 import RootNavigator from "navigation/rootnavigation";
@@ -7,7 +7,6 @@ import styles from "./styles";
 import FoodItemsComponent from "components/foodItems/Index";
 import Typography from "components/typography/Typography";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
-import { foodItemData, groceryItemData, } from "./data";
 import TestimonialComponent from "components/testimonial/Index";
 import BannerComponent from "components/banner/Index";
 import { MyStatusBar } from "components/statusbar/Index";
@@ -16,16 +15,14 @@ import { useSelector } from "react-redux";
 import RootStore from "reduxModule/store/Index";
 import MealPlan from "features/mealplan/Index";
 import OrderScreen from "features/orderScreen/Index";
-import ProductListControllerInstance from "features/products/controllers/product.controller";
 import StorageService from "libs/storage/Storage";
-import SearchScreen from "features/searchScreen/Index";
 import TestimonialsControllerInstance from "./controllers/testimonials.controller";
 import { window } from "themes/functions";
+import PopularProductControllerInstance from "./controllers/popularProduct.controller";
 interface HomeScreenProps { }
-const renderFoodItems = (item: any) => {
-    const { index } = item;
+const renderFoodItems = (item: any, index: number) => {
     return (
-        <FoodItemsComponent text={item.item.text} imageUrl={item.item.imageUrl} index={index} />
+        <FoodItemsComponent data={item.products} title={item?.category_name} index={index} />
     )
 }
 const HomeScreen = ({ }: HomeScreenProps) => {
@@ -33,10 +30,12 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const [homePageBanner, setHomePageBanner] = useState<string>("");
     useEffect(() => {
         CategoryControllerInstance.getCategory();
-        TestimonialsControllerInstance.getTestimonials()
+        TestimonialsControllerInstance.getTestimonials();
+        PopularProductControllerInstance.getPopularProduct()
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
     const testimonialData = useSelector((state: RootStore) => state.TestimonialsInState.data?.data);
+    const popularProduct = useSelector((state: RootStore) => state.PopularProductInState.data?.data);
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
@@ -46,13 +45,6 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                 }} />
             </View>
         )
-    }
-    const handleTextInput = (text: string) => {
-        setText(text);
-        if (text && text.length >= 3) {
-            SearchScreen.navigate(text);
-            ProductListControllerInstance.getProductList("", "", text.trim())
-        }
     }
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
     useEffect(() => {
@@ -73,23 +65,14 @@ const HomeScreen = ({ }: HomeScreenProps) => {
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} removeClippedSubviews nestedScrollEnabled>
                     <View style={styles.homeSection}>
-                        <SearchComponent text={text} action={(text) => handleTextInput(text)} />
+                        <SearchComponent text={text} />
                         <BannerComponent BANNERIMAGEURL={homePageBanner} />
                         <View>
-                            <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
+                            <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>
                     </View>
                     <View >
-                        <Typography style={styles.foodItemPopluar}>Popular "Farm To Firehouse" Meals</Typography>
-                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
-                    </View>
-                    <View>
-                        <Typography style={styles.foodItemPopluar}>Popular “For Your Table” Meals </Typography>
-                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={foodItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
-                    </View>
-                    <View>
-                        <Typography style={styles.foodItemPopluar}>Popular “Farm to Firehouse” Recipes</Typography>
-                        <FlatList getItemLayout={(data:any, index:any) => getItemLayout(data,index)} style={{ paddingLeft: 21, }} keyExtractor={(item, index) => index.toString()} bounces={false} data={groceryItemData} renderItem={renderFoodItems} horizontal={true} showsHorizontalScrollIndicator={false} />
+                        <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)}  keyExtractor={(item, index) => index.toString()} bounces={false} data={popularProduct} renderItem={({ item, index }) => renderFoodItems(item, index)}  />
                     </View>
                     <View>
                         <View>

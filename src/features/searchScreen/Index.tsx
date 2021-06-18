@@ -28,18 +28,13 @@ const SearchScreen = (props: SearchScreenProps) => {
     }, [props?.route]);
     React.useEffect(() => {
         if(searchString){
+            console.log(searchString)
             setText(searchString);
         }else{
             setText("");
             productList = [];
         }
     }, [searchString])
-    const handleTextInput = (text: string) => {
-        setText(text);
-        if (text && text.length >= 3) {
-            ProductListControllerInstance.getProductList("", "", text.trim())
-        }
-    }
     productList = useSelector((state: RootStore) => state.ProductInState.data?.data?.data);
     function renderProduct(item: any, index: number) {
         return (
@@ -58,7 +53,7 @@ const SearchScreen = (props: SearchScreenProps) => {
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false}>
                     <View style={styles.searchSection}>
-                        <SearchComponent text={text} action={(text) => handleTextInput(text)} />
+                        <SearchComponent text={searchString} />
                     </View>
                     <View style={{ marginTop: 10 }}>
                         <FlatList data={productList}

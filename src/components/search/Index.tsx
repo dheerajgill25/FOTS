@@ -1,29 +1,40 @@
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
+import ProductListControllerInstance from "features/products/controllers/product.controller";
+import SearchScreen from "features/searchScreen/Index";
 import React, { memo } from "react";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 import { SafeAreaView, View, StyleSheet, TextInput, Image } from "react-native";
 interface SearchProps {
-    action: (text: string) => void
+    action?: () => void
     text: string;
 }
-const renderButtonWithIcon = () => {
-    const IMAGEURLFILTER = require("../../../assets/images/filter.png")
+const handleTextInput = (searchText: string) => {
+    if (searchText && searchText.length >= 3) {
+        SearchScreen.navigate(searchText);
+        ProductListControllerInstance.getProductList("", "", searchText.trim())
+    }
+}
+const renderButtonWithIcon = (searchText: string) => {
+    const IMAGEURLFILTER = require("../../../assets/images/search.png")
+
     return (
-        <View style={styles.filterButton}>
-            <Typography style={styles.filterText}>Filter</Typography>
+        <TouchableOpacity style={styles.filterButton} onPress={() => handleTextInput(searchText)}>
             <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
-        </View>
+        </TouchableOpacity>
     )
 }
-const SearchComponent = ({ action,text}: SearchProps) => {
-    const IMAGEURL = require("../../../assets/images/search.png")
+const SearchComponent = ({ action, text }: SearchProps) => {
+    const IMAGEURL = require("../../../assets/images/search.png");
+    const [searchText, setSearchText] = useState<string>("");
+
     return (
         <View style={styles.searchBox}>
             <View style={styles.searchWrap}>
-                <Image source={IMAGEURL} style={styles.searchIcon} />
-                <TextInput placeholder={'Search'} value={text} onChangeText={(text)=>action(text)} style={styles.formControl} placeholderTextColor={"#484848"} />
+                <TextInput placeholder={'Search'} value={searchText||text} onChangeText={(text) => setSearchText(text)} style={styles.formControl} placeholderTextColor={"#484848"} />
             </View>
             <View style={styles.filterBox}>
-                {renderButtonWithIcon()}
+                {renderButtonWithIcon(searchText)}
             </View>
         </View>
     )
@@ -47,11 +58,11 @@ const styles = StyleSheet.create({
     },
     formControl: {
         paddingVertical: 12,
-        paddingLeft: 40,
+        paddingLeft: 10,
         fontFamily: FontFamilyFoods.POPPINS,
         color: 'black',
         paddingRight: 10,
-        fontSize:14,lineHeight:20
+        fontSize: 14, lineHeight: 20
     },
     searchIcon: {
         position: 'absolute',
@@ -66,18 +77,18 @@ const styles = StyleSheet.create({
         fontFamily: FontFamilyFoods.POPPINS
     },
     filterIcon: {
-        width:20,
-        height:18
+        width: 18,
+        height: 17,
+        marginRight:5
     },
     filterButton: {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        marginRight: 20,
-        backgroundColor: '#F2F2F2',
+        marginRight: 10,
         padding: 8,
         borderRadius: 4,
-        maxWidth: 100
+        maxWidth: 120
     },
 })

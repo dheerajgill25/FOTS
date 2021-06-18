@@ -128,6 +128,7 @@ const BottomTabNavigation = () => {
                         ),
                         unmountOnBlur: true,
                     }}
+                    
                 />
             </Tab.Navigator>
         </>

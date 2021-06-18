@@ -17,6 +17,7 @@ import { CartCountInState } from "features/commonApiCall/cartCount/reducers/cart
 import { AddToCartInState } from "features/commonApiCall/addToCart/reducers/addToCart.reducer";
 import { TestimonialsInState } from "features/home/reducers/testimonials.reducer";
 import { GeneralSettingInState } from "features/commonApiCall/generalSetting/reducers/generalSettings.reducer";
+import { PopularProductInState } from "features/home/reducers/popularProduct.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -37,5 +38,6 @@ export default interface RootStore {
     CartCountInState:CartCountInState;
     AddToCartInState:AddToCartInState;
     TestimonialsInState:TestimonialsInState;
-    GeneralSettingInState:GeneralSettingInState
+    GeneralSettingInState:GeneralSettingInState;
+    PopularProductInState:PopularProductInState
 };

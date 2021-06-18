@@ -47,7 +47,8 @@ const registerForm = () => {
             Snackbar.show({
                 text: 'Please fill all required Fields',
                 textColor: "white",
-                duration: 3000
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
             })
         }
     }

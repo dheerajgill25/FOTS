@@ -23,6 +23,7 @@ import { cartCountReducer } from 'features/commonApiCall/cartCount/reducers/cart
 import { addToCartReducer } from 'features/commonApiCall/addToCart/reducers/addToCart.reducer';
 import { testimonialsReducer } from 'features/home/reducers/testimonials.reducer';
 import { generalSettingsReducer } from 'features/commonApiCall/generalSetting/reducers/generalSettings.reducer';
+import { popularProductReducer } from 'features/home/reducers/popularProduct.reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -49,7 +50,8 @@ function createReducer(injectedReducers = {}) {
         CartCountInState:cartCountReducer,
         AddToCartInState:addToCartReducer,
         TestimonialsInState:testimonialsReducer,
-        GeneralSettingInState:generalSettingsReducer
+        GeneralSettingInState:generalSettingsReducer,
+        PopularProductInState:popularProductReducer
     });
     const persistConfig = {
         key: 'root',

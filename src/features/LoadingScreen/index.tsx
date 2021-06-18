@@ -9,16 +9,22 @@ const LoadingScreen = () => {
     const loading = useSelector((state: any) => state.loadingState);
     return (
         <Spinner
-            overlayColor='rgba(0, 0, 0, 0.7)'
+            overlayColor='rgba(0, 0, 0, 0.25)'
             visible={loading.loading}
             textContent={"Loading"}
             textStyle={{
                 color: 'white',
                 fontSize: 20,
-                fontFamily: FontFamilyFoods.POLLERONE
+                fontFamily: FontFamilyFoods.POPPINS
             }}
+            animation="fade"
         />
     );
 };
 
 export default LoadingScreen;
+const styles = StyleSheet.create({
+    spinner:{
+
+    }
+})

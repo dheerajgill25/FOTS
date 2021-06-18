@@ -1,6 +1,6 @@
 import CheckOutBox from 'components/checkoutbox/Index';
 import DropdownComponentCheckOut from 'components/checkoutdropdown';
-import Typography from 'components/typography/Typography';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import FireDepartmentControllerInstance from 'features/registerscreen/controllers/fireDepartment.controller';
 import FireStationControllerInstance from 'features/registerscreen/controllers/fireStation.controller';
 import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
@@ -100,25 +100,29 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 Snackbar.show({
                     text: 'State id or Fire Deparment id or Fire station id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (stateId == '') {
                 Snackbar.show({
                     text: 'State id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireDepartmentId == '') {
                 Snackbar.show({
                     text: 'Fire department id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireStationId == '') {
                 Snackbar.show({
                     text: 'Fire station id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             }
         }
@@ -134,19 +138,22 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 Snackbar.show({
                     text: 'State id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireDepartmentId == '') {
                 Snackbar.show({
                     text: 'Fire department id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireStationId == '') {
                 Snackbar.show({
                     text: 'Fire station id required ',
                     textColor: "white",
-                    duration: 3000
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
                 })
             }
         } else {
