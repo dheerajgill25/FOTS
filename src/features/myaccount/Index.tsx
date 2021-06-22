@@ -7,37 +7,17 @@ import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import styles from './styles';
-import  moment from "moment";
+import moment from "moment";
 import EditProfile from 'features/editProfile/Index';
 import ProductRating from 'features/rating/Index';
+import { useState } from 'react';
+import OpenLink from 'libs/functions/Linking';
 interface MyAccountProps { }
-interface OrderDataProps {
-    productName: string;
-    productStatus: number;
-}
-enum STATUS {
-    PROCESSING,
-    DISPATCH,
-    DELIVERED
-}
-const orderData: OrderDataProps[] = [
-    {
-        productName: 'Farm To Firehouse (Peruvian Chicken )',
-        productStatus: STATUS.PROCESSING
-    },
-    {
-        productName: 'Farm To Firehouse (Peruvian Chicken )',
-        productStatus: STATUS.DISPATCH
-    },
-    {
-        productName: 'Farm To Firehouse (Peruvian Chicken )',
-        productStatus: STATUS.DELIVERED
-    },
-];
+
 const renderAccountInfo = (data: any) => {
     return (
         <View style={styles.accountInfoSecion}>
@@ -48,22 +28,24 @@ const renderAccountInfo = (data: any) => {
                         <Typography style={styles.accountEmail}>{data.mobile}   •   {data.email}</Typography>
                     </View>
                     <View style={styles.accountInfoContent}>
-                        <Typography onPress={()=>EditProfile.navigate()} style={styles.editBtn}>Edit</Typography>
+                        <Typography onPress={() => EditProfile.navigate()} style={styles.editBtn}>Edit</Typography>
                     </View>
                 </View>
             </View>
         </View>
     )
 }
-const renderHelpSection = () => {
+const renderHelpSection = (contactEmail: string) => {
     const ARROWRIGHT = require('../../../assets/images/arrowright.png')
     return (
         <View style={styles.helpSection}>
             <View style={styles.helpBox}>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <Typography style={styles.helpText}>Help</Typography>
-                        <Typography style={styles.faqText}>FAQ & Links</Typography>
+                        <TouchableOpacity onPress={()=>OpenLink.openUrl(contactEmail)}>
+                            <Typography style={styles.helpText}>Help</Typography>
+                            <Typography style={styles.faqText}>FAQ & Links</Typography>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.helpRight}>
                         <Image source={ARROWRIGHT} style={styles.arrowRight} />
@@ -135,19 +117,22 @@ const renderItems = (items: any, index: any) => {
 
                                 </View>
                             </View>
-                            <View style={[styles.orderContentInner,{paddingTop:15}]}>
+                            <View style={[styles.orderContentInner, { paddingTop: 15 }]}>
                                 <View style={{ flex: 1 }}>
                                     <Typography style={styles.dateFieldsName}>{'Placed on'}</Typography>
                                     <Typography style={styles.date}>{dates(foods.created_at)}</Typography>
                                 </View>
                                 <View style={{ flex: 1, }}>
-                                    <Typography style={[styles.dateFieldsName,{textAlign:"right"}]}>{items.status=="Delivered"?"Delivered on":"Arriving on"}</Typography>
-                                    <Typography style={[styles.date,{textAlign:"right"}]}>{deliverDate}</Typography>
+                                    <Typography style={[styles.dateFieldsName, { textAlign: "right" }]}>{items.status == "Delivered" ? "Delivered on" : "Arriving on"}</Typography>
+                                    <Typography style={[styles.date, { textAlign: "right" }]}>{deliverDate}</Typography>
                                 </View>
                             </View>
-                            <View style={styles.buttonBox}>
-                                <ButtonFood onPress={() => { ProductRating.navigate(items.id,foods?.product?.id)}} label="RATE ORDER" />
-                            </View>
+                            {
+                                items.status == "Delivered" && <View style={styles.buttonBox}>
+                                    <ButtonFood onPress={() => { ProductRating.navigate(items.id, foods?.product?.id) }} label="RATE ORDER" />
+                                </View>
+                            }
+
                         </ View>
                     ))
                 ) : (
@@ -160,7 +145,7 @@ const renderItems = (items: any, index: any) => {
 }
 const MyAccount = (props: MyAccountProps) => {
     const [userData, setUserData] = React.useState({});
-
+    const [contactEmail, setContactEmail] = useState("")
     React.useEffect(() => {
         let cancelled = false;
         StorageService.getItem('user').then((values: any) => {
@@ -171,16 +156,24 @@ const MyAccount = (props: MyAccountProps) => {
         }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
         return () => { cancelled = true; }
     }, [userData])
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    const orderListData = useSelector((state: RootStore) => state.OrderListInState.data?.data);
     React.useEffect(() => {
         OrderListControllerInstance.getOrderList();
     }, [])
-    const orderListData = useSelector((state: RootStore) => state.OrderListInState.data?.data);
+    React.useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any, i: any) => (
+                setContactEmail(obj.contact_email)
+            ))
+        }
+    }, [generalSettingData]);
     return (
         <SafeAreaView style={styles.container}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <ScrollView bounces={false} >
                 {renderAccountInfo(userData)}
-                {renderHelpSection()}
+                {renderHelpSection(contactEmail)}
                 <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={orderListData} renderItem={({ item, index }) => renderItems(item, index)} keyExtractor={(item, index) => index.toString()} />
             </ScrollView>
         </SafeAreaView>

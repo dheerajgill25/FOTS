@@ -17,6 +17,7 @@ import ReactNativeModal from 'react-native-modal';
 import HomeScreen from "features/home/Index";
 import CartIcon from "components/carticon/Index";
 import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
+import OrderScreen from "features/orderScreen/Index";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -29,7 +30,7 @@ const bannerSection = (_data: any) => {
         <View style={styles.bannerSection}>
             <View style={styles.bannerPreview}>
                 <View style={styles.previewImageSection}>
-                <ImageComponent uri={BANNERIMAGEURL} imageStyle={styles.previewImage} priority={Priority.low} resizeMode={ResizeMode.cover} />
+                    <ImageComponent uri={BANNERIMAGEURL} imageStyle={styles.previewImage} priority={Priority.low} resizeMode={ResizeMode.cover} />
                 </View>
             </View>
             <View style={styles.cartIconSection}>
@@ -208,17 +209,7 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
         </View>
     )
 }
-const scrollHeadingSection = () => {
-    return (
-        <View style={[styles.fixedHeaderView]}>
-            <View style={styles.headerSection}>
-                <TouchableOpacity onPress={() => RootNavigator.pop()} style={styles.headerImage}>
-                    <Image source={require("../../../assets/images/backicon.png")} style={styles.backicon} />
-                </TouchableOpacity>
-            </View>
-        </View>
-    )
-}
+
 const callbackAddToCart = async (success: boolean, msg?: any) => {
     cartAgainAdd = success
 }
@@ -226,7 +217,7 @@ const callbackAddToCart = async (success: boolean, msg?: any) => {
 const renderButtonSection = (_data: any, item: any) => {
     return (
         <View style={styles.descriptionSection}>
-            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() =>{ handleAddToCart(item)}} />
+            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => { handleAddToCart(item) }} />
         </View>
     )
 }
@@ -258,11 +249,12 @@ const handleCartAgainAfterRemove = async (cart: {}) => {
 }
 
 const renderModal = (modalizeRef: any, cart: {}) => {
-    const closeModal = () => {
+    const closeModal = async () => {
+        const category_id = await AsyncStorage.getItem('cId');
         modalizeRef?.current?.close();
         cartAgainAdd = false;
         cart = {};
-        HomeScreen.navigate()
+        OrderScreen.navigate(category_id)
     }
     return (
         <>

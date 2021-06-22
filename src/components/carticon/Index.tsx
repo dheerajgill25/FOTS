@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import RootStore from '@reduxModule/store/Index';
 import CartScreen from 'features/cart/Index';
 import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
+import Snackbar from 'react-native-snackbar';
+import { FontFamilyFoods } from 'components/typography/Typography';
 const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
     const IMAGEURL = require('../../../assets/images/cart.png');
     const [cartItems, setCartItems] = useState<number>(0)
@@ -18,10 +20,24 @@ const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
             setCartItems(0)
         }
     }, [countNumber,cartItems])
+    const navigateToCart=()=>{
+        console.log(cartItems)
+        if(cartItems==0){
+            Snackbar.show({
+                text: 'Cart is empty',
+                textColor: "white",
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
+            })
+            return 
+        }else{
+            CartScreen.navigate()
+        }
+    }
     return (
         <>
             <View style={[styles.cartFix, onDetailPage && styles.cartIconOnDetail]}>
-                <TouchableOpacity onPress={()=>CartScreen.navigate()}>
+                <TouchableOpacity onPress={()=>navigateToCart()}>
                     <Image source={onDetailPage ? whiteCartIcon : IMAGEURL} style={{ height: 20, width: 20 }} />
                     <View style={{
                         bottom: 10,

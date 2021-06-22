@@ -16,7 +16,7 @@ const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: Butt
                 fiveMealBtn ? (
                     <TouchableOpacity onPress={onPress} style={styles.filterButton}>
                         <View style={{ flex: 1 }}>
-                            <Typography style={[buttonStyle ? buttonStyle : styles.filterText, { flex: 0,fontFamily:FontFamilyFoods.POPPINSMEDIUM }]}>{label}</Typography>
+                            <Typography style={[buttonStyle ? buttonStyle : styles.filterText, { flex: 0,fontFamily:FontFamilyFoods.POPPINSMEDIUM,textAlign:fiveMealBtn?"center":"left" }]}>{label}</Typography>
                         </View>
 
                         <View style={styles.imageForIcon}>
@@ -26,7 +26,7 @@ const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: Butt
                 ) : (
                     <TouchableOpacity onPress={onPress} style={styles.filterButton}>
                         <Typography style={buttonStyle ? buttonStyle : styles.filterText}>{label}</Typography>
-                        <View style={[styles.imageForIcon,{justifyContent:"flex-end",maxWidth:250}]}>
+                        <View style={[styles.imageForIcon,{justifyContent:"flex-end",maxWidth:100}]}>
                             <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
                         </View>
                     </TouchableOpacity>

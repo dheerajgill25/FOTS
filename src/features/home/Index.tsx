@@ -39,7 +39,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
-                <RenderButtonWithIcon fiveMealBtn label={item.name} onPress={() => {
+                <RenderButtonWithIcon  label={item.name} onPress={() => {
                     item.status == 'free' ? OrderScreen.navigate(item.id) : item.status == "meal" ?
                         MealPlan.navigate(item.id) : null; StorageService.setItem("cId", item.id)
                 }} />

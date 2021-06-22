@@ -124,6 +124,14 @@ const styles = StyleSheet.create({
         position:"absolute",
         right:10,
         top:10
+    },
+    removeAllTextButton:{
+        textAlign: "right", 
+        textDecorationLine: "underline",
+        fontFamily: FontFamilyFoods.POPPINSMEDIUM,
+        fontSize: 16, color: '#484848',
+        lineHeight: 22,
+        marginRight: 10,
     }
 });
 export default styles;

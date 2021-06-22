@@ -47,15 +47,6 @@ const renderHowItsWorks = (item: any) => {
         </>
     )
 };
-// const renderFooterItem = () => {
-//     return (
-//         <View style={styles.footerSection}>
-//             <View style={styles.footerBox}>
-//                 <Typography style={styles.footerTitle}>Orders must be placed by 9am to receive the same day delivery</Typography>
-//             </View>
-//         </View>
-//     )
-// }
 
 const OrderScreen = (props: OrderScreenProps) => {
     const BANNERIMAGEURL = require('../../../assets/images/banner2.png');

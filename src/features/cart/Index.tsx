@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckOutBox from 'components/checkoutbox/Index';
 import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
@@ -5,36 +6,55 @@ import CheckOutControllerInstance from 'features/commonApiCall/checkout/controll
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import { window } from 'themes/functions';
 import CartListControllerInstance from './httpCall/controllers/cartList.controller';
 import styles from './styles';
 interface CartProps { }
-const renderShoppingCartSection = () => {
+const renderShoppingCartSection = (length: any) => {
     const CARTURL = require('../../../assets/images/cart.png');
+    const removeAllProduct = async () => {
+        const categoryId = await AsyncStorage.getItem("cId");
+        length > 0 ? RemoveCartControllerInstance.RemoveCartAllProducts(categoryId) : Snackbar.show({
+            text: 'Cart is already empty',
+            textColor: "white",
+            duration: 3000,
+            fontFamily: FontFamilyFoods.POPPINS
+        });
+        return
+    }
     return (
-        <View style={styles.shoppingCartSection}>
-            <View style={styles.shoppingCartBox}>
-                <View style={styles.shoppingCartWrap}>
-                    <View style={styles.shoppingCartLeft}>
-                        <Image style={styles.cartIcon} source={CARTURL} />
-                    </View>
-                    <View style={styles.shoppingCartRight}>
-                        <Typography style={styles.shoppingCartTitle}>Shopping Cart</Typography>
-                        <Typography style={styles.shoppingCartSubTitle}>Verify your quantity and click checkout</Typography>
+        <>
+            <View style={{ justifyContent: "flex-end", flex: 1 ,marginTop:10,}}>
+                <TouchableOpacity onPress={() => removeAllProduct()}>
+                    <Typography style={styles.removeAllTextButton}>Remove All</Typography>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.shoppingCartSection}>
+                <View style={styles.shoppingCartBox}>
+                    <View style={styles.shoppingCartWrap}>
+                        <View style={styles.shoppingCartLeft}>
+                            <Image style={styles.cartIcon} source={CARTURL} />
+                        </View>
+                        <View style={styles.shoppingCartRight}>
+                            <Typography style={styles.shoppingCartTitle}>Shopping Cart</Typography>
+                            <Typography style={styles.shoppingCartSubTitle}>Verify your quantity and click checkout</Typography>
+                        </View>
+
                     </View>
                 </View>
             </View>
-        </View>
+        </>
     )
 }
-const renderCartItems = (data: any,i:number) => {
+const renderCartItems = (data: any, i: number, type: string) => {
     const CLOSEICON = require('../../../assets/images/cut.png');
     const { product, id, cart_id } = data;
     const handleRemoveCart = () => {
-        RemoveCartControllerInstance.RemoveCartProducts(cart_id, product.id)
+        RemoveCartControllerInstance.RemoveCartProducts(cart_id, product.id, type, product?.category_id)
     }
     return (
         <View key={i} style={styles.cartBox}>
@@ -76,7 +96,6 @@ const CartScreen = ({ }: CartProps) => {
     const handleCheckout = () => {
         CheckOutControllerInstance.Checkout(coupenCode);
     }
-  
     const coupenCodeSection = () => {
         const COUPENURL = require('../../../assets/images/coupencode.png');
         return (
@@ -85,7 +104,7 @@ const CartScreen = ({ }: CartProps) => {
                     <View style={styles.coupenCodeBox}  >
                         <View style={styles.coupenForm}>
                             <TextInput placeholder="Have Coupen Code?"
-                                editable={cartData?.type =="meal" ? true : false}
+                                editable={cartData?.type == "meal" ? true : false}
                                 style={styles.formControl}
                                 onChangeText={(code: string) => setCoupenCode(code)}
                                 placeholderTextColor={"#A3A3A3"} />
@@ -104,12 +123,15 @@ const CartScreen = ({ }: CartProps) => {
     return (
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
-                {renderShoppingCartSection()}
-                <FlatList getItemLayout={getItemLayout} data={cartData?.data && cartData?.data[0]?.cart_item} ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()} renderItem={({ item ,index}) => renderCartItems(item,index)} />
+                {renderShoppingCartSection(cartData && cartData?.data[0]?.cart_item?.length)}
+                <FlatList getItemLayout={getItemLayout}
+                    data={cartData?.data && cartData?.data[0]?.cart_item}
+                    ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => renderCartItems(item, index, cartData?.type)} />
                 {cartData?.type == "meal" && coupenCodeSection()}
             </ScrollView>
             {
-                cartData?.type == "meal"|| cartData?.type == "free" ? (
+                cartData?.type == "meal" || cartData?.type == "free" ? (
                     <CheckOutBox totalMrp={`$${parseInt(cartData?.total_mrp)}`}
                         totalDiscount={`$${parseInt(cartData?.total_discount)}`}
                         total={`$${parseInt(cartData?.total_amount)}`} label="Checkout" deliveryFee={cartData?.delivery_fee == 0 ? "Free" : `$${cartData?.delivery_fee}`} tax={`$${parseInt(cartData?.tax_amount)}`} onPress={() => handleCheckout()} />

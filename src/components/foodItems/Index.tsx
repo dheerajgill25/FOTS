@@ -11,53 +11,56 @@ interface FoodItemsProps {
     title?: string;
     data: []
 }
-const ratingComponent = (rating:any) => {
+const ratingComponent = (rating: any) => {
     return (
         <Rating
-        style={{ paddingVertical: 5, alignSelf: "flex-start" }}
-        imageSize={18}
-        startingValue={rating}
-        readonly
-    />
+            style={{ paddingVertical: 5, alignSelf: "flex-start" }}
+            imageSize={18}
+            startingValue={rating}
+            readonly
+        />
     )
 }
-const FoodItemsComponent = ({ title, data,index }: FoodItemsProps) => {
+const FoodItemsComponent = ({ title, data, index }: FoodItemsProps) => {
     return (
         <>
             <View key={index}>
                 <View>
                     {
-                        data.length > 0&&<Typography style={styles.foodItemPopluar}>Popular “{title}” Meals</Typography>
+                        data.length > 0 && <Typography style={styles.foodItemPopluar}>Popular “{title}” Meals</Typography>
                     }
-                    
+
                 </View>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={styles.foodItemSection}> 
-                {
-                    data && data.length > 0 ? (
-                        data.map((items: any, i) => (
-                                <View key={i} >
-                                    <View style={styles.foodItemBox}>
-                                        <View style={styles.foodItemContent}>
-                                            <View style={styles.foodItemImageSection}>
-                                                <ImageComponent uri={items?.thumbnail} priority={Priority.high} imageStyle={styles.foodImage} resizeMode={ResizeMode.contain} />
-                                            </View>
-                                            <View style={styles.foodItemDetail}>
-                                                <Typography style={styles.text}>{items?.name}</Typography>
-                                                <View style={styles.foodItemRate}>
-                                                    {ratingComponent(items?.rating)}
+                    <View style={styles.foodItemSection}>
+                        {
+                            data && data.length > 0 ? (
+                                data.map((items: any, i) => (
+                                    <View key={i} >
+                                        <View style={styles.foodItemBox}>
+                                            <View style={styles.foodItemContent}>
+                                                <View style={styles.foodItemImageSection}>
+                                                    <ImageComponent uri={items?.thumbnail}
+                                                        priority={Priority.high}
+                                                        imageStyle={styles.foodImage}
+                                                        resizeMode={ResizeMode.cover} />
                                                 </View>
+                                                <View style={styles.foodItemDetail}>
+                                                    <Typography style={styles.text}>{items?.name}</Typography>
+                                                    <View style={styles.foodItemRate}>
+                                                        {ratingComponent(items?.rating)}
+                                                    </View>
 
+                                                </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
-                        ))
-                    ) : (
-                        <View />
-                    )
-                }
-                </View>
+                                ))
+                            ) : (
+                                <View />
+                            )
+                        }
+                    </View>
                 </ScrollView>
             </View>
 
@@ -67,12 +70,12 @@ const FoodItemsComponent = ({ title, data,index }: FoodItemsProps) => {
 export default memo(FoodItemsComponent);
 const styles = StyleSheet.create({
     foodItemSection: {
-        flexDirection:"row",
+        flexDirection: "row",
         display: 'flex',
-        paddingLeft:21
+        paddingLeft: 21
     },
     foodItemBox: {
-   
+
     },
     foodItemPopluar: {
         fontSize: 18,
@@ -97,14 +100,14 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         borderRadius: 5,
         minHeight: 250,
-        overflow:"hidden"
+        overflow: "hidden"
     },
     foodItemImageSection: {},
     foodImage: {
         width: '100%',
         height: 140,
-       
-    },  
+
+    },
     foodItemRatingBox: {
         display: 'flex',
         flexDirection: 'row',

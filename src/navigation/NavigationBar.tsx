@@ -56,7 +56,6 @@ const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
-                        onPress={()=>CartScreen.navigate()}
                     >
                         <CartIcon  />
                     </TouchableOpacity>

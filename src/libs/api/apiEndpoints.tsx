@@ -26,7 +26,8 @@ export const URL={
     TESTIMONIALS:"/testimonials",
     GENERALSETTING:"/general-setting",
     RATEING:"/rating-add",
-    POPULARPRODUCT:"/popular-products"
+    POPULARPRODUCT:"/popular-products",
+    REMOVEALLPRODUCT:"/remove-all-cart"
 }
 export const STRIPEENDPOINTS={
     APIURL:"https://api.stripe.com/v1",
