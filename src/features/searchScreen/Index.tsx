@@ -3,10 +3,9 @@ import { MyStatusBar } from 'components/statusbar/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import BaseScreen from 'features/basescreen/Index';
 import ProductDetailScreen from 'features/productdetail/Index';
-import ProductListControllerInstance from 'features/products/controllers/product.controller';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 

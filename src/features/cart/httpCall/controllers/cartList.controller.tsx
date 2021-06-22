@@ -1,9 +1,7 @@
-import CartScreen from "features/cart/Index";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
-import Toast from 'react-native-simple-toast';
 import { CartListAction } from "../actions/cartList.action";
 class CartListController {
     async getCartProducts() {

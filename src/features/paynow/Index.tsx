@@ -1,14 +1,6 @@
-import CheckOutBox from 'components/checkoutbox/Index';
-import DropdownComponentCheckOut from 'components/checkoutdropdown';
-import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import FireDepartmentControllerInstance from 'features/registerscreen/controllers/fireDepartment.controller';
-import FireStationControllerInstance from 'features/registerscreen/controllers/fireStation.controller';
-import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
-import moment from 'moment';
-import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { useState } from 'react';
-import { Text, View, SafeAreaView, ScrollView, Image, FlatList, Alert } from 'react-native';
+import { View, SafeAreaView, ScrollView } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
@@ -17,13 +9,15 @@ import styles from './styles';
 import StorageService from 'libs/storage/Storage';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import WebhookPaymentScreen from './payment/Index';
+import CheckOutBox from 'components/checkoutbox/Index';
+import DropdownComponentCheckOut from 'components/checkoutdropdown';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import FireDepartmentControllerInstance from 'features/registerscreen/controllers/fireDepartment.controller';
+import FireStationControllerInstance from 'features/registerscreen/controllers/fireStation.controller';
+import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
+import moment from 'moment';
+import RootNavigator from 'navigation/rootnavigation';
 interface BeforePayNowProps { route: any }
-interface ElementData {
-    imageUrlLeft: any;
-    title: string;
-    rightIcon: any;
-    leftIcon: boolean;
-}
 function dates() {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),

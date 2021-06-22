@@ -1,5 +1,4 @@
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
-import BeforePayNow from "features/paynow/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";

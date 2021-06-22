@@ -1,14 +1,11 @@
 import CartListControllerInstance from "features/cart/httpCall/controllers/cartList.controller";
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
-import HomeScreen from "features/home/Index";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import OrderScreen from "features/orderScreen/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
-import HomeStack from "navigation/homestack";
 import Toast from 'react-native-simple-toast';
-let success: boolean = false;
 class RemoveCartController {
     async RemoveCartProducts(id: any, product_id: any, type?: string,cId?:any) {
         try {

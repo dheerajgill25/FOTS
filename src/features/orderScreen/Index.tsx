@@ -49,7 +49,6 @@ const renderHowItsWorks = (item: any) => {
 };
 
 const OrderScreen = (props: OrderScreenProps) => {
-    const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     const [homePageBanner, setHomePageBanner] = useState<string>("");
     const {
         route: { params:{params:{params:{id}}}, },
@@ -68,7 +67,7 @@ const OrderScreen = (props: OrderScreenProps) => {
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
     useEffect(() => {
         if (generalSettingData && generalSettingData.length > 0) {
-            generalSettingData.map((obj: any,i: any)=>(
+            generalSettingData.map((obj: any)=>(
                 setHomePageBanner(obj.category_banner)
             ))
         }

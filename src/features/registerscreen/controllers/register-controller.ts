@@ -2,7 +2,6 @@ import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import StorageService from "libs/storage/Storage";
-import HomeStack from "navigation/homestack";
 import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { RegisterAction } from "../actions/register.action";
 import Toast from 'react-native-simple-toast';

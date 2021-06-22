@@ -42,10 +42,10 @@ class HttpCallClass {
             });
         } catch (error) {
             console.debug(' error --', error);
-            return this.errorHandler(error, url, HttpMethod.POST, params, useAccessToken);
+            return this.errorHandler(error);
         }
     }
-    errorHandler = async (error: any, url: string, method: HttpMethod, params: Record<string, any>, useAccessToken = false) => {
+    errorHandler = async (error: any ) => {
         const err = error as AxiosError;
         CrashReporterInstance.recordError(error)
         if (err.response) {

@@ -1,10 +1,10 @@
+import * as React from 'react';
+import { Image, SafeAreaView, View } from 'react-native';
+import styles from './styles';
 import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography from 'components/typography/Typography';
 import MyAccount from 'features/myaccount/Index';
 import RootNavigator from 'navigation/rootnavigation';
-import * as React from 'react';
-import { Image, SafeAreaView, View } from 'react-native';
-import styles from './styles';
 
 interface ThankYouScreenProps { }
 const renderThankYouSection = () => {

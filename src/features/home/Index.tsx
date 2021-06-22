@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  FlatList, SafeAreaView, ScrollView, View, VirtualizedList } from "react-native";
+import {  FlatList, SafeAreaView, ScrollView, View } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import SearchComponent from "@components/search/Index";
 import RootNavigator from "navigation/rootnavigation";

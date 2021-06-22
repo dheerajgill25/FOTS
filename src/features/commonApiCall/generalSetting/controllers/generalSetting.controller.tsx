@@ -1,4 +1,3 @@
-import CartScreen from "features/cart/Index";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";

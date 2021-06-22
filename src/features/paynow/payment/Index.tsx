@@ -1,10 +1,8 @@
 import {
-    CardFieldInput,
-    useConfirmPayment,
     useStripe,
 } from '@stripe/stripe-react-native';
 import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import PaymentScreen from 'components/stripePaymentScreen/Index';
 import { APIENDPOINTS } from 'libs/api/apiEndpoints';
 import RootNavigator from 'navigation/rootnavigation';

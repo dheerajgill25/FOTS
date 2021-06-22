@@ -1,15 +1,15 @@
-import BannerComponent from 'components/banner/Index';
-import RenderButtonWithIcon from 'components/buttons/ButtonWithIcon';
-import Typography from 'components/typography/Typography';
-import ProductScreen from 'features/products/Index';
-import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
+import {  View, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import { window } from 'themes/functions';
 import MealPlanControllerInstance from './controllers/meal-plan.controller';
 import styles from './styles';
+import BannerComponent from 'components/banner/Index';
+import RenderButtonWithIcon from 'components/buttons/ButtonWithIcon';
+import Typography from 'components/typography/Typography';
+import ProductScreen from 'features/products/Index';
+import RootNavigator from 'navigation/rootnavigation';
 
 interface MealPlanProps {
   route: any;

@@ -5,8 +5,6 @@ import Size from '@themes/size/size';
 import RootNavigator from './rootnavigation';
 import CartIcon from 'components/carticon/Index';
 import LogoTitle from '@components/logotitle/Index';
-import MenusIcons from 'components/menusicon/Index';
-import CartScreen from 'features/cart/Index';
 import BackIconDark from 'components/backicon/BackIconDark';
 
 interface ScreenOptionNavigation {

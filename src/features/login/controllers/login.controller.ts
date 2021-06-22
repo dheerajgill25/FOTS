@@ -26,7 +26,6 @@ class SignInController {
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();
-                //HomeStack.navigate();
                 Toast.showWithGravity(message||"Login success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
             } else {
                 Toast.showWithGravity(message||"Please enter valid credentials", Toast.LONG, Toast.BOTTOM);

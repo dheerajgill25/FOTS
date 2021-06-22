@@ -1,21 +1,18 @@
-import Typography, { FontFamilyFoods } from '@components/typography/Typography';
-import RootNavigator from '@navigation/rootnavigation';
-import DropdownComponent from '@components/dropdown/Index';
-import { MyStatusBar } from '@components/statusbar/Index';
 import React, { useEffect, useState } from 'react';
-import { View, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { View, SafeAreaView, TextInput } from 'react-native';
 import styles from './styles';
-import { isAndroid } from 'themes/functions';
 import { ScrollView } from 'react-native-gesture-handler';
 import ButtonFood from 'components/buttons/ButtonFoods';
-import HomeStack from 'navigation/homestack';
 import FireStationControllerInstance from './controllers/fireStation.controller';
 import FireDepartmentControllerInstance from './controllers/fireDepartment.controller';
-import StateControllerInstance from './controllers/state.controller';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import RegisterControllerInstance from './controllers/register-controller';
 import Snackbar from 'react-native-snackbar';
+import Typography, { FontFamilyFoods } from '@components/typography/Typography';
+import RootNavigator from '@navigation/rootnavigation';
+import DropdownComponent from '@components/dropdown/Index';
+import { MyStatusBar } from '@components/statusbar/Index';
 interface RegisterProps { }
 const registerForm = () => {
     const [fireDepartmentId, setFireDepartmentId] = useState<string>("");

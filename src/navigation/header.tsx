@@ -5,7 +5,6 @@ import Size from '@themes/size/size';
 import RootNavigator from './rootnavigation';
 import CartIcon from 'components/carticon/Index';
 import CartScreen from '@features/cart/Index';
-import BackIcon from '@components/backicon/Index';
 import BackIconDark from 'components/backicon/BackIconDark';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import { View } from 'react-native';

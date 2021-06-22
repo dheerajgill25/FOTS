@@ -1,17 +1,17 @@
-import BannerComponent from 'components/banner/Index';
-import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
-import ModalComponent from 'components/popup/Index';
-import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import ProductDetailScreen from 'features/productdetail/Index';
-import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, FlatList, TouchableOpacity, } from 'react-native';
+import { View, SafeAreaView, ScrollView, FlatList, TouchableOpacity, } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import { window } from 'themes/functions';
 import ProductListControllerInstance from './controllers/product.controller';
 import styles from './styles';
+import BannerComponent from 'components/banner/Index';
+import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
+import ModalComponent from 'components/popup/Index';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import ProductDetailScreen from 'features/productdetail/Index';
+import RootNavigator from 'navigation/rootnavigation';
 
 interface ProductScreenProps { route: any };
 

@@ -3,7 +3,6 @@ import { FlatList, Image, SafeAreaView, ScrollView, View } from "react-native";
 import BaseScreen from "@features/basescreen/Index";
 import RootNavigator from "navigation/rootnavigation";
 import styles from "./styles";
-import FoodItemsComponent from "components/foodItems/Index";
 import RenderButtonWithIcon from "components/buttons/ButtonWithIcon";
 import Typography from "components/typography/Typography";
 import ProductDetailScreen from "features/productdetail/Index";
@@ -57,7 +56,6 @@ const renderFooterItem = () => {
     )
 }
 const OrderScreenSecond = ({ }: OrderScreenSecondProps) => {
-    const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
     const [homePageBanner, setHomePageBanner] = React.useState<string>("");
     React.useEffect(() => {

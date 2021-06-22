@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler'
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator, { navigationRef } from '@navigation/rootnavigation';
 import RootStackScreen from '@navigation/RootscreenStack';
 import LoadingScreen from "@features/LoadingScreen";
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './src/reduxModule';
 import NetworkInfo from '@libs/netInfo';
@@ -15,14 +15,14 @@ import AnalyticsFunction from 'behaviour/analytics/AnalyticsService';
 import AnalyticsWatcher from 'behaviour/analytics';
 import NotificationWatcher from 'behaviour/notifications';
 import { setJSExceptionHandler, setNativeExceptionHandler } from 'react-native-exception-handler';
+//@ts-ignore
 import RNRestart from 'react-native-restart';
 import DeviceInfo from 'react-native-device-info';
 import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { StripeProvider, initStripe } from '@stripe/stripe-react-native';
-import { STRIPEENDPOINTS } from 'libs/api/apiEndpoints';
+import PerfomanceWatcher from 'behaviour/perfomance';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
   let previousRouteName: string | undefined;
@@ -61,9 +61,9 @@ const App = () => {
   }
   /* JS error hadnling */
   const exceptionhandler = async (error: any, isFatal: any) => {
-    await setCrashanalyticsAttributes();
+    //await setCrashanalyticsAttributes();
     console.log(" JS Error ", error);
-    CrashReporterInstance.recordError(error);
+    //CrashReporterInstance.recordError(error);
     //alertView();
   };
 
@@ -82,10 +82,6 @@ const App = () => {
       PERMISSIONS_TYPE.photo,
       PERMISSIONS_TYPE.camera,
     ]);
-    initStripe({
-      publishableKey: STRIPEENDPOINTS.APIKEY,
-      merchantIdentifier: 'merchant.identifier',
-    })
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
@@ -96,29 +92,30 @@ const App = () => {
 
   return (
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer
-            ref={navigationRef}
-            onReady={() => {
-              RootNavigator.isReadyRef = true;
-              previousRouteName = navigationRef.current?.getCurrentRoute()?.name;
-            }}
-            onStateChange={async () => {
-              const screenName = navigationRef.current?.getCurrentRoute()?.name;
-              AnalyticsFunction.functionScreenTracking(
-                previousRouteName,
-                screenName
-              );
-            }}
-          >
-              <NetworkInfo>
-                <RootStackScreen />
-                <AnalyticsWatcher />
-                <NotificationWatcher />
-                <LoadingScreen />
-              </NetworkInfo>
-          </NavigationContainer>
-        </PersistGate>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            RootNavigator.isReadyRef = true;
+            previousRouteName = navigationRef.current?.getCurrentRoute()?.name;
+          }}
+          onStateChange={async () => {
+            const screenName = navigationRef.current?.getCurrentRoute()?.name;
+            AnalyticsFunction.functionScreenTracking(
+              previousRouteName,
+              screenName
+            );
+          }}
+        >
+          <NetworkInfo>
+            <RootStackScreen />
+            <AnalyticsWatcher />
+            <NotificationWatcher />
+            <LoadingScreen />
+            <PerfomanceWatcher />
+          </NetworkInfo>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };

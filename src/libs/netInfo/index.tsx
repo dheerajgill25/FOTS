@@ -31,6 +31,7 @@ const NetworkInfo = (props: NetworkInfoProps) => {
     }
 
     return (
+        //@ts-ignore
         <NetworkContext.Provider value={isConnected}>
             {props.children}
         </NetworkContext.Provider>

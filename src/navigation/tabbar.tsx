@@ -5,9 +5,7 @@ import { StackActions } from '@react-navigation/native';
 import HomeScreen from 'features/home/Index';
 import MyAccount from 'features/myaccount/Index';
 import OrderScreen from 'features/orderScreen/Index';
-import OrderScreenSecond from 'features/orderScreentwo/Index';
 import { createStackNavigator } from '@react-navigation/stack';
-import ScreenOptionNavigation from './NavigationBar';
 import SearchScreen from 'features/searchScreen/Index';
 
 const Tab = createBottomTabNavigator();

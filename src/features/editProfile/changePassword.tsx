@@ -3,8 +3,7 @@ import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import { validateResetPassword } from 'libs/functions/validation';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
-import { Image, KeyboardAvoidingView, ScrollView, TextInput, TouchableOpacity } from 'react-native';
-import { Text, View, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, TextInput, View, StyleSheet } from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import ChangePasswordControllerInstance from './controllers/changepassword.controller';
 interface ChangePasswordProps { }

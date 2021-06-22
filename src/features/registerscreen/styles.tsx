@@ -1,5 +1,5 @@
 import { FontFamilyFoods } from "components/typography/Typography";
-import { StatusBar, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     rootContainer: {

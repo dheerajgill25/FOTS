@@ -1,16 +1,16 @@
-import ButtonFoods from 'components/buttons/ButtonFoods';
-import Typography, { FontFamilyFoods } from 'components/typography/Typography';
-import BaseScreen from 'features/basescreen/Index';
-import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native';
-import { Text, View, StyleSheet } from 'react-native';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { View, StyleSheet } from 'react-native';
+import { Rating } from 'react-native-ratings';
 import Snackbar from 'react-native-snackbar';
 import { isAndroid } from 'themes/functions';
 import RatingControllerInstance from './controllers/productRating.controller';
+import ButtonFoods from 'components/buttons/ButtonFoods';
+import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import BaseScreen from 'features/basescreen/Index';
+import RootNavigator from 'navigation/rootnavigation';
 
 interface ProductRatingProps {
     route: any;
