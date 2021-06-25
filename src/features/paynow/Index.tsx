@@ -17,6 +17,7 @@ import FireStationControllerInstance from 'features/registerscreen/controllers/f
 import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
 import moment from 'moment';
 import RootNavigator from 'navigation/rootnavigation';
+import { useEffect } from 'react';
 interface BeforePayNowProps { route: any }
 function dates() {
     var d = new Date(),
@@ -31,8 +32,9 @@ function dates() {
 
     return [year, month, day].join('-');
 }
-const renderDateOfDeliverSection = (dateOfDelivery: any) => {
+const renderDateOfDeliverSection = (dateOfDelivery: any, dateOfDeliverySecond: any, isDateShow: any, days: any) => {
     const deliverDate = moment(dateOfDelivery).format("DD|MM|YYYY");
+    const deliverDateSecond = moment(dateOfDeliverySecond).format("DD|MM|YYYY");
     return (
         <View style={styles.descriptionSection}>
             <View style={styles.descriptiongBox}>
@@ -48,6 +50,24 @@ const renderDateOfDeliverSection = (dateOfDelivery: any) => {
                     </View>
                 </View>
             </View>
+            {
+                isDateShow == 0 || (days == 5 && days == 7) ? (<View style={styles.descriptiongBox}>
+                    <View style={styles.descriptionInner}>
+                        <Typography style={styles.descriptionName}>Date of Delivery</Typography>
+                    </View>
+                    <View style={styles.borderBottom}></View>
+                    <View style={styles.dateBox}>
+                        <View style={styles.dateSection}>
+                            <View style={styles.dateWrap}>
+                                <Typography style={styles.date}>{deliverDateSecond}</Typography>
+                            </View>
+                        </View>
+                    </View>
+                </View>) : (
+                    null
+                )
+            }
+
         </View>
     )
 }
@@ -56,6 +76,8 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     const [fireDepartmentId, setFireDepartmentId] = useState("");
     const [fireStationId, setFireStationId] = useState("");
     const [userData, setUserData] = React.useState<any>({});
+    const [isDateShow, setIsDateShow] = useState<number>();
+    const [days, setDays] = useState<number>();
     React.useEffect(() => {
         StateControllerInstance.getState();
     }, [])
@@ -81,10 +103,27 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
         return () => { cancelled = true; }
     }, [userData])
+    useEffect(() => {
+        let cancelled = false;
+        StorageService.getItem('days').then((values: any) => {
+            if (!cancelled) {
+                setDays(values);
+            }
+        }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
+        return () => { cancelled = true; }
+    }, [days])
     const checkoutData = useSelector((state: RootStore) => state.CheckoutInState.data?.data);
     const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
     const fireStationData = useSelector((state: RootStore) => state.FireStationInState.data?.data);
+    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
+    React.useEffect(() => {
+        if (generalSettingData && generalSettingData.length > 0) {
+            generalSettingData.map((obj: any, i: any) => (
+                setIsDateShow(obj?.delivery_date_mode)
+            ))
+        }
+    }, [generalSettingData])
     const handlePayNowWithOutPay = (paymentMethod?: string, paymentId?: string) => {
         const date = dates();
         if (stateId !== '' && fireDepartmentId !== '' && fireStationId !== '') {
@@ -99,21 +138,21 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 })
             } else if (stateId == '') {
                 Snackbar.show({
-                    text: 'State id required ',
+                    text: 'Please select a state',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireDepartmentId == '') {
                 Snackbar.show({
-                    text: 'Fire department id required ',
+                    text: 'Please select a Fire department',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireStationId == '') {
                 Snackbar.show({
-                    text: 'Fire station id required ',
+                    text: 'Please select a Fire station',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
@@ -130,21 +169,21 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 WebhookPaymentScreen.navigate(stateId, fireDepartmentId, fireStationId, dates())
             } else if (stateId == '') {
                 Snackbar.show({
-                    text: 'State id required ',
+                    text: 'Please select a state',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireDepartmentId == '') {
                 Snackbar.show({
-                    text: 'Fire department id required ',
+                    text: 'Please select a Fire department',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
                 })
             } else if (fireStationId == '') {
                 Snackbar.show({
-                    text: 'Fire station id required ',
+                    text: 'Please select a Fire station',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
@@ -166,7 +205,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 <View>
                     <DropdownComponentCheckOut title="Fire Station" data={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
                 </View>
-                {renderDateOfDeliverSection(checkoutData?.delivery_date)}
+                {renderDateOfDeliverSection(checkoutData?.delivery_date, checkoutData?.delivery_date2, isDateShow, days)}
             </ScrollView>
             <CheckOutBox
                 label="Order Now"

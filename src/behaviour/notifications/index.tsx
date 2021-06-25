@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect} from 'react';
 import messaging from '@react-native-firebase/messaging';
 import inAppMessaging from '@react-native-firebase/in-app-messaging';
 import iid from '@react-native-firebase/iid';
 import PushNotification from 'react-native-push-notification';
-import { Platform } from 'react-native';
+import { isAndroid } from 'themes/functions';
 interface NotificationWatcherProps {
 }
 async function requestPermission() {
@@ -20,7 +20,7 @@ async function requestUserPermission() {
         permissionGranted === messaging.AuthorizationStatus.AUTHORIZED ||
         permissionGranted === messaging.AuthorizationStatus.PROVISIONAL;
 
-    let enabled= isPermissionGranted;
+    let enabled= isAndroid;
     if (!isPermissionGranted) {
         enabled = await requestPermission();
     }
@@ -41,17 +41,47 @@ async function requestUserPermission() {
 
 
 const NotificationWatcher = ({ }: NotificationWatcherProps) => {
+    //@ts-ignore
+    const notificationHandler = async (remoteMessage ) => {
+        console.debug('remoteMessage', remoteMessage);
+        //@ts-ignore
+        const {notification: {body, title} = {}, data } = remoteMessage;
+         if (body && title) {
+            console.debug('title', title);
+            console.debug('body', body);
+    
+            if (isAndroid) {
+                PushNotification.createChannel({
+                    channelId: 'foodonstoves_channel',
+                    channelName: 'Foodonstoves Channel',
+                    channelDescription: 'Foodonstoves Channel',
+                    vibrate: true,
+                    playSound: true,
+                }, (created) => {
+                    console.debug('created', created);
+                });
+            } 
+            PushNotification.localNotification({
+                id: 1,
+                message: body,
+                title,
+                largeIcon: '',
+                priority: 'high',
+                channelId: 'foodonstoves_channel',
+                color: '#00ACCA',
+                playSound: true
+            });
+        }
+    }
     useEffect(() => {
         requestUserPermission();
         const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-            const { notification: { body, title } = {}, data } = remoteMessage;
-            if (body && title) {
-                PushNotification.localNotification({
-                    message: body,
-                    title,
-                });
-            }
+            notificationHandler(remoteMessage);
         });
+        messaging().setBackgroundMessageHandler(async remoteMessage => {
+            notificationHandler(remoteMessage);
+        });
+
         return () => {
             unsubscribe();
         }

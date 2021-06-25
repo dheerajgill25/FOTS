@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FoodOnStoves</string>
+    <string name="default_notification_channel_id">foodonstoves_channel</string>
 </resources>

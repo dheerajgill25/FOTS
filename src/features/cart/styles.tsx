@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
         fontSize: 16, color: '#484848',
         lineHeight: 24,textTransform:"capitalize",
-        paddingRight:40
+        paddingRight:100
     },
     productPrice: {
         fontFamily: FontFamilyFoods.POPPINSBOLD,

@@ -23,6 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import PerfomanceWatcher from 'behaviour/perfomance';
+import InactivityHandler from 'behaviour/inactivityHandler';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
   let previousRouteName: string | undefined;
@@ -77,6 +78,8 @@ const App = () => {
     alertView();
   });
   useEffect(() => {
+    const activeDate: Date = new Date();
+    AsyncStorage.setItem("activeTime", JSON.stringify(activeDate));
     TokenControllerInstance.setInitialTokens();
     Permission.requestMultiple([
       PERMISSIONS_TYPE.photo,
@@ -110,6 +113,7 @@ const App = () => {
           <NetworkInfo>
             <RootStackScreen />
             <AnalyticsWatcher />
+            <InactivityHandler />
             <NotificationWatcher />
             <LoadingScreen />
             <PerfomanceWatcher />

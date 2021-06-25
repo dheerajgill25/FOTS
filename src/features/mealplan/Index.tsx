@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {  View, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
+import { View, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import { window } from 'themes/functions';
@@ -10,6 +10,7 @@ import RenderButtonWithIcon from 'components/buttons/ButtonWithIcon';
 import Typography from 'components/typography/Typography';
 import ProductScreen from 'features/products/Index';
 import RootNavigator from 'navigation/rootnavigation';
+import StorageService from 'libs/storage/Storage';
 
 interface MealPlanProps {
   route: any;
@@ -53,7 +54,13 @@ const renderHowItsWorks = (item: any, index: number) => {
 const renderMealButton = (item: any, index: number) => {
   return (
     <View key={index} style={styles.mealPlanButtons}>
-      <RenderButtonWithIcon buttonStyle={styles.buttonstyles} label={`${item.day}-Days Plan (${item.meal_count} Meals)`} onPress={() => ProductScreen.navigate(item.category_id, item.id, true)} />
+      <RenderButtonWithIcon type="meal"
+        buttonStyle={styles.buttonstyles}
+        label={`${item.day}-Days Plan (${item.meal_count} Meals)`}
+        onPress={() => {
+          ProductScreen.navigate(item.category_id, item.id, true)
+          StorageService.setItem("days",item.day)
+        }} />
     </View>
   )
 }
@@ -67,7 +74,6 @@ const MealPlan = (props: MealPlanProps) => {
     route: { params, },
   } = props;
   const [homePageBanner, setHomePageBanner] = React.useState<string>("");
-  const BANNERIMAGEURL = require('../../../assets/images/banner2.png');
   useEffect(() => {
     MealPlanControllerInstance.getMealPlan(params.id);
   }, []);
@@ -97,7 +103,7 @@ const MealPlan = (props: MealPlanProps) => {
             </View>
           </View>
         </View>
-        <View style={{ marginTop: 21, paddingBottom: 30,paddingHorizontal:20 }}>
+        <View style={{ marginTop: 21, paddingBottom: 30, paddingHorizontal: 20 }}>
           <Typography style={styles.foodItemPopluar}>How It Works</Typography>
           <FlatList scrollEnabled={false} keyExtractor={(item, index) => index.toString()} contentContainerStyle={styles.worksFlex} data={orderData} renderItem={({ item, index }) => renderHowItsWorks(item, index)} />
         </View>

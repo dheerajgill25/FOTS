@@ -5,9 +5,10 @@ interface ButtonWithIconProps {
     label: string;
     onPress: () => void,
     buttonStyle?: {},
-    fiveMealBtn?: boolean
+    fiveMealBtn?: boolean;
+    type?: string
 }
-const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: ButtonWithIconProps) => {
+const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn, type }: ButtonWithIconProps) => {
     const IMAGEURLFILTER = require("../../../assets/images/arrowleft.png")
     return (
 
@@ -16,7 +17,7 @@ const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: Butt
                 fiveMealBtn ? (
                     <TouchableOpacity onPress={onPress} style={styles.filterButton}>
                         <View style={{ flex: 1 }}>
-                            <Typography style={[buttonStyle ? buttonStyle : styles.filterText, { flex: 0,fontFamily:FontFamilyFoods.POPPINSMEDIUM,textAlign:fiveMealBtn?"center":"left" }]}>{label}</Typography>
+                            <Typography style={[buttonStyle ? buttonStyle : styles.filterText, { flex: 0, fontFamily: FontFamilyFoods.POPPINSMEDIUM, textAlign: fiveMealBtn ? "center" : "left" }]}>{label}</Typography>
                         </View>
 
                         <View style={styles.imageForIcon}>
@@ -26,7 +27,7 @@ const RenderButtonWithIcon = ({ label, onPress, buttonStyle, fiveMealBtn }: Butt
                 ) : (
                     <TouchableOpacity onPress={onPress} style={styles.filterButton}>
                         <Typography style={buttonStyle ? buttonStyle : styles.filterText}>{label}</Typography>
-                        <View style={[styles.imageForIcon,{justifyContent:"flex-end",maxWidth:100}]}>
+                        <View style={[styles.imageForIcon, { justifyContent: "flex-end", maxWidth: type == 'meal' ? 250 : 100 }]}>
                             <Image source={IMAGEURLFILTER} style={styles.filterIcon} />
                         </View>
                     </TouchableOpacity>

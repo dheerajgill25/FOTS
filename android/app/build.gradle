@@ -218,7 +218,6 @@ dependencies {
         exclude group:'com.facebook.flipper'
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
-    implementation project(':react-native-razorpay')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'

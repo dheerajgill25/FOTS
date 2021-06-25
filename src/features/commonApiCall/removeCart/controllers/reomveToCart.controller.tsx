@@ -2,12 +2,13 @@ import CartListControllerInstance from "features/cart/httpCall/controllers/cartL
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import OrderScreen from "features/orderScreen/Index";
+import ProductScreen from "features/products/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
 class RemoveCartController {
-    async RemoveCartProducts(id: any, product_id: any, type?: string,cId?:any) {
+    async RemoveCartProducts(id: any, product_id: any, type?: string, cId?: any,length?:any) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
@@ -22,10 +23,14 @@ class RemoveCartController {
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
                 CartCountControllerInstance.getCartCount();
                 if (type == 'meal') {
-                    CartListControllerInstance.getCartProducts()
-                    return
+                    if(length==0){
+                        OrderScreen.navigate(cId)
+                    }else{
+                        CartListControllerInstance.getCartProducts()
+                        return
+                    }
                 } else {
-                   OrderScreen.navigate(cId)
+                    OrderScreen.navigate(cId)
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
@@ -66,7 +71,7 @@ class RemoveCartController {
     async removeProductSuccess() {
         return true;
     }
-    async RemoveCartAllProducts(categoryId?:any) {
+    async RemoveCartAllProducts(categoryId?: any,mealId?:any, type?: string) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             const URLS = APIENDPOINTS.APIBASEURL + URL.REMOVEALLPRODUCT + `?key=${APIENDPOINTS.APIKEY}`;
@@ -77,7 +82,11 @@ class RemoveCartController {
                 CartCountControllerInstance.getCartCount();
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
-                OrderScreen.navigate(categoryId)
+                if (type == 'meal') {
+                    ProductScreen.navigate(categoryId,mealId,true)
+                } else {
+                    OrderScreen.navigate(categoryId)
+                }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);

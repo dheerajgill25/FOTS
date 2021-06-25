@@ -4,6 +4,7 @@ import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import CheckOutControllerInstance from 'features/commonApiCall/checkout/controllers/checkout.controller';
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
+import HomeScreen from 'features/home/Index';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity } from 'react-native';
@@ -14,11 +15,10 @@ import { window } from 'themes/functions';
 import CartListControllerInstance from './httpCall/controllers/cartList.controller';
 import styles from './styles';
 interface CartProps { }
-const renderShoppingCartSection = (length: any) => {
+const renderShoppingCartSection = (length: any, type: string, data: any) => {
     const CARTURL = require('../../../assets/images/cart.png');
     const removeAllProduct = async () => {
-        const categoryId = await AsyncStorage.getItem("cId");
-        length > 0 ? RemoveCartControllerInstance.RemoveCartAllProducts(categoryId) : Snackbar.show({
+        length > 0 ? RemoveCartControllerInstance.RemoveCartAllProducts(data && data.category_id, data && data.meal_id, type) : Snackbar.show({
             text: 'Cart is already empty',
             textColor: "white",
             duration: 3000,
@@ -28,7 +28,7 @@ const renderShoppingCartSection = (length: any) => {
     }
     return (
         <>
-            <View style={{ justifyContent: "flex-end", flex: 1 ,marginTop:10,}}>
+            <View style={{ justifyContent: "flex-end", flex: 1, marginTop: 10, }}>
                 <TouchableOpacity onPress={() => removeAllProduct()}>
                     <Typography style={styles.removeAllTextButton}>Remove All</Typography>
                 </TouchableOpacity>
@@ -50,11 +50,11 @@ const renderShoppingCartSection = (length: any) => {
         </>
     )
 }
-const renderCartItems = (data: any, i: number, type: string) => {
+const renderCartItems = (data: any, i: number, type: string,length:any) => {
     const CLOSEICON = require('../../../assets/images/cut.png');
     const { product, id, cart_id } = data;
     const handleRemoveCart = () => {
-        RemoveCartControllerInstance.RemoveCartProducts(cart_id, product.id, type, product?.category_id)
+        RemoveCartControllerInstance.RemoveCartProducts(cart_id, product.id, type, product?.category_id,length)
     }
     return (
         <View key={i} style={styles.cartBox}>
@@ -92,7 +92,23 @@ const CartScreen = ({ }: CartProps) => {
     useEffect(() => {
         CartListControllerInstance.getCartProducts();
     }, []);
+    const countNumber = useSelector((state: RootStore) => state.CartCountInState.data)
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
+    useEffect(() => {
+        if (countNumber && countNumber.length > 0) {
+            countNumber.map((obj: { carts_count: number; }) => {
+                if (obj.carts_count <= 0) {
+                    HomeScreen.navigate();
+                    Snackbar.show({
+                        text: 'Cart is empty',
+                        textColor: "white",
+                        duration: 3000,
+                        fontFamily: FontFamilyFoods.POPPINS
+                    });
+                }
+            })
+        }
+    }, [countNumber,cartData])
     const handleCheckout = () => {
         CheckOutControllerInstance.Checkout(coupenCode);
     }
@@ -123,11 +139,14 @@ const CartScreen = ({ }: CartProps) => {
     return (
         <View style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
-                {renderShoppingCartSection(cartData && cartData?.data[0]?.cart_item?.length)}
-                <FlatList getItemLayout={getItemLayout}
+                {renderShoppingCartSection(cartData && cartData?.data[0]?.cart_item?.length, cartData&&cartData?.type, cartData&&cartData?.data[0])}
+                <FlatList
+                    getItemLayout={getItemLayout}
                     data={cartData?.data && cartData?.data[0]?.cart_item}
-                    ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false} style={{ marginTop: 20, marginBottom: 13 }} keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => renderCartItems(item, index, cartData?.type)} />
+                    ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false}
+                    style={{ marginTop: 20, marginBottom: 13 }}
+                    keyExtractor={(item, index) => index.toString()}
+                    renderItem={({ item, index }) => renderCartItems(item, index, cartData?.type,cartData && cartData?.data[0]?.cart_item?.length)} />
                 {cartData?.type == "meal" && coupenCodeSection()}
             </ScrollView>
             {

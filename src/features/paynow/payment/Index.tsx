@@ -20,7 +20,6 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
     const [paymentSheetEnabled, setPaymentSheetEnabled] = useState(false);
     const [loading, setLoading] = useState(false);
     const [clientSc, setClientSc] = useState<string>("");
-    const [logo,setLogo] = useState<string>("")
     const [paymentMethod, setPaymentMethod] = useState<{
         image: string;
         label: string;
@@ -124,14 +123,6 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
     React.useEffect(() => {
         initialisePaymentSheet();
     }, []);
-    const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
-    useEffect(() => {
-        if (generalSettingData && generalSettingData.length > 0) {
-            generalSettingData.map((obj: any, i: any) => (
-                setLogo(obj.logo)
-            ))
-        }
-    }, [generalSettingData])
     return (
         <PaymentScreen>
               <View style={{marginBottom:20}}>

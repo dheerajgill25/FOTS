@@ -41,8 +41,8 @@ class HttpCallClass {
             return await instance.post<T>(url, params, {
             });
         } catch (error) {
-            console.debug(' error --', error);
-            return this.errorHandler(error);
+            console.debug(' error --', error[0].Error);
+            return this.errorHandler(error[0].Error);
         }
     }
     errorHandler = async (error: any ) => {
