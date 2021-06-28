@@ -42,7 +42,7 @@ const renderHelpSection = (contactEmail: string) => {
             <View style={styles.helpBox}>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <TouchableOpacity onPress={()=>OpenLink.openUrl(contactEmail)}>
+                        <TouchableOpacity onPress={() => OpenLink.openUrl(contactEmail)}>
                             <Typography style={styles.helpText}>Help</Typography>
                             <Typography style={styles.faqText}>FAQ & Links</Typography>
                         </TouchableOpacity>
@@ -109,7 +109,7 @@ const renderItems = (items: any, index: any) => {
                                     <View style={styles.orderStatuswrp}>
                                         <Typography style={styles.orderStatusType}>{items.status}</Typography>
                                         <View style={[styles.orderStatus, {
-                                            backgroundColor: items.status == "Scheduled" ? "#FE8E3C" : items.status == "Accepted" ? "#FE8E3C" : items.status == "In Progress" ? "#FE8E3C" : items.status == "Dispatched" ? "#FE8E3C" : "#77D32F"
+                                            backgroundColor: items.status == "Pending" ? "#FE8E3C" : items.status == "Cancel" ? "red" : items.status == "Scheduled" ? "#FE8E3C" : items.status == "Accepted" ? "#FE8E3C" : items.status == "In Progress" ? "#FE8E3C" : items.status == "Dispatched" ? "#FE8E3C" : "#77D32F"
                                         }]}>
                                             <Image source={ARROWRIGHT} style={styles.arrowIcon} />
                                         </View>

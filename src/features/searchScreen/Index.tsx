@@ -3,6 +3,7 @@ import { MyStatusBar } from 'components/statusbar/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import BaseScreen from 'features/basescreen/Index';
 import ProductDetailScreen from 'features/productdetail/Index';
+import StorageService from 'libs/storage/Storage';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
@@ -27,7 +28,6 @@ const SearchScreen = (props: SearchScreenProps) => {
     }, [props?.route]);
     React.useEffect(() => {
         if(searchString){
-            console.log(searchString)
             setText(searchString);
         }else{
             setText("");
@@ -40,7 +40,10 @@ const SearchScreen = (props: SearchScreenProps) => {
             <View key={index} style={styles.searchDropdown}>
                 <View style={styles.searchDropdownBox}>
                     <View style={styles.searchDropdownWrap}>
-                        <Typography onPress={() => ProductDetailScreen.navigate(item.product_id)} style={styles.productName}>{item.name}</Typography>
+                        <Typography onPress={() =>{ 
+                            ProductDetailScreen.navigate(item.product_id);
+                            StorageService.setItem("search", true)
+                            }} style={styles.productName}>{item.name}</Typography>
                     </View>
                 </View>
             </View>

@@ -63,7 +63,7 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 paymentIntentClientSecret: paymentIntent,
                 customFlow: true,
                 merchantDisplayName: 'Food on Stoves',
-                merchantCountryCode: 'US',
+                merchantCountryCode: "INR",
                 style: 'alwaysDark',
                 googlePay: false,
                 testEnv: true,
@@ -107,6 +107,7 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 duration: 3000,
                 fontFamily: FontFamilyFoods.POPPINS
             })
+            setLoading(false);
         } else {
             const { paymentIntent, error } = await retrievePaymentIntent(clientSc);
             Snackbar.show({
@@ -114,7 +115,15 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 textColor: "white",
                 duration: 3000,
                 fontFamily: FontFamilyFoods.POPPINS
-            })
+            });
+            if(error){
+                Snackbar.show({
+                    text:error.message,
+                    textColor: "white",
+                    duration: 3000,
+                    fontFamily: FontFamilyFoods.POPPINS
+                });
+            }
             PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, 'stripe', paymentIntent?.id,paymentIntent)
             setPaymentSheetEnabled(false);
             setLoading(false);

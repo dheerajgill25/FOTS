@@ -8,12 +8,13 @@ target 'FoodOnStoves' do
   use_react_native!(
     :path => config[:reactNativePath],
     # to enable hermes on iOS, change `false` to `true` and then install pods
-    :hermes_enabled => false
+    :hermes_enabled => true
   )
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  #pod 'RNThread', :path => '../node_modules/react-native-threads'
   target 'FoodOnStovesTests' do
     inherit! :complete
     # Pods for testing

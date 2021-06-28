@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headingInner: {
-
+        flex:1,
     },
     productName: {
         fontSize: 20,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     productPrice: {
         flex: 1,
-
+        maxWidth:150
     },
     price: {
         textAlign: 'right',

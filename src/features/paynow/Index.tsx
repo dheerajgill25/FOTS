@@ -18,6 +18,7 @@ import StateControllerInstance from 'features/registerscreen/controllers/state.c
 import moment from 'moment';
 import RootNavigator from 'navigation/rootnavigation';
 import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 interface BeforePayNowProps { route: any }
 function dates() {
     var d = new Date(),
@@ -51,7 +52,7 @@ const renderDateOfDeliverSection = (dateOfDelivery: any, dateOfDeliverySecond: a
                 </View>
             </View>
             {
-                isDateShow == 0 || (days == 5 && days == 7) ? (<View style={styles.descriptiongBox}>
+                isDateShow == 0 && (days == 5 || days == 7) ? (<View style={styles.descriptiongBox}>
                     <View style={styles.descriptionInner}>
                         <Typography style={styles.descriptionName}>Date of Delivery</Typography>
                     </View>
@@ -77,7 +78,6 @@ const BeforePayNow = (props: BeforePayNowProps) => {
     const [fireStationId, setFireStationId] = useState("");
     const [userData, setUserData] = React.useState<any>({});
     const [isDateShow, setIsDateShow] = useState<number>();
-    const [days, setDays] = useState<number>();
     React.useEffect(() => {
         StateControllerInstance.getState();
     }, [])
@@ -102,16 +102,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
             }
         }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
         return () => { cancelled = true; }
-    }, [userData])
-    useEffect(() => {
-        let cancelled = false;
-        StorageService.getItem('days').then((values: any) => {
-            if (!cancelled) {
-                setDays(values);
-            }
-        }).catch((error) => { CrashReporterInstance.recordError(error); console.log("asyncstorage error", error) });
-        return () => { cancelled = true; }
-    }, [days])
+    }, [userData]);
     const checkoutData = useSelector((state: RootStore) => state.CheckoutInState.data?.data);
     const stateData = useSelector((state: RootStore) => state.StateInState.data?.data);
     const fireDepartmentData = useSelector((state: RootStore) => state.FireDepartmentInState.data?.data);
@@ -131,7 +122,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         } else {
             if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
                 Snackbar.show({
-                    text: 'State id or Fire Deparment id or Fire station id required ',
+                    text: 'Please select a state or Fire Deparment or Fire station ',
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
@@ -205,7 +196,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
                 <View>
                     <DropdownComponentCheckOut title="Fire Station" data={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
                 </View>
-                {renderDateOfDeliverSection(checkoutData?.delivery_date, checkoutData?.delivery_date2, isDateShow, days)}
+                {renderDateOfDeliverSection(checkoutData?.delivery_date, checkoutData?.delivery_date2, isDateShow, checkoutData?.mealPlanDay)}
             </ScrollView>
             <CheckOutBox
                 label="Order Now"

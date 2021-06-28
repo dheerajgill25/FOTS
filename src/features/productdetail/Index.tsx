@@ -18,6 +18,7 @@ import HomeScreen from "features/home/Index";
 import CartIcon from "components/carticon/Index";
 import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
 import OrderScreen from "features/orderScreen/Index";
+import SearchScreen from "features/searchScreen/Index";
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -251,10 +252,16 @@ const handleCartAgainAfterRemove = async (cart: {}) => {
 const renderModal = (modalizeRef: any, cart: {}) => {
     const closeModal = async () => {
         const category_id = await AsyncStorage.getItem('cId');
+        const search = await AsyncStorage.getItem('search');
         modalizeRef?.current?.close();
         cartAgainAdd = false;
         cart = {};
-        OrderScreen.navigate(category_id)
+        if(search){
+            SearchScreen.navigate();
+            AsyncStorage.removeItem('search')
+        }else{
+            OrderScreen.navigate(category_id);
+        }
     }
     return (
         <>

@@ -14,7 +14,7 @@ interface error {
 interface LoginProps { }
 const loginForm = () => {
     const inputFeilds = React.createRef<TextInput>();
-    const [formValidate, setSubmitting] = useState<any>({
+    const [formValidate, setSubmitting] = useState({
         isSubmitting: false,
         error: undefined,
     });
@@ -113,7 +113,7 @@ const loginForm = () => {
                 </View>
                 <View style={styles.registerButton}>
                     <Typography style={styles.dontHave}>Don't have an account?</Typography>
-                    <TouchableOpacity onPress={() => Register.navigate()}>
+                    <TouchableOpacity  onPress={() => Register.navigate()}>
                         <Typography style={styles.register}>Register</Typography>
                     </TouchableOpacity>
                 </View>

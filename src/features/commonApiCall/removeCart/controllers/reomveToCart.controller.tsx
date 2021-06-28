@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartListControllerInstance from "features/cart/httpCall/controllers/cartList.controller";
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
@@ -83,9 +84,11 @@ class RemoveCartController {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
                 if (type == 'meal') {
-                    ProductScreen.navigate(categoryId,mealId,true)
+                    ProductScreen.navigate(categoryId,mealId,true);
+                    AsyncStorage.removeItem('days');
                 } else {
-                    OrderScreen.navigate(categoryId)
+                    OrderScreen.navigate(categoryId);
+                    AsyncStorage.removeItem('days');
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
