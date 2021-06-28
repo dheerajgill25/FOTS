@@ -87,7 +87,6 @@
 		EDD009D1B4F24AB78AD4F1AE /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ThinItalic.ttf"; path = "../assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		FD605F042664F1B90096700B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FD77972226859D2600822FF9 /* libreact-native-splash-screen.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-splash-screen.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD7797E42685A38000822FF9 /* FoodOnStoves-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodOnStoves-Bridging-Header.h"; sourceTree = "<group>"; };
 		FD7797E52685A38000822FF9 /* Fots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fots.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,7 +208,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				0AEBE2516B33F589CAACD7CD /* Pods */,
 				4F3710FD05EA47D2A8391F37 /* Resources */,
-				FD7797E42685A38000822FF9 /* FoodOnStoves-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -591,7 +589,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.foodonstoves;
 				PRODUCT_NAME = FoodOnStoves;
-				SWIFT_OBJC_BRIDGING_HEADER = "FoodOnStoves-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -619,7 +617,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.foodonstoves;
 				PRODUCT_NAME = FoodOnStoves;
-				SWIFT_OBJC_BRIDGING_HEADER = "FoodOnStoves-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -681,7 +679,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -739,7 +736,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
