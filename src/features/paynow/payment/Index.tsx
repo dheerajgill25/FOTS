@@ -1,7 +1,7 @@
 import {
     useStripe,
 } from '@stripe/stripe-react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import PaymentScreen from 'components/stripePaymentScreen/Index';
 import { APIENDPOINTS } from 'libs/api/apiEndpoints';
@@ -11,8 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchPublishableKey } from 'components/stripePaymentScreen/fetchPublishKey/Index';
 import Snackbar from 'react-native-snackbar';
 import PayNowControllerInstance from '../controllers/paynow.controller';
-import { useSelector } from 'react-redux';
-import RootStore from 'reduxModule/store/Index';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 
 const WebhookPaymentScreen = (props: { route: any; }) => {

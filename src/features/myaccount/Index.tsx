@@ -125,6 +125,10 @@ const renderItems = (items: any, index: any) => {
                                 <View style={{ flex: 1, }}>
                                     <Typography style={[styles.dateFieldsName, { textAlign: "right" }]}>{items.status == "Delivered" ? "Delivered on" : "Arriving on"}</Typography>
                                     <Typography style={[styles.date, { textAlign: "right" }]}>{deliverDate}</Typography>
+                                    {
+                                        items.delivery_date2!=="" && <Typography style={[styles.date, { textAlign: "right" }]}>{moment(items.delivery_date2).format("DD|MM|YYYY")}</Typography>
+                                    }
+
                                 </View>
                             </View>
                             {
