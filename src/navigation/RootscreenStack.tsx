@@ -19,6 +19,7 @@ import CartCountControllerInstance from 'features/commonApiCall/cartCount/contro
 import GeneralSettingControllerInstance from 'features/commonApiCall/generalSetting/controllers/generalSetting.controller';
 import WebhookPaymentScreen from 'features/paynow/payment/Index';
 import ProductRating from 'features/rating/Index';
+import FaqScreen from 'features/faq/Faq';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -131,7 +132,7 @@ const RootStackScreen = () => {
 
 
                         />
-                          <RootStackNavigator.Screen
+                        <RootStackNavigator.Screen
                             name={WebhookPaymentScreen.SCREEN_NAME}
                             component={WebhookPaymentScreen}
                             options={HeaderScreenOptionNavigation({
@@ -139,8 +140,15 @@ const RootStackScreen = () => {
                                 headerTitle: "Payment",
                                 showCartIcon: false
                             })}
-
-
+                        />
+                        <RootStackNavigator.Screen
+                            name={FaqScreen.SCREEN_NAME}
+                            component={FaqScreen}
+                            options={HeaderScreenOptionNavigation({
+                                showBackButton: true,
+                                headerTitle: "FAQ",
+                                showCartIcon: false
+                            })}
                         />
                     </>
                 ) : (

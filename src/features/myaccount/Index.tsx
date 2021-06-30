@@ -16,6 +16,7 @@ import EditProfile from 'features/editProfile/Index';
 import ProductRating from 'features/rating/Index';
 import { useState } from 'react';
 import OpenLink from 'libs/functions/Linking';
+import FaqScreen from 'features/faq/Faq';
 interface MyAccountProps { }
 
 const renderAccountInfo = (data: any) => {
@@ -42,7 +43,7 @@ const renderHelpSection = (contactEmail: string) => {
             <View style={styles.helpBox}>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <TouchableOpacity onPress={() => OpenLink.openUrl(contactEmail)}>
+                        <TouchableOpacity onPress={() => FaqScreen.navigate()}>
                             <Typography style={styles.helpText}>Help</Typography>
                             <Typography style={styles.faqText}>FAQ & Links</Typography>
                         </TouchableOpacity>
@@ -126,7 +127,7 @@ const renderItems = (items: any, index: any) => {
                                     <Typography style={[styles.dateFieldsName, { textAlign: "right" }]}>{items.status == "Delivered" ? "Delivered on" : "Arriving on"}</Typography>
                                     <Typography style={[styles.date, { textAlign: "right" }]}>{deliverDate}</Typography>
                                     {
-                                        items.delivery_date2!=="" && <Typography style={[styles.date, { textAlign: "right" }]}>{moment(items.delivery_date2).format("DD|MM|YYYY")}</Typography>
+                                        items.delivery_date2 !== "" && <Typography style={[styles.date, { textAlign: "right" }]}>{moment(items.delivery_date2).format("DD|MM|YYYY")}</Typography>
                                     }
 
                                 </View>

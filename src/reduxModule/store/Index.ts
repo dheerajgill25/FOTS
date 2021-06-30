@@ -18,6 +18,7 @@ import { AddToCartInState } from "features/commonApiCall/addToCart/reducers/addT
 import { TestimonialsInState } from "features/home/reducers/testimonials.reducer";
 import { GeneralSettingInState } from "features/commonApiCall/generalSetting/reducers/generalSettings.reducer";
 import { PopularProductInState } from "features/home/reducers/popularProduct.reducer";
+import { FaqInState } from "features/faq/httpCallFaq/reducers/faq.reducer";
 
 export default interface RootStore {
     loadingState:LoadingInState;
@@ -39,5 +40,6 @@ export default interface RootStore {
     AddToCartInState:AddToCartInState;
     TestimonialsInState:TestimonialsInState;
     GeneralSettingInState:GeneralSettingInState;
-    PopularProductInState:PopularProductInState
+    PopularProductInState:PopularProductInState;
+    FaqInState:FaqInState
 };
