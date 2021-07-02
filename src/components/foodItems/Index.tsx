@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import { ScrollView } from "react-native";
 import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "react-native";
 import { Rating } from "react-native-ratings";
+import { isAndroid } from "themes/functions";
 interface FoodItemsProps {
     text?: string;
     imageUrl?: string;
@@ -100,13 +101,13 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         borderRadius: 5,
         minHeight: 250,
-        overflow: "hidden"
+        overflow: isAndroid?"hidden":"visible"
     },
     foodItemImageSection: {},
     foodImage: {
         width: '100%',
         height: 140,
-
+        borderRadius: isAndroid?0:5, 
     },
     foodItemRatingBox: {
         display: 'flex',

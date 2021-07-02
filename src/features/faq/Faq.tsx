@@ -25,90 +25,62 @@ interface ElementProfile {
     id?: any
 }
 
-const elementsProfileArray: ElementProfile[] = [
-    {
-        id: 0,
-        question: 'What is Lorem Ipsum?',
-        answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)"
-
-    },
-    {
-        id: 1,
-        question: 'What is Lorem Ipsum?',
-        answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)"
-
-    },
-    {
-        id: 2,
-        question: 'What is Lorem Ipsum?',
-        answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)"
-
-    },
-    {
-        id: 3,
-        question: 'What is Lorem Ipsum?',
-        answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)"
-
-    },
-    {
-        id: 4,
-        question: 'What is Lorem Ipsum?',
-        answer: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)"
-
-    },
-
-];
-
-const renderItemProfile = ({ question, answer, id }: ElementProfile, index: any) => {
-    const arrowRight = require("../../../assets/images/arrowright.png");
+const FaqScreen = ({ }: FaqScreenProps) => {
     const [shownAnswer, setShownAnswer] = useState<any>({});
-    const handleAccordian = (id: string | number) => {
-        setShownAnswer((shownAnswer: { [x: string]: any; }) => ({
-            ...shownAnswer,
-            [id]: !shownAnswer[id]
-        }));
-    }
-    return (
-        <View key={index} style={{ marginBottom: 20, borderBottomWidth: 2, borderBottomColor: '#ddd', paddingBottom: 20 }}>
-            <View
-                style={{
-                    alignItems: 'center',
-                    flex: 1,
-                    marginLeft: 20,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                }}
-            >
-                <View style={{ flexDirection: 'column', width: '100%' }}>
-                    <View style={{ flexDirection: 'row', alignItems: "center", width: '100%' }}>
-                        <View style={{ flex: 1 }}>
-                            <Typography style={{ color: 'black', fontSize: 14, fontFamily: FontFamilyFoods.POPPINS }}> Q : {question}</Typography>
+    useEffect(() => {
+        FaqControllerInstance.getFaq();
+    }, []);
+    const faqData = useSelector((state: RootStore) => state.FaqInState.data);
+    const renderItemProfile = ({ question, answer, id }: ElementProfile, index: any) => {
+        const arrowRight = require("../../../assets/images/arrowright.png");
+        const handleAccordian = (id: string | number) => {
+            // setShownAnswer((shownAnswer: { [x: string]: any; }) => ({
+            //     ...shownAnswer,
+            //     [id]: !shownAnswer[id]
+            // }));
+            if (id !== shownAnswer[id]) {
+                setShownAnswer((shownAnswer: { [x: string]: any; }) => ({
+                    ...shownAnswer,
+                    [id]: !shownAnswer[id]
+                }));
+            }
+        }
+        return (
+            <View key={index} style={{ marginBottom: 20, borderBottomWidth: 2, borderBottomColor: '#ddd', paddingBottom: 20 }}>
+                <View
+                    style={{
+                        alignItems: 'center',
+                        flex: 1,
+                        marginLeft: 20,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <View style={{ flexDirection: 'column', width: '100%' }}>
+                        <View style={{ flexDirection: 'row', alignItems: "center", width: '100%' }}>
+                            <View style={{ flex: 1 }}>
+                                <Typography style={{ color: 'black', fontSize: 16, fontFamily: FontFamilyFoods.POPPINS }}> Q : {question}</Typography>
+                            </View>
+                            <View style={{ flex: 1, alignItems: "flex-end", marginRight: 20, maxWidth: 100 }}>
+                                <TouchableOpacity onPress={_ => handleAccordian(id)}>
+                                    <Image source={arrowRight} style={{ height: 18, width: 10, transform: [{ rotate: shownAnswer[id] ? '-90deg' : "90deg" }] }} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={{ flex: 1, alignItems: "flex-end", marginRight: 20, maxWidth: 100 }}>
-                            <TouchableOpacity onPress={() => handleAccordian(id)}>
-                                <Image source={arrowRight} style={{ height: 18, width: 10, transform: [{ rotate: shownAnswer[id] ? '90deg' :"0deg"}] }} />
-                            </TouchableOpacity>
-                        </View>
+                        {
+                            shownAnswer[id] ? (
+                                <Typography style={{ color: 'black', fontSize: 14, marginTop: 10, lineHeight: 22, fontFamily: FontFamilyFoods.POPPINS, paddingRight: 20, paddingLeft: 6 }}>A : {answer}</Typography>
+                            ) : (
+                                null
+                            )
+                        }
                     </View>
-                    {
-                        shownAnswer[id] ? (
-                            <Typography style={{ color: 'black', fontSize: 11, marginTop: 10, lineHeight: 18, fontFamily: FontFamilyFoods.POPPINS }}> A : {answer}</Typography>
-                        ) : (
-                            null
-                        )
-                    }
                 </View>
             </View>
-        </View>
-    );
+        );
 
-};
+    };
 
-const FaqScreen = ({ }: FaqScreenProps) => {
-    useEffect(()=>{
-        FaqControllerInstance.getFaq();
-    },[]);
-    const faqData = useSelector((state:RootStore)=>state.FaqInState.data);
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, }}>
             <View style={{ flex: 1, width: '100%', flexDirection: 'column' }}>
@@ -129,7 +101,7 @@ const FaqScreen = ({ }: FaqScreenProps) => {
                     </View>
                     <View style={style.separator} />
                     {  //@ts-ignore
-                        faqData.map<ElementProfile>((item, index) => {
+                        faqData && faqData?.map<ElementProfile>((item, index) => {
                             return renderItemProfile(item, index);
                         })}
                 </ScrollView>

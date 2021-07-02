@@ -43,21 +43,23 @@ const renderHelpSection = (contactEmail: string) => {
             <View style={styles.helpBox}>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <TouchableOpacity onPress={() => FaqScreen.navigate()}>
-                            <Typography style={styles.helpText}>Help</Typography>
-                            <Typography style={styles.faqText}>FAQ & Links</Typography>
-                        </TouchableOpacity>
+                        <Typography style={styles.helpText}>Help</Typography>
+                        <Typography style={styles.faqText}>FAQ & Links</Typography>
                     </View>
                     <View style={styles.helpRight}>
-                        <Image source={ARROWRIGHT} style={styles.arrowRight} />
+                        <TouchableOpacity onPress={() => FaqScreen.navigate()}>
+                            <Image source={ARROWRIGHT} style={styles.arrowRight} />
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.helpContent}>
                     <View style={styles.helpLeft}>
-                        <Typography onPress={() => SignInControllerInstance.signout()} style={styles.helpText}>Sign out</Typography>
+                        <Typography style={styles.helpText}>Sign out</Typography>
                     </View>
                     <View style={styles.helpRight}>
-                        <Image source={ARROWRIGHT} style={styles.arrowRight} />
+                        <TouchableOpacity onPress={() => SignInControllerInstance.signout()}>
+                            <Image source={ARROWRIGHT} style={styles.arrowRight} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

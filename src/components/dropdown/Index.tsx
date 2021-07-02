@@ -2,6 +2,7 @@ import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import React, { memo, useState } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { isAndroid } from 'themes/functions';
 interface DropdownProps {
     title: string;
     onPress: (data: any) => void;
@@ -23,8 +24,8 @@ const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
         <>
             <View style={styles.dropdownBox}>
                 <View>
-                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : 22 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true }}>
-                        <Typography style={[styles.title, { color: selectedValue ? 'black' : edit ? 'black' : '#A7A7A7' }]}>{dropdownValue?dropdownValue:title}</Typography>
+                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : isAndroid ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true }}>
+                        <Typography style={[styles.title, { color: selectedValue ? 'black' : edit ? 'black' : '#A7A7A7' }]}>{dropdownValue ? dropdownValue : title}</Typography>
                         <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15 }} />
                     </TouchableOpacity>
                     {
@@ -33,7 +34,7 @@ const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
                                 data && data.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
-                                            <Typography style={styles.values}>{item.name!==''&&item.name}</Typography>
+                                            <Typography style={styles.values}>{item.name !== '' && item.name}</Typography>
                                         </TouchableOpacity>
                                     </View>
                                 ))

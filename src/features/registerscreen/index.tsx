@@ -79,10 +79,10 @@ const registerForm = () => {
                 <View style={styles.formGroup}>
                     <TextInput style={styles.formControl} value={password} onChangeText={(text) => {
                         setPassword(text);
-                        if (password?.length < 6) {
-                            setPassError("Password must be at least 6 characters")
-                        } else {
+                        if (text?.length >= 6) {
                             setPassError("")
+                        } else {
+                            setPassError("Password must be at least 6 characters")
                         }
                     }} placeholder={'Password'} placeholderTextColor={"#A7A7A7"} secureTextEntry={true} />
                 </View>

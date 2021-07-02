@@ -176,7 +176,7 @@ const EditProfile = (props: EditProfileProps) => {
                                     />
                                     <Typography onPress={() => ChangePassword.navigate()} style={styles.passwordLink}>Change Password</Typography>
                                 </View>
-                                <View style={[styles.formGroup, { marginTop: 30 }]}>
+                                <View style={[styles.formGroup, { marginTop:isAndroid?30:20 }]}>
                                     <DropdownComponent edit title={fireDepartment} data={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
                                 </View>
                                 <View style={styles.formGroup}>
@@ -265,7 +265,8 @@ const styles = StyleSheet.create({
     },
     formGroup: {
         marginHorizontal: 23,
-        marginTop: 20
+        marginTop: 20,
+        marginBottom: isAndroid?0:8,
     },
     formControl: {
         borderBottomWidth: 1,

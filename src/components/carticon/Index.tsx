@@ -4,7 +4,6 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from '@reduxModule/store/Index';
 import CartScreen from 'features/cart/Index';
-import CartCountControllerInstance from 'features/commonApiCall/cartCount/controllers/cartCount.controller';
 import Snackbar from 'react-native-snackbar';
 import { FontFamilyFoods } from 'components/typography/Typography';
 const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
@@ -16,28 +15,29 @@ const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
             countNumber.map((obj: { carts_count: number; }) => {
                 setCartItems(obj.carts_count)
             })
-        }else{
+        } else {
             setCartItems(0)
         }
-    }, [countNumber,cartItems])
-    const navigateToCart=()=>{
-        console.log(cartItems)
-        if(cartItems==0){
+    }, [countNumber, cartItems])
+    const navigateToCart = () => {
+        if (cartItems == 0) {
+            console.log("clciked")
             Snackbar.show({
                 text: 'Cart is empty',
                 textColor: "white",
                 duration: 3000,
                 fontFamily: FontFamilyFoods.POPPINS
             })
-            return 
-        }else{
+            return
+        } else {
+            console.log("clicked")
             CartScreen.navigate()
         }
     }
     return (
         <>
             <View style={[styles.cartFix, onDetailPage && styles.cartIconOnDetail]}>
-                <TouchableOpacity onPress={()=>navigateToCart()}>
+                <TouchableOpacity onPress={() => navigateToCart()}>
                     <Image source={onDetailPage ? whiteCartIcon : IMAGEURL} style={{ height: 20, width: 20 }} />
                     <View style={{
                         bottom: 10,
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
         top: 10
     },
     cartIconOnDetail: {
-        right: 0
+        right: 0,
     }
 })

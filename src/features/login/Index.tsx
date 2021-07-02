@@ -104,9 +104,9 @@ const loginForm = () => {
                     </Typography>
                 )}
                 <View>
-                    <TouchableOpacity>
+                    {/* <TouchableOpacity>
                         <Typography style={styles.forgotPass}>Forgot Password?</Typography>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
                 <View style={styles.buttonSetion}>
                     <ButtonFood onPress={() => handleLoginButton()} label={'Sign IN'} textColor={'white'} textStyle={styles.buttonStyle} />
