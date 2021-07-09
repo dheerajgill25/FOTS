@@ -6,7 +6,18 @@ import RootStore from '@reduxModule/store/Index';
 import CartScreen from 'features/cart/Index';
 import Snackbar from 'react-native-snackbar';
 import { FontFamilyFoods } from 'components/typography/Typography';
-const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
+interface CartIconProps{
+    onDetailPage?:any;
+    whiteCartIcon?:any;
+    cart?:any;
+    height?:any;
+    width?:any;
+    alignItems?: string,
+    justifyContent?: string,
+}
+const CartIcon = ({ onDetailPage, whiteCartIcon, cart,height,width,alignItems ,justifyContent}: CartIconProps) => {
+    console.log(alignItems)
+    console.log(height,width)
     const IMAGEURL = require('../../../assets/images/cart.png');
     const [cartItems, setCartItems] = useState<number>(0)
     const countNumber = useSelector((state: RootStore) => state.CartCountInState.data)
@@ -20,8 +31,7 @@ const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
         }
     }, [countNumber, cartItems])
     const navigateToCart = () => {
-        if (cartItems == 0) {
-            console.log("clciked")
+        if (cartItems <= 0) {
             Snackbar.show({
                 text: 'Cart is empty',
                 textColor: "white",
@@ -30,14 +40,13 @@ const CartIcon = ({ onDetailPage, whiteCartIcon, cart }: any) => {
             })
             return
         } else {
-            console.log("clicked")
             CartScreen.navigate()
         }
     }
     return (
         <>
-            <View style={[styles.cartFix, onDetailPage && styles.cartIconOnDetail]}>
-                <TouchableOpacity onPress={() => navigateToCart()}>
+            <View style={[styles.cartFix, onDetailPage && styles.cartIconOnDetail,height,width,justifyContent,alignItems,{marginRight: 10,}]}>
+                <TouchableOpacity onPress={() =>  navigateToCart()}>
                     <Image source={onDetailPage ? whiteCartIcon : IMAGEURL} style={{ height: 20, width: 20 }} />
                     <View style={{
                         bottom: 10,

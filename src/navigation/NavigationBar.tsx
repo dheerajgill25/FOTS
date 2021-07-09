@@ -15,11 +15,11 @@ interface ScreenOptionNavigation {
     headerRight?: React.ReactNode;
 }
 
-const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
-    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight,showOnlyLogo, } =
+const ScreenOptionNavigation: any = (props?: ScreenOptionNavigation) => {
+    const { showBackButton = false, showCartIcon = false, headerLeft, headerRight, showOnlyLogo, } =
         props || {};
     return {
-        headerTitleAlign:"center",
+        headerTitleAlign: "center",
         headerStyle: {
             backgroundColor: 'white',
         },
@@ -47,16 +47,12 @@ const ScreenOptionNavigation:any = (props?: ScreenOptionNavigation) => {
         headerRight: () => {
             if (showCartIcon) {
                 return (
-                    <TouchableOpacity
-                        style={{
-                            height: Size.squareButton.size,
-                            width: Size.squareButton.size,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <CartIcon  />
-                    </TouchableOpacity>
+                    <CartIcon
+                    height={Size.squareButton.size}
+                    width={Size.squareButton.size}
+                    alignItems='center'
+                    justifyContent='center'
+                />
                 );
             } else if (headerRight) {
                 return headerRight;
