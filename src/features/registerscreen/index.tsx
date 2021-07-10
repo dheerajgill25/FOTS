@@ -13,6 +13,7 @@ import Typography, { FontFamilyFoods } from '@components/typography/Typography';
 import RootNavigator from '@navigation/rootnavigation';
 import DropdownComponent from '@components/dropdown/Index';
 import { MyStatusBar } from '@components/statusbar/Index';
+import { isAndroid } from 'themes/functions';
 interface RegisterProps { }
 const registerForm = () => {
     const [fireDepartmentId, setFireDepartmentId] = useState<string>("");
@@ -61,7 +62,7 @@ const registerForm = () => {
                 <View style={styles.formGroup}>
                     <TextInput value={email} style={styles.formControl} onChangeText={(text) => {
                         setEmail(text)
-                        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+                        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(text)) {
                             setError("Please enter valid email")
                         } else {
                             setError("")
@@ -96,7 +97,7 @@ const registerForm = () => {
                 <View style={styles.formGroup}>
                     <TextInput style={styles.formControl} value={mobile} onChangeText={(text) => setMobile(text)} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
                 </View>
-                <View >
+                <View style={{marginBottom: isAndroid?0:20}}>
                     <DropdownComponent title="Fire Department" data={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
                 </View>
                 <View >

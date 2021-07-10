@@ -166,7 +166,7 @@ const RootStackScreen = () => {
                             name={Register.SCREEN_NAME}
                             component={Register}
                             options={ScreenOptionNavigation({
-                                showBackButton: false,
+                                showBackButton: true,
                                 showCartIcon: false,
                                 showOnlyLogo: true
                             })}
