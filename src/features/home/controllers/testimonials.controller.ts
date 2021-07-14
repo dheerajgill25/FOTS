@@ -11,7 +11,7 @@ class TestimonialsController {
             const getTestimonials = await HttpCall.post(URLS,{}, true);
             const {data,status}:any = getTestimonials;
             if(data.status&&status){
-                useAppDispatch(LoadingAction.showLoading(true));
+                useAppDispatch(LoadingAction.showLoading(false));
                 useAppDispatch(TestimonialsAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false))
             }else{

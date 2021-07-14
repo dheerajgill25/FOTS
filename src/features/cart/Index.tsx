@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckOutBox from 'components/checkoutbox/Index';
 import ImageComponent, { Priority, ResizeMode } from 'components/imageComponent/ImageComponent';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
@@ -119,7 +118,7 @@ const CartScreen = ({ }: CartProps) => {
                 <View style={styles.coupenCodeWrap}>
                     <View style={styles.coupenCodeBox}  >
                         <View style={styles.coupenForm}>
-                            <TextInput placeholder="Have Coupen Code?"
+                            <TextInput placeholder="Have Coupon Code?"
                                 editable={cartData?.type == "meal" ? true : false}
                                 style={styles.formControl}
                                 onChangeText={(code: string) => setCoupenCode(code)}

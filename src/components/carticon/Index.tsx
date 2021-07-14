@@ -16,8 +16,6 @@ interface CartIconProps{
     justifyContent?: string,
 }
 const CartIcon = ({ onDetailPage, whiteCartIcon, cart,height,width,alignItems ,justifyContent}: CartIconProps) => {
-    console.log(alignItems)
-    console.log(height,width)
     const IMAGEURL = require('../../../assets/images/cart.png');
     const [cartItems, setCartItems] = useState<number>(0)
     const countNumber = useSelector((state: RootStore) => state.CartCountInState.data)

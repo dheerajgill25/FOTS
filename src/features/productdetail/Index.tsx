@@ -129,7 +129,7 @@ const cookingSection = (_data: any) => {
         </View>
     )
 }
-const cookingInstructionSection = (_data: any, ingradient: []) => {
+const cookingInstructionSection = (_data: any, ingradient: [],cabinet:[]) => {
     const PLUSIMAGEURL = require('../../../assets/images/plus.png');
     const MINUSIMAGEURL = require('../../../assets/images/minus.png');
     const [accrodien, setAccrodien] = useState<string>("");
@@ -163,6 +163,49 @@ const cookingInstructionSection = (_data: any, ingradient: []) => {
                                 {
                                     ingradient && ingradient.length > 0 ? (
                                         ingradient && ingradient.map((item: any, index: any) => (
+                                            <>
+                                                <View key={index} style={[styles.inYourBox, {
+                                                    width: 100,
+                                                    marginBottom: 10,
+                                                }]}>
+                                                    {
+                                                        item.quantity == "" && item.quantity == 0 ? (
+                                                            <View />
+                                                        ) : (
+                                                            <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
+                                                        )
+                                                    }
+                                                    <Typography style={styles.nutritionType}>{item.name}</Typography>
+                                                </View>
+                                            </>
+                                        ))
+                                    ) : (
+                                        <View />
+                                    )
+                                }
+
+                            </View>
+                        </View>
+                    }
+                    <View style={styles.accordienWrap}>
+                        <View style={styles.accordienContentFlex}>
+                            <Typography style={styles.accordienTitle}>From Your Cabinet</Typography>
+                        </View>
+                        <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("cabinet")} >
+                            <Image source={accrodien == 'cabinet' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
+                        </TouchableOpacity>
+                    </View>
+                    {
+                        accrodien == 'cabinet' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
+                            <View style={{
+                                flexDirection: 'row',
+                                marginLeft: -10,
+                                marginTop: 10,
+                                flexWrap: 'wrap'
+                            }}>
+                                {
+                                    cabinet && cabinet.length > 0 ? (
+                                        cabinet && cabinet.map((item: any, index: any) => (
                                             <>
                                                 <View key={index} style={[styles.inYourBox, {
                                                     width: 100,
@@ -351,7 +394,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     {renderDescriptionSection(productDetail?.description)}
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {cookingSection(productDetail?.cooking_time)}
-                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient)}
+                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient,productDetail?.cabinet)}
                     {renderButtonSection(productDetail?.net_amount, productDetail)}
                     {
                         addCart?.popup ? renderModal(modalizeRef, addCart) : null

@@ -8,6 +8,9 @@ import { SignInAction } from "../action/login.action";
 import Toast from 'react-native-simple-toast';
 import TokenControllerInstance from "./token.controller";
 import AnalyticsFunction from "behaviour/analytics/AnalyticsService";
+import Snackbar from "react-native-snackbar";
+import { FontFamilyFoods } from "components/typography/Typography";
+import Toaster from "features/commonApiCall/toaster";
 class SignInController {
     async loginUser(email: string, password: string) {
         try {
@@ -26,9 +29,9 @@ class SignInController {
                 useAppDispatch(SignInAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();
-                Toast.showWithGravity(message||"Login success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
+                Toaster.show("Login success Welcome in FOTS")
             } else {
-                Toast.showWithGravity(message||"Please enter valid credentials", Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message||"Please enter valid credentials")
                 useAppDispatch(LoadingAction.showLoading(false));
             }
             useAppDispatch(LoadingAction.showLoading(false));

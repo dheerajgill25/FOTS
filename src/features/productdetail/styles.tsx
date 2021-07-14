@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 9,
         fontFamily: FontFamilyFoods.POPPINSMEDIUM,
-        fontSize: 15, color: '#484848',
+        fontSize: 15, color: '#d80000',
         lineHeight: 25
     },
     accordienSection: {
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
         width: 22,
     },
     accordienTitle: {
-        fontFamily: FontFamilyFoods.POPPINSMEDIUM,
+        fontFamily: FontFamilyFoods.POPPINSBOLD,
         fontSize: 18, color: '#484848',
         lineHeight: 27
     },

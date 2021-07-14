@@ -11,7 +11,7 @@ class PopularProductController {
             const getPopularProduct = await HttpCall.post(URLS,{}, true);
             const {data,status}:any = getPopularProduct;
             if(data.status&&status){
-                useAppDispatch(LoadingAction.showLoading(true));
+                useAppDispatch(LoadingAction.showLoading(false));
                 useAppDispatch(PopularProductAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false))
             }else{

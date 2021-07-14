@@ -11,7 +11,7 @@ class CategoryController {
             const getCategory = await HttpCall.post(CATEGORYURL,{}, true);
             const {data,status}:any = getCategory;
             if(data.status&&status){
-                useAppDispatch(LoadingAction.showLoading(true));
+                useAppDispatch(LoadingAction.showLoading(false));
                 useAppDispatch(CategoryAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false))
             }else{

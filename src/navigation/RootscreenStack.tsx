@@ -115,7 +115,7 @@ const RootStackScreen = () => {
                             name={ProductScreen.SCREEN_NAME}
                             component={ProductScreen}
                             options={ScreenOptionNavigation({
-                                showBackButton: false,
+                                showBackButton: true,
                                 showCartIcon: true,
                                 showOnlyLogo: false
                             })}

@@ -16,7 +16,6 @@ const style = StyleSheet.create({
 });
 
 const CircleNumber = ({ amountCart, cart, onDetailPage=false }: { amountCart: number, cart?: boolean, onDetailPage?: boolean }) => {
-    console.log("amount-cart===",amountCart)
     return (
         <>
             {

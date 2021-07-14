@@ -1,5 +1,6 @@
 import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import Toaster from 'features/commonApiCall/toaster';
 import Register from 'features/registerscreen';
 import { validateLogin } from 'libs/functions/validation';
 import RootNavigator from 'navigation/rootnavigation';
@@ -41,7 +42,7 @@ const loginForm = () => {
     };
     const handleLoginButton = () => {
         const { email, password } = loginRequest;
-        if (email !== '' && password !== '') {
+        if (email !== '' && password !== '' && formValidate.isSubmitting) {
             SignInControllerInstance.loginUser(email.trim(), password);
             inputFeilds.current?.clear()
             setLoginRequest({
@@ -54,12 +55,7 @@ const loginForm = () => {
                 error: undefined,
             })
         } else {
-            Snackbar.show({
-                text: 'Please fill all required Fields',
-                textColor: "white",
-                duration: 3000,
-                fontFamily: FontFamilyFoods.POPPINS
-            })
+          Toaster.show(!formValidate.isSubmitting?"Please validate your Credentials":'Please fill all required Fields')
         }
     }
     return (
@@ -113,7 +109,7 @@ const loginForm = () => {
                 </View>
                 <View style={styles.registerButton}>
                     <Typography style={styles.dontHave}>Don't have an account?</Typography>
-                    <TouchableOpacity  onPress={() => Register.navigate()}>
+                    <TouchableOpacity onPress={() => Register.navigate()}>
                         <Typography style={styles.register}>Register</Typography>
                     </TouchableOpacity>
                 </View>

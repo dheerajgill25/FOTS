@@ -10,23 +10,19 @@ interface AlertModalProps {
     isVisiable?: boolean;
     mealPlan?: boolean;
     subTitle?: string;
+    onClosePress: Function;
+    onSuccess:Function
 }
 
-const AlertModal = ({ label,isVisiable }: AlertModalProps) => {
-    console.log(label)
-    const [isShown, setIsShown] = React.useState(true);
-    const closeModal = () => {
-        setIsShown(false);
-    }
+const AlertModal = ({ label,isVisiable,onClosePress,onSuccess }: AlertModalProps) => {
     return (
-        <ReactNativeModal isVisible={true}  style={styles.modal}
+        <ReactNativeModal isVisible={isVisiable}  style={styles.modal}
             backdropColor={'black'}
             backdropOpacity={0.3}
             coverScreen={true}
 
         >
             <View style={styles.container} >
-
                 <View style={styles.modalSection}>
                     <View style={styles.modalInner}>
                         <Typography  style={styles.label}>{label}</Typography>
@@ -34,14 +30,12 @@ const AlertModal = ({ label,isVisiable }: AlertModalProps) => {
                     <View style={styles.modalButton}>
                         <TouchableOpacity
                             style={styles.btn}
-                         
+                            onPress={()=>onClosePress()}
                         >
                             <Typography style={styles.buttonText}>{'Cancel'}</Typography>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={styles.btn}
-                           
-                        >
+                            style={styles.btn} onPress={()=>onSuccess()}  >
                             <Typography style={styles.buttonText}>{'OK'}</Typography>
                         </TouchableOpacity>
                     </View>
@@ -61,7 +55,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 13,
-        height: 325,
+        height: 225,
         backgroundColor: "white",
         width: width * 0.93,
         zIndex: 99,
