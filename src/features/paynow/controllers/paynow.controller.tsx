@@ -1,4 +1,5 @@
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import ThankYouScreen from "features/thankyou/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
@@ -23,12 +24,12 @@ class PayNowController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity("Your order has been placed", Toast.LONG, Toast.BOTTOM);
+                Toaster.show("Your order has been placed")
                 CartCountControllerInstance.getCartCount();
                 ThankYouScreen.navigate()
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

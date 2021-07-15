@@ -4,6 +4,7 @@ import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
 import MyAccount from "features/myaccount/Index";
+import Toaster from "features/commonApiCall/toaster";
 class RatingController {
     async rateProduct(orderId:string,productId:string,productRating:string,review:string) {
         try {
@@ -18,13 +19,13 @@ class RatingController {
             const { data, status }: any = rating;
             const {message} = data;
             if (data.status && status) {
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
                 useAppDispatch(LoadingAction.showLoading(false));
                 MyAccount.navigate()
             } 
             else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
             }
             useAppDispatch(LoadingAction.showLoading(false));
         } catch (error) {

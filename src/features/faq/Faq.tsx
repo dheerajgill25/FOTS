@@ -34,10 +34,6 @@ const FaqScreen = ({ }: FaqScreenProps) => {
     const renderItemProfile = ({ question, answer, id }: ElementProfile, index: any) => {
         const arrowRight = require("../../../assets/images/arrowright.png");
         const handleAccordian = (id: string | number) => {
-            // setShownAnswer((shownAnswer: { [x: string]: any; }) => ({
-            //     ...shownAnswer,
-            //     [id]: !shownAnswer[id]
-            // }));
             if (id !== shownAnswer[id]) {
                 setShownAnswer((shownAnswer: { [x: string]: any; }) => ({
                     ...shownAnswer,

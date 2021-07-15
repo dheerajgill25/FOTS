@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { View, SafeAreaView, ScrollView } from 'react-native';
-import Snackbar from 'react-native-snackbar';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import PayNowControllerInstance from './controllers/paynow.controller';
@@ -17,8 +16,7 @@ import FireStationControllerInstance from 'features/registerscreen/controllers/f
 import StateControllerInstance from 'features/registerscreen/controllers/state.controller';
 import moment from 'moment';
 import RootNavigator from 'navigation/rootnavigation';
-import { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toaster from 'features/commonApiCall/toaster';
 interface BeforePayNowProps { route: any }
 function dates() {
     var d = new Date(),
@@ -121,33 +119,13 @@ const BeforePayNow = (props: BeforePayNowProps) => {
             PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, paymentMethod, paymentId)
         } else {
             if (stateId == '' && fireDepartmentId == '' && fireStationId == '') {
-                Snackbar.show({
-                    text: 'Please select a state or Fire Deparment or Fire station ',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a state or Fire Deparment or Fire station ');
             } else if (stateId == '') {
-                Snackbar.show({
-                    text: 'Please select a state',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a state');
             } else if (fireDepartmentId == '') {
-                Snackbar.show({
-                    text: 'Please select a Fire department',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a Fire department');
             } else if (fireStationId == '') {
-                Snackbar.show({
-                    text: 'Please select a Fire station',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a Fire station');
             }
         }
 
@@ -159,26 +137,11 @@ const BeforePayNow = (props: BeforePayNowProps) => {
             if (stateId !== "" && fireDepartmentId !== '' && fireStationId !== '') {
                 WebhookPaymentScreen.navigate(stateId, fireDepartmentId, fireStationId, dates())
             } else if (stateId == '') {
-                Snackbar.show({
-                    text: 'Please select a state',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a state');
             } else if (fireDepartmentId == '') {
-                Snackbar.show({
-                    text: 'Please select a Fire department',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a Fire department');
             } else if (fireStationId == '') {
-                Snackbar.show({
-                    text: 'Please select a Fire station',
-                    textColor: "white",
-                    duration: 3000,
-                    fontFamily: FontFamilyFoods.POPPINS
-                })
+                Toaster.show('Please select a Fire station');
             }
         } else {
             handlePayNowWithOutPay()

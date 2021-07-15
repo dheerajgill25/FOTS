@@ -8,6 +8,7 @@ import Toast from 'react-native-simple-toast';
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
 import Snackbar from "react-native-snackbar";
 import { FontFamilyFoods } from "components/typography/Typography";
+import Toaster from "features/commonApiCall/toaster";
 class AddToCartController {
     async addToCartProducts(request: any, name: string, callback: (success: boolean, msg?: string) => void, productScreen?: boolean) {
         try {
@@ -19,13 +20,7 @@ class AddToCartController {
             if (data.status && status) {
                 useAppDispatch(AddToCartAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                // Toast.showWithGravity(name + " " + "has been added to your cart", 10000, Toast.BOTTOM);
-                Snackbar.show({
-                    text:name + " " + "has been added to your cart",
-                    backgroundColor:'black',
-                    fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-                    duration:3000
-                })
+                Toaster.show(name + " " + "has been added to your cart");
                 CartCountControllerInstance.getCartCount();
                 callback(false)
                 if (!productScreen){
@@ -35,17 +30,10 @@ class AddToCartController {
                 callback(popup, message);
                 const _data = { popup, message }
                 useAppDispatch(AddToCartAction.requestSuccess(_data));
-                useAppDispatch(LoadingAction.showLoading(false));
-                //Toast.showWithGravity("Your cart has another product, do you want to discard the previous selection and add new product?", Toast.LONG, Toast.BOTTOM);
-            }
+                useAppDispatch(LoadingAction.showLoading(false));}
             else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Snackbar.show({
-                    text:message,
-                    backgroundColor:'black',
-                    fontFamily:FontFamilyFoods.POPPINSMEDIUM,
-                    duration:3000
-                })
+                Toaster.show(message)
             }
             useAppDispatch(LoadingAction.showLoading(false));
         } catch (error) {

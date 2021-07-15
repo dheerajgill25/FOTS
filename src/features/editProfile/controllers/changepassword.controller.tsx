@@ -1,8 +1,8 @@
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
-import Toast from 'react-native-simple-toast';
 import EditProfile from "../Index";
 class ChangePasswordController {
     async ChangePassword(currentPassword: string, password: string, confirmPassword: string) {
@@ -18,11 +18,11 @@ class ChangePasswordController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
                 EditProfile.navigate();
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

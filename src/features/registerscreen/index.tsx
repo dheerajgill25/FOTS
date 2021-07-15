@@ -14,6 +14,7 @@ import RootNavigator from '@navigation/rootnavigation';
 import DropdownComponent from '@components/dropdown/Index';
 import { MyStatusBar } from '@components/statusbar/Index';
 import { isAndroid } from 'themes/functions';
+import Toaster from 'features/commonApiCall/toaster';
 interface RegisterProps { }
 const registerForm = () => {
     const [fireDepartmentId, setFireDepartmentId] = useState<string>("");
@@ -42,12 +43,7 @@ const registerForm = () => {
         if (first_name !== '' && last_name !== '' && email !== '' && password !== '' && mobile !== '' && fireDepartmentId !== "" && fireStationId !== '') { 
             RegisterControllerInstance.reigsterUser(first_name?.trim(), last_name?.trim(), email?.trim(), password, mobile, fireDepartmentId, fireStationId)
         } else {
-            Snackbar.show({
-                text: 'Please fill all required Fields',
-                textColor: "white",
-                duration: 3000,
-                fontFamily: FontFamilyFoods.POPPINS
-            })
+           Toaster.show("Please fill all required Fields")
         }
     }
     return (

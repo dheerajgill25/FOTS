@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CartListControllerInstance from "features/cart/httpCall/controllers/cartList.controller";
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import OrderScreen from "features/orderScreen/Index";
 import ProductScreen from "features/products/Index";
@@ -21,7 +22,7 @@ class RemoveCartController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
                 CartCountControllerInstance.getCartCount();
                 if (type == 'meal') {
                     if(length==0){
@@ -35,7 +36,7 @@ class RemoveCartController {
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
@@ -56,10 +57,10 @@ class RemoveCartController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
@@ -82,17 +83,15 @@ class RemoveCartController {
             if (data.status && status) {
                 CartCountControllerInstance.getCartCount();
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
                 if (type == 'meal') {
                     ProductScreen.navigate(categoryId,mealId,true);
-                    AsyncStorage.removeItem('days');
                 } else {
                     OrderScreen.navigate(categoryId);
-                    AsyncStorage.removeItem('days');
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+               Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

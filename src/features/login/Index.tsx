@@ -44,16 +44,6 @@ const loginForm = () => {
         const { email, password } = loginRequest;
         if (email !== '' && password !== '' && formValidate.isSubmitting) {
             SignInControllerInstance.loginUser(email.trim(), password);
-            inputFeilds.current?.clear()
-            setLoginRequest({
-                ...loginRequest,
-                email: '',
-                password: ''
-            });
-            setSubmitting({
-                isSubmitting: false,
-                error: undefined,
-            })
         } else {
           Toaster.show(!formValidate.isSubmitting?"Please validate your Credentials":'Please fill all required Fields')
         }

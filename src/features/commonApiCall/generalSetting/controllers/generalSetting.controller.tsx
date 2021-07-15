@@ -1,3 +1,4 @@
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
@@ -17,7 +18,7 @@ class GeneralSettingController {
                 useAppDispatch(LoadingAction.showLoading(false));
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

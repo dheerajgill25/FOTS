@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
-import Toast from 'react-native-simple-toast';
 import { UploadImageAction } from "../actions/uploadImage.action";
 class UploadImageController {
     async uploadImage(photo: any) {
@@ -23,10 +23,10 @@ class UploadImageController {
                     AsyncStorage.setItem('user', JSON.stringify(currentUser));
                 }).catch((eror) => console.log(eror))
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);;
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

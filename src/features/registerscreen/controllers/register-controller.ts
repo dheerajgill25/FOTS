@@ -6,6 +6,7 @@ import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { RegisterAction } from "../actions/register.action";
 import Toast from 'react-native-simple-toast';
 import TokenControllerInstance from "features/login/controllers/token.controller";
+import Toaster from "features/commonApiCall/toaster";
 class RegisterController {
     async reigsterUser(first_name: string, last_name: string, email: string, password: string, mobile: string, fireDepartmentId: string, fireStationId: string) {
 
@@ -29,11 +30,11 @@ class RegisterController {
                 useAppDispatch(RegisterAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();
-                Toast.showWithGravity(message||"Register success Welcome in FOTS", Toast.LONG, Toast.BOTTOM);
+                Toaster.show("Register success Welcome in FOTS");
             } else {
                 const {mobile,email} = message;
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(mobile&&mobile[0]||email&&email[0], Toast.LONG, Toast.BOTTOM);
+                Toaster.show(mobile&&mobile[0]||email&&email[0]);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

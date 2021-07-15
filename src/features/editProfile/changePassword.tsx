@@ -1,5 +1,6 @@
 import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import Toaster from 'features/commonApiCall/toaster';
 import { validateResetPassword } from 'libs/functions/validation';
 import RootNavigator from 'navigation/rootnavigation';
 import * as React from 'react';
@@ -57,12 +58,7 @@ const ChangePassword = (props: ChangePasswordProps) => {
         if (current_password !== "" && password !== "" && confirm_password !== "") {
             ChangePasswordControllerInstance.ChangePassword(current_password, password, confirm_password)
         } else {
-            Snackbar.show({
-                text: 'Please fill all required Fields',
-                textColor: "white",
-                duration: 3000,
-                fontFamily: FontFamilyFoods.POPPINS
-            })
+            Toaster.show('Please fill all required Fields');
         }
     }
     return (

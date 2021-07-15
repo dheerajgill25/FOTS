@@ -4,13 +4,13 @@ import { SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import { Rating } from 'react-native-ratings';
-import Snackbar from 'react-native-snackbar';
 import { isAndroid } from 'themes/functions';
 import RatingControllerInstance from './controllers/productRating.controller';
 import ButtonFoods from 'components/buttons/ButtonFoods';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import BaseScreen from 'features/basescreen/Index';
 import RootNavigator from 'navigation/rootnavigation';
+import Toaster from 'features/commonApiCall/toaster';
 
 interface ProductRatingProps {
     route: any;
@@ -28,11 +28,7 @@ const ProductRating = (props: ProductRatingProps) => {
         if (rating !== "" && message !== "") {
             RatingControllerInstance.rateProduct(params?.orderId, params?.productId, rating, message)
         } else {
-            Snackbar.show({
-                text: "Please give us rating and write review",
-                textColor: "white",
-                fontFamily: FontFamilyFoods.POPPINS
-            });
+            Toaster.show("Please give us rating and write review");
         }
     }
 

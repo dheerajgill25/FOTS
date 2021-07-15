@@ -59,7 +59,6 @@ const EditProfile = (props: EditProfileProps) => {
         FireStationControllerInstance.getFireStation(data.id)
     }
     const showModal = (camera: boolean): void => {
-        console.debug('response', 'camera');
         const options: ImageLibraryOptions = {
             mediaType: 'photo',
             maxWidth: 400,

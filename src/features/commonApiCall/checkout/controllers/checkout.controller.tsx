@@ -1,3 +1,4 @@
+import Toaster from "features/commonApiCall/toaster";
 import { LoadingAction } from "features/LoadingScreen/actions/LoadingAction";
 import BeforePayNow from "features/paynow/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
@@ -21,7 +22,7 @@ class CheckOutController {
                 BeforePayNow.navigate();
             }else{
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toast.showWithGravity(message, Toast.LONG, Toast.BOTTOM);
+                Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

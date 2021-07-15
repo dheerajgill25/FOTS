@@ -15,7 +15,6 @@ import moment from "moment";
 import EditProfile from 'features/editProfile/Index';
 import ProductRating from 'features/rating/Index';
 import { useState } from 'react';
-import OpenLink from 'libs/functions/Linking';
 import FaqScreen from 'features/faq/Faq';
 interface MyAccountProps { }
 
@@ -96,7 +95,7 @@ const renderItems = (items: any, index: any) => {
     return (
         <View key={index} style={styles.orderContentbox}>
             {
-                index == 0 && <View style={styles.myOrderBox}>
+              items && items.cart_order.length > 0|| index == 0 && <View style={styles.myOrderBox}>
                     <Typography style={styles.myOrderText}>MY ORDERS</Typography>
                 </View>
             }
@@ -181,7 +180,13 @@ const MyAccount = (props: MyAccountProps) => {
             <ScrollView bounces={false} >
                 {renderAccountInfo(userData)}
                 {renderHelpSection(contactEmail)}
-                <FlatList scrollEnabled={false} bounces={false} nestedScrollEnabled={false} data={orderListData} renderItem={({ item, index }) => renderItems(item, index)} keyExtractor={(item, index) => index.toString()} />
+                <FlatList
+                    scrollEnabled={false}
+                    bounces={false}
+                    nestedScrollEnabled={false}
+                    data={orderListData}
+                    renderItem={({ item, index }) => renderItems(item, index)}
+                    keyExtractor={(item, index) => index.toString()} />
             </ScrollView>
         </SafeAreaView>
     );
