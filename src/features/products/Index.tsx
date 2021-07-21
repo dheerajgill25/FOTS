@@ -100,7 +100,6 @@ const ProductScreen = (props: ProductScreenProps) => {
         AddToCartControllerInstance.addToCartProducts(request, data.name, callbackAddToCart,true);
     }
     const callbackAddToCart = async (success: boolean, msg?: any) => {
-        console.log(success)
         if (success) {
             setIsShowModal(true);
         } else {

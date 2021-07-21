@@ -17,6 +17,7 @@ import DropdownComponent from 'components/dropdown/Index';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
 import UploadImageControllerInstance from './controllers/uploadimage.controller';
+import MyAccount from 'features/myaccount/Index';
 interface EditProfileProps { }
 
 const EditProfile = (props: EditProfileProps) => {
@@ -37,8 +38,8 @@ const EditProfile = (props: EditProfileProps) => {
             if (!cancelled) {
                 const currentUser = JSON.parse(values);
                 setUserData(currentUser);
-                setFireDepartment(currentUser?.fire_department_name)
-                setFireStation(currentUser?.fire_station_name)
+                setFireDepartment(currentUser?.fire_department_name||"")
+                setFireStation(currentUser?.fire_station_name||"")
                 setFirst_name(currentUser?.first_name)
                 setLast_name(currentUser?.last_name)
                 setMobile(currentUser?.mobile)
@@ -101,7 +102,12 @@ const EditProfile = (props: EditProfileProps) => {
         }
     }
     const updateProfile = () => {
-        EditProfileControllerInstance.updateProfile(first_name, last_name, mobile, fireDepartmentId || userData.fire_department, fireStationId || userData.fire_station)
+        EditProfileControllerInstance.updateProfile(first_name, last_name, mobile, fireDepartmentId || userData.fire_department, fireStationId || userData.fire_station,callBackUpdateProfile)
+    }
+    const callBackUpdateProfile = (success:boolean) =>{
+        if(success){
+            MyAccount.navigate();
+        }
     }
     return (
         <>
@@ -176,10 +182,10 @@ const EditProfile = (props: EditProfileProps) => {
                                     <Typography onPress={() => ChangePassword.navigate()} style={styles.passwordLink}>Change Password</Typography>
                                 </View>
                                 <View style={[styles.formGroup, { marginTop:isAndroid?30:20 }]}>
-                                    <DropdownComponent edit title={fireDepartment} data={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
+                                    <DropdownComponent edit title={fireDepartment} dropdownData={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
                                 </View>
                                 <View style={styles.formGroup}>
-                                    <DropdownComponent edit title={fireStation} data={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
+                                    <DropdownComponent edit title={fireStation} dropdownData={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
                                 </View>
                                 <View style={styles.button}>
                                     <ButtonFood label="Update" onPress={() => updateProfile()} />

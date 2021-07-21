@@ -1,6 +1,6 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, Platform, StyleSheet, View } from 'react-native';
 import HTML from 'react-native-render-html';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -26,25 +26,7 @@ const TestimonialComponent = ({ data }: any) => {
             setSliderData([])
         }
     }, [data])
-    const ratingComponent = () => {
-        return (
-            <View style={styles.foodItemRatingBox}>
-                <View style={styles.foodItemRating}>
-                    <Image source={require("../../../assets/images/star.png")} style={styles.rating} />
-                </View>
-                <View style={styles.foodItemRating}>
-                    <Image source={require("../../../assets/images/star.png")} style={styles.rating} />
-                </View>
-                <View style={styles.foodItemRating}>
-                    <Image source={require("../../../assets/images/star.png")} style={styles.rating} />
-                </View>
-                <View style={styles.foodItemRating}>
-                    <Image source={require("../../../assets/images/star.png")} style={styles.rating} />
-                </View>
 
-            </View>
-        )
-    }
     const renderItem = ({ item, index }: any) => {
         return (
             <View key={index} style={styles.testimonialSection}>
@@ -55,7 +37,7 @@ const TestimonialComponent = ({ data }: any) => {
                         </View>
                         <View style={styles.contentText}>
                             {/* <Typography style={styles.text}>{item.description}</Typography> */}
-                            <HTML source={{ html: item.description }} containerStyle={{ paddingHorizontal: 15 }} baseFontStyle={styles.text} contentWidth={width} />
+                            <HTML  source={{ html: item.description }} containerStyle={{ paddingHorizontal: 15 }} baseFontStyle={ Platform.OS=="android"?styles.testDescription: styles.text} contentWidth={width} />
                         </View>
                         <View style={[styles.colonBox, { display: "flex", justifyContent: 'flex-end', alignItems: 'flex-end' }]}>
                             <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10, transform: [{ rotate: '180deg' }], }]}>“</Typography>
@@ -143,7 +125,12 @@ const styles = StyleSheet.create({
         lineHeight: 18,
         textAlign: 'center',
         paddingHorizontal: 25,
-        fontFamily: FontFamilyFoods.POPPINS
+        fontFamily: FontFamilyFoods.POPPINS,
+    },
+    testDescription:{
+        textAlign: 'center',
+         color: 'white',
+        fontSize: 13,
     },
     foodItemRatingBox: {
         display: 'flex',
@@ -174,6 +161,7 @@ const styles = StyleSheet.create({
     clientImage: {
         height: 80,
         width: 80,
+        borderRadius:50
     },
     clientDetail: {},
     clientDesgination: {

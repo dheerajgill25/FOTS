@@ -1,7 +1,9 @@
 import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
 import Typography, { FontFamilyFoods } from "components/typography/Typography";
+import ProductDetailScreen from "features/productdetail/Index";
 import React, { memo } from "react";
-import { ScrollView } from "react-native";
+import { TouchableOpacity } from "react-native";
+import { ScrollView, Touchable } from "react-native";
 import { SafeAreaView, View, StyleSheet, Image, ImageSourcePropType } from "react-native";
 import { Rating } from "react-native-ratings";
 import { isAndroid } from "themes/functions";
@@ -38,7 +40,8 @@ const FoodItemsComponent = ({ title, data, index }: FoodItemsProps) => {
                             data && data.length > 0 ? (
                                 data.map((items: any, i) => (
                                     <View key={i} >
-                                        <View style={styles.foodItemBox}>
+                                        <View style={styles.foodItemBox}> 
+                                        <TouchableOpacity onPress={() => ProductDetailScreen.navigate(items.product_id)}>
                                             <View style={styles.foodItemContent}>
                                                 <View style={styles.foodItemImageSection}>
                                                     <ImageComponent uri={items?.thumbnail}
@@ -54,6 +57,7 @@ const FoodItemsComponent = ({ title, data, index }: FoodItemsProps) => {
 
                                                 </View>
                                             </View>
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
                                 ))
@@ -100,13 +104,13 @@ const styles = StyleSheet.create({
         width: 135,
         marginLeft: 5,
         borderRadius: 5,
-        minHeight: 250,
+        minHeight: 200,
         overflow: isAndroid?"hidden":"visible"
     },
     foodItemImageSection: {},
     foodImage: {
         width: '100%',
-        height: 140,
+        height: 100,
         borderRadius: isAndroid?0:5, 
     },
     foodItemRatingBox: {

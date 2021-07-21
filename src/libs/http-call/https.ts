@@ -34,7 +34,7 @@ class HttpCallClass {
                 const token = await AsyncStorage.getItem("token");
                 return await instance.post<T>(url, params, {
                     headers: {
-                        Authorization: "Bearer " + token||"",
+                        Authorization: "Bearer " + token || "",
                     },
                 });
             }
@@ -45,7 +45,7 @@ class HttpCallClass {
             return this.errorHandler(error[0].Error);
         }
     }
-    errorHandler = async (error: any ) => {
+    errorHandler = async (error: any) => {
         const err = error as AxiosError;
         CrashReporterInstance.recordError(error)
         if (err.response) {

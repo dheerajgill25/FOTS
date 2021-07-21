@@ -18,7 +18,7 @@ import HomeScreen from "features/home/Index";
 import CartIcon from "components/carticon/Index";
 import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
 import OrderScreen from "features/orderScreen/Index";
-import SearchScreen from "features/searchScreen/Index";
+import AlertModal from 'components/alertModal';
 const { height, width } = Dimensions.get('screen');
 let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
@@ -129,7 +129,7 @@ const cookingSection = (_data: any) => {
         </View>
     )
 }
-const cookingInstructionSection = (_data: any, ingradient: [],cabinet:[]) => {
+const cookingInstructionSection = (_data: any, ingradient: [], cabinet: []) => {
     const PLUSIMAGEURL = require('../../../assets/images/plus.png');
     const MINUSIMAGEURL = require('../../../assets/images/minus.png');
     const [accrodien, setAccrodien] = useState<string>("");
@@ -254,123 +254,120 @@ const cookingInstructionSection = (_data: any, ingradient: [],cabinet:[]) => {
     )
 }
 
-const callbackAddToCart = async (success: boolean, msg?: any) => {
-    cartAgainAdd = success
-}
 
-const renderButtonSection = (_data: any, item: any) => {
-    return (
-        <View style={styles.descriptionSection}>
-            <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => { handleAddToCart(item) }} />
-        </View>
-    )
-}
-const handleAddToCart = (item: any) => {
-    const products: any[] = [];
-    const productId = {
-        product_id: item.id, quantity: 1
-    };
-    products.push(productId);
-    const request = {
-        category_id: item.category_id,
-        meal_id: item.meal_id || "",
-        products: products
-    };
-    AsyncStorage.setItem("cartRequest", JSON.stringify(item));
-    AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
 
-}
-const handleCartAgainAfterRemove = async (cart: {}) => {
-    const categoryId = await AsyncStorage.getItem("cId");
-    RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
-    const successfully = await RemoveCartControllerInstance.removeProductSuccess();
-    setTimeout(() => {
-        if (successfully) {
-            handleAddToCartAfterRemove(cart);
-            cart = {}
-        }
-    }, 1000);
-}
 
-const renderModal = (modalizeRef: any, cart: {}) => {
-    const closeModal = async () => {
-        const category_id = await AsyncStorage.getItem('cId');
-        const search = await AsyncStorage.getItem('search');
-        modalizeRef?.current?.close();
-        cartAgainAdd = false;
-        cart = {};
-        if(search){
-            SearchScreen.navigate();
-            AsyncStorage.removeItem('search')
-        }else{
-            OrderScreen.navigate(category_id);
-        }
-    }
-    return (
-        <>
-            {
-                cartAgainAdd ? (
-                    <ReactNativeModal ref={modalizeRef} isVisible={true} onModalHide={() => closeModal()} style={styles.modal}
-                        backdropColor={'black'}
-                        backdropOpacity={0.3}
-                        coverScreen={true}
-                    >
-                        <View style={styles.modalcontainer} >
-                            <View style={styles.modalSection}>
-                                <View style={styles.modalInner}>
-                                    <Typography style={styles.label}>{'Your cart has another product, do you want to discard the previous selection and add new product?'}</Typography>
-                                </View>
-                                <View style={styles.modalButton}>
-                                    <TouchableOpacity
-                                        style={styles.btn}
-                                        onPress={() => closeModal()}
-                                    >
-                                        <Typography style={styles.buttonText}>{'Cancel'}</Typography>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={styles.btn}
-                                        onPress={() => handleCartAgainAfterRemove(cart)}
-                                    >
-                                        <Typography style={styles.buttonText}>{'OK'}</Typography>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </ReactNativeModal>
-                ) : (
-                    <View />
-                )
-            }
-        </>
-    )
-}
-const handleAddToCartAfterRemove = async (cart: {}) => {
-    AsyncStorage.getItem('cartRequest').then((val: any) => {
-        const cartRequest = JSON.parse(val);
-        handleAddToCart(cartRequest)
-    });
-    AsyncStorage.removeItem("cartRequest");
-    cart = {}
-}
+
+
+// const renderModal = (modalizeRef: any, cart: {}) => {
+//     const closeModal = async () => {
+//         const category_id = await AsyncStorage.getItem('cId');
+//         const search = await AsyncStorage.getItem('search');
+//         modalizeRef?.current?.close();
+//         cartAgainAdd = false;
+//         cart = {};
+//         if(search){
+//             SearchScreen.navigate();
+//             AsyncStorage.removeItem('search')
+//         }else{
+//             OrderScreen.navigate(category_id);
+//         }
+//     }
+//     return (
+//         <>
+//             {
+//                 cartAgainAdd ? (
+//                     <ReactNativeModal ref={modalizeRef} isVisible={true} onModalHide={() => closeModal()} style={styles.modal}
+//                         backdropColor={'black'}
+//                         backdropOpacity={0.3}
+//                         coverScreen={true}
+//                     >
+//                         <View style={styles.modalcontainer} >
+//                             <View style={styles.modalSection}>
+//                                 <View style={styles.modalInner}>
+//                                     <Typography style={styles.label}>{'Your cart has another product, do you want to discard the previous selection and add new product?'}</Typography>
+//                                 </View>
+//                                 <View style={styles.modalButton}>
+//                                     <TouchableOpacity
+//                                         style={styles.btn}
+//                                         onPress={() => closeModal()}
+//                                     >
+//                                         <Typography style={styles.buttonText}>{'Cancel'}</Typography>
+//                                     </TouchableOpacity>
+//                                     <TouchableOpacity
+//                                         style={styles.btn}
+//                                         onPress={() => handleCartAgainAfterRemove(cart)}
+//                                     >
+//                                         <Typography style={styles.buttonText}>{'OK'}</Typography>
+//                                     </TouchableOpacity>
+//                                 </View>
+//                             </View>
+//                         </View>
+//                     </ReactNativeModal>
+//                 ) : (
+//                     <View />
+//                 ) 
+//             }
+//         </>
+//     )
+// }
+
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
-    let addCart: { popup?: any; };
     const modalizeRef = React.useRef<ReactNativeModal>(null);
+    const [isShowModal, setIsShowModal] = useState<boolean>(false);
     const {
         route: { params: { id, meal } },
     } = props;
     useEffect(() => {
-        addCart = { popup: false }
         ProductDetailControllerInstance.getProductDetails(id)
     }, []);
     const productDetail = useSelector((state: RootStore) => state.ProductDetailInState.data?.data);
-    addCart = useSelector((state: any) => state.AddToCartInState.data);
-    useEffect(() => {
-        if (addCart?.popup) {
-            renderModal(modalizeRef, addCart);
+    const callbackAddToCart = async (success: boolean, msg?: any) => {
+        if (success) {
+            setIsShowModal(true);
+        } else {
+            setIsShowModal(false);
         }
-        cartAgainAdd = false;
-        addCart = {}
-    }, [addCart])
+    }
+    const handleAddToCart = (item: any) => {
+        const products: any[] = [];
+        const productId = {
+            product_id: item.id, quantity: 1
+        };
+        products.push(productId);
+        const request = {
+            category_id: item.category_id,
+            meal_id: item.meal_id || "",
+            products: products
+        };
+        AsyncStorage.setItem("cartRequest", JSON.stringify(item));
+        AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart);
+
+    }
+    const handleAddToCartAfterRemove = async () => {
+        AsyncStorage.getItem('cartRequest').then((val: any) => {
+            const cartRequest = JSON.parse(val);
+            handleAddToCart(cartRequest)
+        });
+        AsyncStorage.removeItem("cartRequest");
+    }
+    const handleCartAgainAfterRemove = async () => {
+        const categoryId = await AsyncStorage.getItem("cId");
+        RemoveCartControllerInstance.RemoveCartOtherProducts(categoryId)
+        const successfully = await RemoveCartControllerInstance.removeProductSuccess();
+        setTimeout(() => {
+            if (successfully) {
+                handleAddToCartAfterRemove();
+            }
+        }, 1000);
+    }
+    const renderButtonSection = (_data: any, item: any) => {
+        return (
+            <View style={styles.descriptionSection}>
+                <ButtonWithText label={"Add to cart"} subText={"$" + _data} onPress={() => { handleAddToCart(item) }} />
+            </View>
+        )
+    }
     return (
         <>
             <SafeAreaView style={styles.container}>
@@ -394,10 +391,15 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     {renderDescriptionSection(productDetail?.description)}
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {cookingSection(productDetail?.cooking_time)}
-                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient,productDetail?.cabinet)}
+                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient, productDetail?.cabinet)}
                     {renderButtonSection(productDetail?.net_amount, productDetail)}
                     {
-                        addCart?.popup ? renderModal(modalizeRef, addCart) : null
+                        isShowModal && <AlertModal
+                            onClosePress={() => { setIsShowModal(false); }}
+                            label="Your cart has another product, do you want to discard the previous selection and add new product?"
+                            isVisiable={isShowModal}
+                            onSuccess={() => { handleCartAgainAfterRemove() }}
+                        />
                     }
                 </ScrollView>
 

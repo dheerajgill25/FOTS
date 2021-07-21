@@ -21,7 +21,6 @@ const ProductRating = (props: ProductRatingProps) => {
     const [message, setMessage] = useState<string>("");
     const [rating, setRating] = useState<any>("");
     function ratingCompleted(rating: string) {
-        console.log("Rating is: " + rating);
         setRating(rating)
     }
     const handleRatingSubmit = () => {

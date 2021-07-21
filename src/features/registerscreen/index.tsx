@@ -94,10 +94,10 @@ const registerForm = () => {
                     <TextInput style={styles.formControl} value={mobile} onChangeText={(text) => setMobile(text)} placeholder={'Mobile No.'} placeholderTextColor={"#A7A7A7"} keyboardType="number-pad" />
                 </View>
                 <View style={{marginBottom: isAndroid?0:20}}>
-                    <DropdownComponent title="Fire Department" data={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
+                    <DropdownComponent title="Fire Department" dropdownData={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
                 </View>
                 <View >
-                    <DropdownComponent title="Fire Station / Engine" data={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
+                    <DropdownComponent title="Fire Station / Engine" dropdownData={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
                 </View>
             </View>
             <View style={styles.buttonSetion}>

@@ -9,7 +9,7 @@ const LoadingScreen = () => {
     const loading = useSelector((state: any) => state.loadingState);
     return (
         <Spinner
-            overlayColor='rgba(0, 0, 0, 0.25)'
+            overlayColor='rgba(0, 0, 0, 0.5)'
             visible={loading.loading}
             textContent={"Loading"}
             textStyle={{

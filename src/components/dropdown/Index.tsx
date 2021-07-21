@@ -6,12 +6,13 @@ import { isAndroid } from 'themes/functions';
 interface DropdownProps {
     title: string;
     onPress: (data: any) => void;
-    data: DropdownData[];
-    edit?: boolean
+    dropdownData: DropdownData[];
+    edit?: boolean;
+    selectedId?: any
 }
 export interface DropdownData { name?: string; id?: any }
 let isShown: boolean = false;
-const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
+const DropdownComponent = ({ dropdownData = [], title, onPress, edit, }: DropdownProps) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [dropdownValue, setDropdownValue] = useState<string>(title);
     const [selectedValue, setSelectedValue] = useState<boolean>(false);
@@ -24,17 +25,17 @@ const DropdownComponent = ({ data, title, onPress, edit }: DropdownProps) => {
         <>
             <View style={styles.dropdownBox}>
                 <View>
-                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : isAndroid ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true }}>
+                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : isAndroid ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; console.log(dropdownData) }}>
                         <Typography style={[styles.title, { color: selectedValue ? 'black' : edit ? 'black' : '#A7A7A7' }]}>{dropdownValue ? dropdownValue : title}</Typography>
                         <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15 }} />
                     </TouchableOpacity>
                     {
-                        showDropdown ? (
-                            data && data.length > 0 && (
-                                data && data.map((item: any, index: any) => (
+                        showDropdown && dropdownData ? (
+                            dropdownData && dropdownData.length > 0 && (
+                                dropdownData && dropdownData.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
-                                            <Typography style={styles.values}>{item.name !== '' && item.name}</Typography>
+                                            <Typography style={styles.values}>{item.name !== '' ? item.name : 'Please select'}</Typography>
                                         </TouchableOpacity>
                                     </View>
                                 ))

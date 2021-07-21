@@ -6,7 +6,7 @@ import { LoadingAction } from "../../LoadingScreen/actions/LoadingAction";
 import { EditProfileAction } from "../actions/editProfile.action";
 import Toaster from "features/commonApiCall/toaster";
 class EditProfileController {
-    async updateProfile(first_name: string, last_name: string,mobile: string, fireDepartmentId: string, fireStationId: string) {
+    async updateProfile(first_name: string, last_name: string,mobile: string, fireDepartmentId: string, fireStationId: string,callback:(success:boolean)=>void) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
@@ -23,7 +23,8 @@ class EditProfileController {
                 StorageService.setItem("user", JSON.stringify(data.data))
                 useAppDispatch(EditProfileAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
-                Toaster.show(message);;
+                callback(status)
+                Toaster.show(message);
             } else {
                 const {mobile,email} = message;
                 useAppDispatch(LoadingAction.showLoading(false));
