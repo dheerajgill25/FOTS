@@ -37,13 +37,30 @@ const TestimonialComponent = ({ data }: any) => {
                         </View>
                         <View style={styles.contentText}>
                             {/* <Typography style={styles.text}>{item.description}</Typography> */}
-                            <HTML  source={{ html: item.description }} containerStyle={{ paddingHorizontal: 15 }} baseFontStyle={ Platform.OS=="android"?styles.testDescription: styles.text} contentWidth={width} />
+                            <HTML source={{ html: item.description }} tagsStyles={{
+                                p: {
+                                    color: 'white',
+                                    fontSize: 15,
+                                    lineHeight: 22,
+                                    textAlign: 'center',
+                                    paddingHorizontal: 25,
+                                    fontFamily: FontFamilyFoods.POPPINS,
+                                    paddingBottom:10,
+                                    fontStyle:'normal'
+                                },
+                                strong:{
+                                    color: 'white',
+                                    textAlign: 'center',
+                                    fontFamily: FontFamilyFoods.POPPINS, 
+                                    fontStyle:'normal'
+                                }
+                            }} containerStyle={{ paddingHorizontal: 15 }} baseFontStyle={Platform.OS == "android" ? styles.testDescription : styles.text} contentWidth={width} />
                         </View>
                         <View style={[styles.colonBox, { display: "flex", justifyContent: 'flex-end', alignItems: 'flex-end' }]}>
                             <Typography style={[styles.colon, { textAlign: 'right', paddingRight: 10, transform: [{ rotate: '180deg' }], }]}>“</Typography>
                         </View>
                     </View>
-                    <View style={styles.clientSection}>
+                    {/* <View style={styles.clientSection}>
                         <View style={styles.clientBox}>
                             <Image source={{ uri: item.image }} style={styles.clientImage} />
                             <View style={styles.clientDetail}>
@@ -51,7 +68,7 @@ const TestimonialComponent = ({ data }: any) => {
                                 <Typography style={styles.clientDesgination}>{item.sub_title}r</Typography>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
             </View>
         )
@@ -102,7 +119,7 @@ const styles = StyleSheet.create({
     },
     testimonialWrap: {
         position: 'relative',
-        marginBottom: 120,
+        marginBottom: 40,
         backgroundColor: "#D80000",
         borderRadius: 6
     },
@@ -127,10 +144,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         fontFamily: FontFamilyFoods.POPPINS,
     },
-    testDescription:{
+    testDescription: {
         textAlign: 'center',
-         color: 'white',
+        color: 'white',
         fontSize: 13,
+        paddingHorizontal: 25,
+        fontFamily: FontFamilyFoods.POPPINS,
+        
     },
     foodItemRatingBox: {
         display: 'flex',
@@ -156,12 +176,12 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top: "100%",
-        marginTop: -30
+        marginTop: 10
     },
     clientImage: {
         height: 80,
         width: 80,
-        borderRadius:50
+        borderRadius: 50
     },
     clientDetail: {},
     clientDesgination: {

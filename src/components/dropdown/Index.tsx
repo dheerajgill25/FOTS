@@ -25,7 +25,7 @@ const DropdownComponent = ({ dropdownData = [], title, onPress, edit, }: Dropdow
         <>
             <View style={styles.dropdownBox}>
                 <View>
-                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : isAndroid ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; console.log(dropdownData) }}>
+                    <TouchableOpacity activeOpacity={1} style={[styles.dropdownFlex, { marginBottom: showDropdown ? 0 : isAndroid ? 15 : 0 }]} onPress={() => { setShowDropdown(showDropdown ? false : true); isShown = showDropdown ? false : true; }}>
                         <Typography style={[styles.title, { color: selectedValue ? 'black' : edit ? 'black' : '#A7A7A7' }]}>{dropdownValue ? dropdownValue : title}</Typography>
                         <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15 }} />
                     </TouchableOpacity>

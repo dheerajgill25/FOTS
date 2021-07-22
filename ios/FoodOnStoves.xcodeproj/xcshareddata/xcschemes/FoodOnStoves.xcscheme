@@ -83,7 +83,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "foodonthestove"
+      customArchiveName = "Food on the stove"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

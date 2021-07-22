@@ -31,11 +31,11 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     useEffect(() => {
         CategoryControllerInstance.getCategory();
         TestimonialsControllerInstance.getTestimonials();
-        PopularProductControllerInstance.getPopularProduct()
+        //PopularProductControllerInstance.getPopularProduct()
     }, [])
     const categoryData = useSelector((state: RootStore) => state.CategoryInState.data?.data);
     const testimonialData = useSelector((state: RootStore) => state.TestimonialsInState.data?.data);
-    const popularProduct = useSelector((state: RootStore) => state.PopularProductInState.data?.data);
+    //const popularProduct = useSelector((state: RootStore) => state.PopularProductInState.data?.data);
     const handleCategory = (item: any, index: number) => {
         return (
             <View key={index} style={styles.buttonsGroup}>
@@ -71,9 +71,9 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                             <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>
                     </View>
-                    <View >
+                    {/* <View >
                         <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)}  keyExtractor={(item, index) => index.toString()} bounces={false} data={popularProduct} renderItem={({ item, index }) => renderFoodItems(item, index)}  />
-                    </View>
+                    </View> */}
                     <View>
                         <View>
                             <Typography style={styles.foodItemPopluar} >Testimonials</Typography>
