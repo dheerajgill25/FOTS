@@ -20,6 +20,7 @@ import GeneralSettingControllerInstance from 'features/commonApiCall/generalSett
 import WebhookPaymentScreen from 'features/paynow/payment/Index';
 import ProductRating from 'features/rating/Index';
 import FaqScreen from 'features/faq/Faq';
+import ForgotPassword from 'features/login/screens';
 
 const RootStackNavigator = createStackNavigator();
 const RootStackScreen = () => {
@@ -165,6 +166,15 @@ const RootStackScreen = () => {
                         <RootStackNavigator.Screen
                             name={Register.SCREEN_NAME}
                             component={Register}
+                            options={ScreenOptionNavigation({
+                                showBackButton: true,
+                                showCartIcon: false,
+                                showOnlyLogo: true
+                            })}
+                        />
+                         <RootStackNavigator.Screen
+                            name={ForgotPassword.SCREEN_NAME}
+                            component={ForgotPassword}
                             options={ScreenOptionNavigation({
                                 showBackButton: true,
                                 showCartIcon: false,

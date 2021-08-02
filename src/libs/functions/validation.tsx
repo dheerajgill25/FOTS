@@ -25,8 +25,10 @@ export function validateLogin(values: any) {
 }
 export function validateForgotPassword(values: any) {
     var errors: { [k: string]: any } = {};
-    if (!values?.loyalty_id) {
-        errors.loyalty_id = 'Loyalty id Required';
+    if (!values?.email) {
+        errors.email = 'Email Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+        errors.email = 'Invalid email address';
     }
     return errors;
 }

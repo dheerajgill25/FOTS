@@ -83,7 +83,7 @@ const OrderScreen = (props: OrderScreenProps) => {
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
                     <View style={styles.homeSection}>
-                        <BannerComponent label BANNERIMAGEURL={homePageBanner} />
+                        <BannerComponent  BANNERIMAGEURL={homePageBanner} />
                         <View>
                             <FlatList getItemLayout={getItemLayout} data={productList} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleProducts(item, index)} />
                         </View>

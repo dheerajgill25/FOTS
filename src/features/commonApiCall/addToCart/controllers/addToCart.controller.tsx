@@ -4,10 +4,7 @@ import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import { AddToCartAction } from "../actions/addToCart.action";
-import Toast from 'react-native-simple-toast';
 import CartCountControllerInstance from "features/commonApiCall/cartCount/controllers/cartCount.controller";
-import Snackbar from "react-native-snackbar";
-import { FontFamilyFoods } from "components/typography/Typography";
 import Toaster from "features/commonApiCall/toaster";
 class AddToCartController {
     async addToCartProducts(request: any, name: string, callback: (success: boolean, msg?: string) => void, productScreen?: boolean) {

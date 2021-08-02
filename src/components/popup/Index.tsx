@@ -1,7 +1,6 @@
-import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import * as React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import ReactNativeModal from 'react-native-modal';
 
 interface ModalComponentProps {

@@ -170,7 +170,7 @@ const ProductScreen = (props: ProductScreenProps) => {
     }
     return (
         <SafeAreaView style={styles.container}>
-            <ModalComponent label={"Orders must be placed by 12pm Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
+            <ModalComponent label={"Orders must be placed by 12PM Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
             <View style={{ marginHorizontal: 20 }}>
                 <BannerComponent BANNERIMAGEURL={homePageBanner} />
             </View>

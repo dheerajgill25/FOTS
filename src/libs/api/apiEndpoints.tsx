@@ -28,7 +28,8 @@ export const URL={
     RATEING:"/rating-add",
     POPULARPRODUCT:"/popular-products",
     REMOVEALLPRODUCT:"/remove-all-cart",
-    FAQ:'/faq'
+    FAQ:'/faq',
+    FORGOT:'/forgot-password'
 }
 export const STRIPEENDPOINTS={
     APIURL:"https://api.stripe.com/v1",

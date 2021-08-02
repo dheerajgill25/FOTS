@@ -38,8 +38,9 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 Authorization: "Bearer " + token || "",
             },
         });
-        const { data: { paymentIntent, ephemeralKey, customer } } = await response.json();
-        setClientSc(paymentIntent)
+        const { data: { paymentIntent, ephemeralKey, customer }, status } = await response.json();
+        setClientSc(paymentIntent);
+        if (!status) { setLoading(false) }
         return {
             paymentIntent,
             ephemeralKey,
@@ -61,7 +62,7 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 paymentIntentClientSecret: paymentIntent,
                 customFlow: true,
                 merchantDisplayName: 'Food on Stoves',
-                merchantCountryCode: "INR",
+                merchantCountryCode: "US",
                 style: 'alwaysDark',
                 googlePay: false,
                 testEnv: true,
@@ -114,15 +115,15 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
                 duration: 3000,
                 fontFamily: FontFamilyFoods.POPPINS
             });
-            if(error){
+            if (error) {
                 Snackbar.show({
-                    text:error.message,
+                    text: error.message,
                     textColor: "white",
                     duration: 3000,
                     fontFamily: FontFamilyFoods.POPPINS
                 });
             }
-            PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, 'stripe', paymentIntent?.id,paymentIntent)
+            PayNowControllerInstance.paynowProducts(stateId, fireDepartmentId, fireStationId, date, 'stripe', paymentIntent?.id, paymentIntent)
             setPaymentSheetEnabled(false);
             setLoading(false);
         }
@@ -132,43 +133,43 @@ const WebhookPaymentScreen = (props: { route: any; }) => {
     }, []);
     return (
         <PaymentScreen>
-              <View style={{marginBottom:20}}>
-                    <Image source={require("../../../../assets/images/appsquare.png")} style={styles.logo} />
+            <View style={{ marginBottom: 20 }}>
+                <Image source={require("../../../../assets/images/appsquare.png")} style={styles.logo} />
+            </View>
+            <View>
+                <View>
+                    <Button
+                        variant="primary"
+                        loading={loading}
+                        title={
+                            paymentMethod ? (
+                                <View style={styles.row}>
+                                    <Image
+                                        source={{
+                                            uri: `data:image/png;base64,${paymentMethod.image}`,
+                                        }}
+                                        style={styles.image}
+                                    />
+                                    <Typography style={styles.text}>{paymentMethod.label}</Typography>
+                                </View>
+                            ) : (
+                                'Choose payment method'
+                            )
+                        }
+                        disabled={!paymentSheetEnabled}
+                        onPress={choosePaymentOption}
+                    />
                 </View>
-            <View>
-            <View>
-                <Button
-                    variant="primary"
-                    loading={loading}
-                    title={
-                        paymentMethod ? (
-                            <View style={styles.row}>
-                                <Image
-                                    source={{
-                                        uri: `data:image/png;base64,${paymentMethod.image}`,
-                                    }}
-                                    style={styles.image}
-                                />
-                                <Typography style={styles.text}>{paymentMethod.label}</Typography>
-                            </View>
-                        ) : (
-                            'Choose payment method'
-                        )
-                    }
-                    disabled={!paymentSheetEnabled}
-                    onPress={choosePaymentOption}
-                />
-            </View>
 
-            <View style={styles.section}>
-                <Button
-                    variant="primary"
-                    loading={loading}
-                    disabled={!paymentMethod || !paymentSheetEnabled}
-                    title="Buy"
-                    onPress={onPressBuy}
-                />
-            </View>
+                <View style={styles.section}>
+                    <Button
+                        variant="primary"
+                        loading={loading}
+                        disabled={!paymentMethod || !paymentSheetEnabled}
+                        title="Buy"
+                        onPress={onPressBuy}
+                    />
+                </View>
             </View>
         </PaymentScreen>
     );
@@ -202,13 +203,13 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         marginLeft: 12,
-        fontFamily:FontFamilyFoods.POPPINSSEMIBOLD
+        fontFamily: FontFamilyFoods.POPPINSSEMIBOLD
     },
-    logo:{
-        height:150,
-        width:400,
-        alignSelf:"center",
-        overflow:"hidden"
+    logo: {
+        height: 150,
+        width: 400,
+        alignSelf: "center",
+        overflow: "hidden"
     }
 });
 WebhookPaymentScreen.SCREEN_NAME = 'WebhookPaymentScreen';

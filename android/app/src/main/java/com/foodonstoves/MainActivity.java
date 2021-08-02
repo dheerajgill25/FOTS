@@ -1,4 +1,4 @@
-package com.foodonstoves;
+package com.it.fots;
 import android.os.Bundle; 
 import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;

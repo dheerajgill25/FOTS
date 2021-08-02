@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, Dimensions, Image, ImageBackground, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Image, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import RootNavigator from "@navigation/rootnavigation";
 import Typography, { FontFamilyFoods } from "@components/typography/Typography";
 import styles from "./styles";
@@ -14,13 +14,10 @@ import AddToCartControllerInstance from "features/commonApiCall/addToCart/contro
 import RemoveCartControllerInstance from "features/commonApiCall/removeCart/controllers/reomveToCart.controller";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReactNativeModal from 'react-native-modal';
-import HomeScreen from "features/home/Index";
 import CartIcon from "components/carticon/Index";
 import ImageComponent, { Priority, ResizeMode } from "components/imageComponent/ImageComponent";
-import OrderScreen from "features/orderScreen/Index";
 import AlertModal from 'components/alertModal';
 const { height, width } = Dimensions.get('screen');
-let cartAgainAdd: boolean = false;
 interface ProductDetailScreenProps {
     route: any
 };
@@ -258,7 +255,16 @@ const cookingInstructionSection = (_data: any, ingradient: [], cabinet: []) => {
 
 
 
-
+const renderFooterSection = () => {
+    return (
+        <View style={{marginVertical:18,marginHorizontal:20}}>
+            <Typography style={{fontStyle:'italic',fontSize:14,lineHeight:21,fontFamily:FontFamilyFoods.POPPINS}}>*Food on the Stove encourages portion control. The
+                quantity provided is based on the known staffing
+                count provided by your department. Food on the
+                Stove buffers for 2-3 extra servings per delivery. </Typography>
+        </View>
+    )
+}
 // const renderModal = (modalizeRef: any, cart: {}) => {
 //     const closeModal = async () => {
 //         const category_id = await AsyncStorage.getItem('cId');
@@ -390,8 +396,9 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     } */}
                     {renderDescriptionSection(productDetail?.description)}
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
-                    {cookingSection(productDetail?.cooking_time)}
+                    {productDetail?.meal_id == "" && cookingSection(productDetail?.cooking_time)}
                     {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient, productDetail?.cabinet)}
+                    {productDetail?.category_name=="Farm to Firehouse"&&renderFooterSection()}
                     {renderButtonSection(productDetail?.net_amount, productDetail)}
                     {
                         isShowModal && <AlertModal

@@ -2,7 +2,7 @@ interface FoodItemProps {
     text: string;
     imageUrl: string
 }
-export const label:string="Orders must be placed between Sunday 12 AM and Tuesday 2 pM in order for meals to be delivered by Friday of the same week. Orders placed on other days will be delivered the following Friday."
+export const label:string="Orders must be placed between Sunday 12 AM and Tuesday 2 PM in order for meals to be delivered by Friday of the same week. Orders placed on other days will be delivered the following Friday."
  
 export const foodItemData: FoodItemProps[] = [
     {
