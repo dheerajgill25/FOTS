@@ -29,7 +29,7 @@ export const URL={
     POPULARPRODUCT:"/popular-products",
     REMOVEALLPRODUCT:"/remove-all-cart",
     FAQ:'/faq',
-    FORGOT:'/forgot-password'
+    FORGOT:'/forgotpassword'
 }
 export const STRIPEENDPOINTS={
     APIURL:"https://api.stripe.com/v1",

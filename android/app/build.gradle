@@ -173,9 +173,8 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.release
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            useProguard true
+            setProguardFiles([getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'])
             shrinkResources true
             minifyEnabled true
             shrinkResources true
@@ -184,6 +183,8 @@ android {
                 checkReleaseBuilds false
                 abortOnError false
             }
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
         }
     }
 
@@ -213,7 +214,8 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
-
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
         exclude group:'com.squareup.okhttp3', module:'okhttp'

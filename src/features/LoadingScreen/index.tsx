@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useSelector } from 'react-redux';
 import { FontFamilyFoods } from "components/typography/Typography";
@@ -9,7 +9,7 @@ const LoadingScreen = () => {
     const loading = useSelector((state: any) => state.loadingState);
     return (
         <Spinner
-            overlayColor='rgba(0, 0, 0, 0.5)'
+            overlayColor='rgba( 1, 1, 1, 0.87 )'
             visible={loading.loading}
             textContent={"Loading"}
             textStyle={{
@@ -18,6 +18,7 @@ const LoadingScreen = () => {
                 fontFamily: FontFamilyFoods.POPPINS
             }}
             animation="fade"
+            customIndicator={<Image style={{height:50,width:50}} source={require("../../../assets/images/animated.gif")} />}
         />
     );
 };

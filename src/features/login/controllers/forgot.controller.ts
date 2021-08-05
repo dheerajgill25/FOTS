@@ -17,7 +17,7 @@ class ForgotPasswordController {
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
                 TokenControllerInstance.setInitialTokens();
-                Toaster.show("A request has been received to change the password for your FOTS account. ")
+                Toaster.show("Reset password link has been sent it to your email",6000)
             } else {
                 Toaster.show(message||"Please enter valid credentials")
                 useAppDispatch(LoadingAction.showLoading(false));

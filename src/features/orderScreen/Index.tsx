@@ -50,8 +50,9 @@ const renderHowItsWorks = (item: any) => {
 
 const OrderScreen = (props: OrderScreenProps) => {
     const [homePageBanner, setHomePageBanner] = useState<string>("");
+    const [bannerImages, setBannerImages] = useState<any>([]);
     const {
-        route: { params:{params:{params:{id}}}, },
+        route: { params: { params: { params: { id } } }, },
     } = props;
     useEffect(() => {
         ProductListControllerInstance.getProductList(id,)
@@ -66,24 +67,22 @@ const OrderScreen = (props: OrderScreenProps) => {
     }
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
     useEffect(() => {
-        if (generalSettingData && generalSettingData.length > 0) {
-            generalSettingData.map((obj: any)=>(
-                setHomePageBanner(obj.category_banner)
-            ))
+        if (generalSettingData && generalSettingData.banner) {
+            setBannerImages(generalSettingData.banner?.product);
         }
-    }, [generalSettingData]);
+    }, [generalSettingData])
     const getItemLayout = (data: any, index: any) => ({
         length: window.width / 5,
         offset: window.width / 5 * index,
         index,
-      })
+    })
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
                 <ScrollView bounces={false} nestedScrollEnabled={false}>
+                    <BannerComponent imagesUrl={bannerImages} />
                     <View style={styles.homeSection}>
-                        <BannerComponent  BANNERIMAGEURL={homePageBanner} />
                         <View>
                             <FlatList getItemLayout={getItemLayout} data={productList} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleProducts(item, index)} />
                         </View>
@@ -104,6 +103,6 @@ OrderScreen.navigationOptions = {
     headerShown: false,
 };
 OrderScreen.navigate = (id: any) => {
-    RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, {id:id});
+    RootNavigator.navigation('OrderScreen', OrderScreen.SCREEN_NAME, { id: id });
 };
 export default OrderScreen;

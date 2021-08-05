@@ -20,7 +20,7 @@ const AlertModal = ({ label,isVisiable,onClosePress,onSuccess }: AlertModalProps
             backdropColor={'black'}
             backdropOpacity={0.3}
             coverScreen={true}
-
+            onBackdropPress={()=>onClosePress()}
         >
             <View style={styles.container} >
                 <View style={styles.modalSection}>

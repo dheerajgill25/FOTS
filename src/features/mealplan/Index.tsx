@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, SafeAreaView, ScrollView, Image, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import RootStore from 'reduxModule/store/Index';
@@ -73,19 +73,17 @@ const MealPlan = (props: MealPlanProps) => {
   const {
     route: { params, },
   } = props;
-  const [homePageBanner, setHomePageBanner] = React.useState<string>("");
+  const [bannerImages, setBannerImages] = useState<any>([]);
   useEffect(() => {
     MealPlanControllerInstance.getMealPlan(params.id);
   }, []);
   const mealPlanData = useSelector((state: RootStore) => state.MealPlanInState.data?.data);
   const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
-  React.useEffect(() => {
-    if (generalSettingData && generalSettingData.length > 0) {
-      generalSettingData.map((obj: any, i: any) => (
-        setHomePageBanner(obj.category_banner)
-      ))
+  useEffect(() => {
+    if (generalSettingData && generalSettingData.banner) {
+        setBannerImages(generalSettingData.banner?.category);
     }
-  }, [generalSettingData])
+}, [generalSettingData])
   const getItemLayout = (data: any, index: any) => ({
     length: window.width / 5,
     offset: window.width / 5 * index,
@@ -94,8 +92,8 @@ const MealPlan = (props: MealPlanProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView bounces={false}>
+          <BannerComponent imagesUrl={bannerImages} />
         <View style={{ marginHorizontal: 21 }}>
-          <BannerComponent BANNERIMAGEURL={homePageBanner} />
           <View style={styles.mealPlanSection}>
             <Typography style={styles.mealPlanText}>Meal Plan</Typography>
             <View>

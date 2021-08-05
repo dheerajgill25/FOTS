@@ -2,16 +2,16 @@ import Snackbar from "react-native-snackbar";
 import { FontFamilyFoods } from "components/typography/Typography";
 
 class ToasterService {
-    show(message: string) {
-        setTimeout(()=>{
+    show(message: string, duration?: number) {
+        setTimeout(() => {
             Snackbar.show({
                 text: message,
                 backgroundColor: 'black',
                 fontFamily: FontFamilyFoods.POPPINSMEDIUM,
-                duration: 3000
+                duration: duration || 5000
             })
-        },100)
-       
+        }, 100)
+
     }
 }
 const Toaster = new ToasterService();

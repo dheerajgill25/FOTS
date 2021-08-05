@@ -30,7 +30,7 @@ const renderEmptyCom = () => {
     )
 }
 const ProductScreen = (props: ProductScreenProps) => {
-    const [homePageBanner, setHomePageBanner] = React.useState<string>("");
+    const [bannerImages, setBannerImages] = useState<any>([]);
     const [productData, setProductData] = useState([])
     let [offset, setOffset] = useState(1);
     const [onEndReachedCalledDuringMomentum, setOnEndReachedCalledDuringMomentum] = useState(true);
@@ -38,6 +38,7 @@ const ProductScreen = (props: ProductScreenProps) => {
     const {
         route: { params: { cId, id, meal } },
     } = props;
+    
     const getProductData = async () => {
         var formData: FormData = new FormData();
         formData.append('category_id', cId || "");
@@ -72,13 +73,6 @@ const ProductScreen = (props: ProductScreenProps) => {
         }
     }, [offset])
     const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
-    React.useEffect(() => {
-        if (generalSettingData && generalSettingData.length > 0) {
-            generalSettingData.map((obj: any, i: any) => (
-                setHomePageBanner(obj.product_banner)
-            ))
-        }
-    }, [generalSettingData]);
     const getItemLayout = (data: any, index: any) => ({
         length: window.width / 5,
         offset: window.width / 5 * index,
@@ -168,11 +162,16 @@ const ProductScreen = (props: ProductScreenProps) => {
         });
         AsyncStorage.removeItem("cartRequest");
     }
+    useEffect(() => {
+        if (generalSettingData && generalSettingData.banner) {
+            setBannerImages(generalSettingData.banner?.product);
+        }
+    }, [generalSettingData])
     return (
         <SafeAreaView style={styles.container}>
             <ModalComponent label={"Orders must be placed by 12PM Friday."} mealPlan subTitle="*5 and 7 - day meal plans will require 2 deliveries to ensure freshness." />
+                <BannerComponent imagesUrl={bannerImages} />
             <View style={{ marginHorizontal: 20 }}>
-                <BannerComponent BANNERIMAGEURL={homePageBanner} />
             </View>
             <FlatList
                 getItemLayout={getItemLayout}

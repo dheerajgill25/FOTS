@@ -1,27 +1,64 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import * as React from 'react';
-import { View, StyleSheet, Image, ImageSourcePropType, ImageBackground } from 'react-native';
+import { useRef, useState } from 'react';
+import { View, StyleSheet, Image, ImageSourcePropType, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import BannerModal from './BannerModal';
 
 interface BannerComponentProps {
     label?: any;
-    BANNERIMAGEURL: any;
+    BANNERIMAGEURL?: any;
+    imagesUrl?: [] | any;
+}
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+const { height, width } = Dimensions.get('screen');
+function wp(percentage: number) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
 }
 
-const BannerComponent = (props: BannerComponentProps) => {
+const slideWidth = wp(76);
+const itemHorizontalMargin = wp(8);
+const sliderWidth = viewportWidth;
+const itemWidth = slideWidth + itemHorizontalMargin * 1.5;
+const BannerComponent = ({ BANNERIMAGEURL, imagesUrl }: BannerComponentProps) => {
+    const _carousal = useRef(null);
+    const [isModalShown, setIsModalShown] = useState<boolean>(false);
+    const [selectedDescription, setSelectedDescription] = useState<string>("");
+    const handleClickImage = (description: React.SetStateAction<string>) => {
+        setIsModalShown(true);
+        setSelectedDescription(description);
+    }
+    const renderItem = (data: any, index: React.Key | null | undefined) => {
+        return (
+            <>
+                <TouchableOpacity key={index} onPress={() => { handleClickImage(data.description) }} activeOpacity={0.6}>
+                    <ImageBackground source={{ uri: data.image,cache:"force-cache" }} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" >
+                    </ImageBackground>
+                </TouchableOpacity>
+
+            </>
+        )
+    }
     return (
         <View style={styles.homeBannerSection}>
-            <ImageBackground source={{uri:props.BANNERIMAGEURL}} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" >
-                {
-                    props.label && (
-                        <View style={styles.textBox}>
-                            <Typography style={styles.label}>Order one of our farm fresh recipes
-                            & have the ingredients delivered to
-                        your firehouse the same day.</Typography>
-                        </View>
-                    )
-                }
-
-            </ImageBackground>
+            <Carousel
+                ref={_carousal}
+                data={imagesUrl}
+                renderItem={({ item, index }) => renderItem(item, index)}
+                sliderWidth={sliderWidth}
+                itemWidth={itemWidth}
+                autoplay={true}
+                autoplayInterval={6000}
+                loop={true}
+                style={{ marginRight: 20 }}
+                layout={'default'}
+                layoutCardOffset={18}
+                removeClippedSubviews={false}
+            />
+            {
+                isModalShown && <BannerModal isVisiable={isModalShown} label={selectedDescription} onClosePress={() => { setIsModalShown(false); }} />
+            }
         </View>
     );
 };
@@ -36,18 +73,18 @@ const styles = StyleSheet.create({
         marginHorizontal: 0
     },
     homeBannerImg: {
-        width: '100%',
+        width: itemWidth,
         height: 200,
-        borderRadius: 7
+        borderRadius: 7,
     },
-    textBox:{
+    textBox: {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         alignSelf: 'center',
-        paddingHorizontal:8,
-        height:"100%"
+        paddingHorizontal: 8,
+        height: "100%"
     },
     label: {
         fontFamily: FontFamilyFoods.POPPINSBOLD,
@@ -55,6 +92,6 @@ const styles = StyleSheet.create({
         lineHeight: 27,
         color: 'white',
         textAlign: "center",
-        textAlignVertical:"bottom",
+        textAlignVertical: "bottom",
     }
 });

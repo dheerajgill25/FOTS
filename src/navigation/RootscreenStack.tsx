@@ -96,7 +96,7 @@ const RootStackScreen = () => {
                             name={MealPlan.SCREEN_NAME}
                             component={MealPlan}
                             options={ScreenOptionNavigation({
-                                showBackButton: false,
+                                showBackButton: true,
                                 showCartIcon: true,
                                 showOnlyLogo: false
                             })}
