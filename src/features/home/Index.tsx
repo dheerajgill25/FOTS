@@ -28,6 +28,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const [text, setText] = useState<string>('');
     const [homePageBanner, setHomePageBanner] = useState<string>("");
     const [bannerImages, setBannerImages] = useState<any>([]);
+    const [enableScrollViewScroll,setEnableScrollViewScroll] =useState<boolean>(true);
     useEffect(() => {
         CategoryControllerInstance.getCategory();
         TestimonialsControllerInstance.getTestimonials();
@@ -57,17 +58,20 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         offset: window.width / 5 * index,
         index,
     })
+    const onEnableScroll = (isScroll:boolean)=>{
+        setEnableScrollViewScroll(isScroll)
+    }
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, cartIcon: true }}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
             <SafeAreaView style={styles.container}>
-                <ScrollView bounces={false} removeClippedSubviews nestedScrollEnabled>
+                <ScrollView bounces={false} scrollEnabled={enableScrollViewScroll} removeClippedSubviews nestedScrollEnabled>
                     <View style={styles.homeSection}>
                         <SearchComponent text={text} />
                         </View>
                         <BannerComponent BANNERIMAGEURL={homePageBanner} imagesUrl={bannerImages} />
                         <View style={styles.homeSection}>
-                            <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
+                            <FlatList bounces={false} onTouchStart={()=>onEnableScroll(false)} onMomentumScrollEnd={()=>onEnableScroll(true)} getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
                         </View>
                     
                     {/* <View >

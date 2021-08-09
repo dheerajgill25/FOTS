@@ -87,7 +87,8 @@ const renderEmptyCom = () => {
     )
 }
 const CartScreen = ({ }: CartProps) => {
-    const [coupenCode, setCoupenCode] = useState<string>("")
+    const [coupenCode, setCoupenCode] = useState<string>("");
+    const [enableScrollViewScroll, setEnableScrollViewScroll] = useState<boolean>(true);
     useEffect(() => {
         CartListControllerInstance.getCartProducts();
     }, []);
@@ -134,10 +135,13 @@ const CartScreen = ({ }: CartProps) => {
         length: window.width / 5,
         offset: window.width / 5 * index,
         index,
-    })
+    });
+    const onEnableScroll = (isScroll: boolean) => {
+        setEnableScrollViewScroll(isScroll)
+    }
     return (
         <View style={styles.container}>
-            <ScrollView bounces={false} nestedScrollEnabled={false}>
+            <ScrollView scrollEnabled={enableScrollViewScroll} bounces={false} nestedScrollEnabled={false}>
                 {renderShoppingCartSection(cartData && cartData?.data[0]?.cart_item?.length, cartData && cartData?.type, cartData && cartData?.data[0])}
                 <FlatList
                     getItemLayout={getItemLayout}
@@ -145,6 +149,9 @@ const CartScreen = ({ }: CartProps) => {
                     ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false}
                     style={{ marginTop: 20, marginBottom: 13 }}
                     keyExtractor={(item, index) => index.toString()}
+                    bounces={false}
+                    onTouchStart={() => onEnableScroll(false)}
+                    onMomentumScrollEnd={() => onEnableScroll(true)}
                     renderItem={({ item, index }) => renderCartItems(item, index, cartData?.type, cartData && cartData?.data[0]?.cart_item?.length)} />
                 {cartData?.type == "meal" && coupenCodeSection()}
             </ScrollView>

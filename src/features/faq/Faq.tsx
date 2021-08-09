@@ -80,7 +80,7 @@ const FaqScreen = ({ }: FaqScreenProps) => {
     return (
         <BaseScreen navigatorBarOptions={{ backIcon: true, }}>
             <View style={{ flex: 1, width: '100%', flexDirection: 'column' }}>
-                <ScrollView>
+                <ScrollView bounces={false}>
                     <View
                         style={{
                             width: '100%',

@@ -95,7 +95,7 @@ const renderItems = (items: any, index: any) => {
     return (
         <View key={index} style={styles.orderContentbox}>
             {
-              items && items.cart_order.length > 0|| index == 0 && <View style={styles.myOrderBox}>
+                items && items.cart_order.length > 0 || index == 0 && <View style={styles.myOrderBox}>
                     <Typography style={styles.myOrderText}>MY ORDERS</Typography>
                 </View>
             }
@@ -151,7 +151,8 @@ const renderItems = (items: any, index: any) => {
 }
 const MyAccount = (props: MyAccountProps) => {
     const [userData, setUserData] = React.useState({});
-    const [contactEmail, setContactEmail] = useState("")
+    const [contactEmail, setContactEmail] = useState("");
+    const [enableScrollViewScroll, setEnableScrollViewScroll] = useState<boolean>(true);
     React.useEffect(() => {
         let cancelled = false;
         StorageService.getItem('user').then((values: any) => {
@@ -174,15 +175,20 @@ const MyAccount = (props: MyAccountProps) => {
             ))
         }
     }, [generalSettingData]);
+    const onEnableScroll = (isScroll: boolean) => {
+        setEnableScrollViewScroll(isScroll)
+    }
     return (
         <SafeAreaView style={styles.container}>
             <MyStatusBar backgroundColor="#fff" barStyle="dark-content" />
-            <ScrollView bounces={false} >
+            <ScrollView bounces={false} scrollEnabled={enableScrollViewScroll} >
                 {renderAccountInfo(userData)}
                 {renderHelpSection(contactEmail)}
                 <FlatList
                     scrollEnabled={false}
                     bounces={false}
+                    onTouchStart={() => onEnableScroll(false)}
+                    onMomentumScrollEnd={() => onEnableScroll(true)}
                     nestedScrollEnabled={false}
                     data={orderListData}
                     renderItem={({ item, index }) => renderItems(item, index)}
