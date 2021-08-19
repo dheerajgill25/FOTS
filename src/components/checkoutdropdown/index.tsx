@@ -1,4 +1,5 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
+import Toaster from 'features/commonApiCall/toaster';
 import React, { memo, useState } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,9 +16,14 @@ const DropdownComponentCheckOut = ({ data, title, onPress, imageLeftUrl }: Dropd
     const [dropdownValue, setDropdownValue] = useState(title);
     const [selectedValue, setSelectedValue] = useState<boolean>(false);
     const handleValue = (data: any) => {
-        setDropdownValue(data.name);
-        setShowDropdown(false);
-        setSelectedValue(true)
+        if(data){
+            setDropdownValue(data?.name);
+            setShowDropdown(false);
+            setSelectedValue(true)
+        }else{
+            Toaster.show("No data found")
+        }
+       
     }
     return (
         <>
@@ -31,7 +37,7 @@ const DropdownComponentCheckOut = ({ data, title, onPress, imageLeftUrl }: Dropd
                             }} />
                         </View>
                         <View style={styles.deliveryContentContent}>
-                        <Typography style={[styles.title, { color: selectedValue ? 'black' : 'black' }]}>{dropdownValue}</Typography>
+                        <Typography style={[styles.title, { color: selectedValue ? 'black' : 'black' }]}>{dropdownValue?dropdownValue:'No data found'}</Typography>
                         </View>
                         <View style={[styles.deliveryContentContent, { maxWidth: 50, }]}>
                             <Image source={require('../../../assets/images/dropdown.png')} style={{ height: 10, width: 15,alignSelf:"flex-end" }} />
@@ -43,7 +49,7 @@ const DropdownComponentCheckOut = ({ data, title, onPress, imageLeftUrl }: Dropd
                                 data && data.map((item: any, index: any) => (
                                     <View key={index} style={styles.dropdownWrap}>
                                         <TouchableOpacity onPress={() => { onPress(item); handleValue(item) }} activeOpacity={0.6} style={styles.dropdownInner}>
-                                            <Typography style={styles.values}>{item.name}</Typography>
+                                            <Typography style={styles.values}>{item?item.name:'No Data found'}</Typography>
                                         </TouchableOpacity>
                                     </View>
                                 ))

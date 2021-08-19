@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         paddingHorizontal: 23,
-        paddingVertical:10
+        paddingVertical:12
     },
     borderBox: {
       

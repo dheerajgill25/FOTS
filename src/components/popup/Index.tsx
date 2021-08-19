@@ -8,15 +8,16 @@ interface ModalComponentProps {
     isVisiable?: boolean;
     mealPlan?: boolean;
     subTitle?: string;
+    onClose:Function
 }
 
-const ModalComponent = ({ label, isVisiable, mealPlan, subTitle }: ModalComponentProps) => {
+const ModalComponent = ({ label, isVisiable, mealPlan, subTitle,onClose }: ModalComponentProps) => {
     const [isShown, setIsShown] = React.useState(true);
     const closeModal = () => {
         setIsShown(false);
     }
     return (
-        <ReactNativeModal isVisible={isShown} onModalHide={() => closeModal()} style={styles.modal}
+        <ReactNativeModal isVisible={isVisiable} onModalHide={() => onClose()} style={styles.modal}
             backdropColor={'black'}
             backdropOpacity={0.3}
             coverScreen={true}
@@ -27,13 +28,13 @@ const ModalComponent = ({ label, isVisiable, mealPlan, subTitle }: ModalComponen
                     mealPlan ? (
                         <View style={styles.modalSection}>
                             <View style={styles.modalInner}>
-                                <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
+                                <Typography onPress={() => onClose()} style={styles.label}>{label}</Typography>
                             </View>
-                            <Typography onPress={() => closeModal()} style={[styles.label,{fontStyle:"italic"}]}>{subTitle}</Typography>
+                            <Typography onPress={() => onClose()} style={[styles.label,{fontStyle:"italic"}]}>{subTitle}</Typography>
                             <View style={styles.modalButton}>
                                 <TouchableOpacity
                                     style={styles.btn}
-                                    onPress={closeModal}
+                                    onPress={()=>onClose()}
                                 >
                                     <Typography style={styles.buttonText}>{'OK'}</Typography>
                                 </TouchableOpacity>
@@ -42,12 +43,12 @@ const ModalComponent = ({ label, isVisiable, mealPlan, subTitle }: ModalComponen
                     ) : (
                         <View style={styles.modalSection}>
                             <View style={styles.modalInner}>
-                                <Typography onPress={() => closeModal()} style={styles.label}>{label}</Typography>
+                                <Typography onPress={() => onClose()} style={styles.label}>{label}</Typography>
                             </View>
                             <View style={styles.modalButton}>
                                 <TouchableOpacity
                                     style={styles.btn}
-                                    onPress={closeModal}
+                                    onPress={()=>onClose()}
                                 >
                                     <Typography style={styles.buttonText}>{'OK'}</Typography>
                                 </TouchableOpacity>

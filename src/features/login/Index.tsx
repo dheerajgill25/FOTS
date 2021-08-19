@@ -117,7 +117,7 @@ const Login = (props: LoginProps) => {
                     <View style={styles.bannerWrap}>
                     </View>
                     <View style={styles.bannerBox}>
-                        <Typography style={styles.heading}>Sign IN</Typography>
+                        <Typography style={styles.heading}>Sign In</Typography>
                     </View>
 
                 </View>

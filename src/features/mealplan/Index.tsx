@@ -56,7 +56,7 @@ const renderMealButton = (item: any, index: number) => {
     <View key={index} style={styles.mealPlanButtons}>
       <RenderButtonWithIcon type="meal"
         buttonStyle={styles.buttonstyles}
-        label={`${item.day}-Days Plan (${item.meal_count} Meals)`}
+        label={`${item.day}-Day Plan (${item.meal_count} Meals)`}
         onPress={() => {
           ProductScreen.navigate(item.category_id, item.id, true)
           StorageService.setItem("days",item.day)
@@ -81,7 +81,7 @@ const MealPlan = (props: MealPlanProps) => {
   const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
   useEffect(() => {
     if (generalSettingData && generalSettingData.banner) {
-        setBannerImages(generalSettingData.banner?.category);
+        setBannerImages(generalSettingData.banner?.home);
     }
 }, [generalSettingData])
   const getItemLayout = (data: any, index: any) => ({

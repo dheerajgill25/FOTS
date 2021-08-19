@@ -88,14 +88,6 @@ const nutritionSection = (_data: any, totalCalories: string) => {
                                             <Typography style={styles.nutritionQuantity}>{item.value}{item.unit}</Typography>
                                             <Typography style={styles.nutritionType}>{item.name}</Typography>
                                         </View>
-                                        {
-                                            index == 2 && (
-                                                <View style={styles.nutritionContent}>
-                                                    <Typography style={styles.nutritionQuantity}>{totalCalories}</Typography>
-                                                    <Typography style={styles.nutritionType}>TOTAL CAL</Typography>
-                                                </View>
-                                            )
-                                        }
 
                                     </>
                                 ))
@@ -103,7 +95,10 @@ const nutritionSection = (_data: any, totalCalories: string) => {
                                 <View />
                             )
                         }
-
+                        <View style={styles.nutritionContent}>
+                            <Typography style={styles.nutritionQuantity}>{totalCalories}</Typography>
+                            <Typography style={styles.nutritionType}>TOTAL CAL</Typography>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -126,7 +121,7 @@ const cookingSection = (_data: any) => {
         </View>
     )
 }
-const cookingInstructionSection = (_data: any, ingradient: [], cabinet: []) => {
+const cookingInstructionSection = (_data: any, ingradient: [], cabinet: [], categoryName: string) => {
     const PLUSIMAGEURL = require('../../../assets/images/plus.png');
     const MINUSIMAGEURL = require('../../../assets/images/minus.png');
     const [accrodien, setAccrodien] = useState<string>("");
@@ -138,189 +133,140 @@ const cookingInstructionSection = (_data: any, ingradient: [], cabinet: []) => {
         }
     }
     return (
-        <View style={styles.accordienSection}>
-            <View style={styles.accordienBox}>
-                <View style={styles.accordienInner}>
-                    <View style={styles.accordienWrap}>
-                        <View style={styles.accordienContentFlex}>
-                            <Typography style={styles.accordienTitle}>In Your Box</Typography>
-                        </View>
-                        <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("box")} >
-                            <Image source={accrodien == 'box' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        accrodien == 'box' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
-                            <View style={{
-                                flexDirection: 'row',
-                                marginLeft: -10,
-                                marginTop: 10,
-                                flexWrap: 'wrap'
-                            }}>
-                                {
-                                    ingradient && ingradient.length > 0 ? (
-                                        ingradient && ingradient.map((item: any, index: any) => (
-                                            <>
-                                                <View key={index} style={[styles.inYourBox, {
-                                                    width: 100,
-                                                    marginBottom: 10,
-                                                }]}>
-                                                    {
-                                                        item.quantity == "" && item.quantity == 0 ? (
-                                                            <View />
-                                                        ) : (
-                                                            <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
-                                                        )
-                                                    }
-                                                    <Typography style={styles.nutritionType}>{item.name}</Typography>
-                                                </View>
-                                            </>
-                                        ))
-                                    ) : (
-                                        <View />
-                                    )
-                                }
-
+        <>
+            {
+                categoryName !== "For Your Table" && <View style={styles.accordienSection}>
+                    <View style={styles.accordienBox}>
+                        <View style={styles.accordienInner}>
+                            <View style={styles.accordienWrap}>
+                                <View style={styles.accordienContentFlex}>
+                                    <Typography style={styles.accordienTitle}>In Your Box</Typography>
+                                </View>
+                                <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("box")} >
+                                    <Image source={accrodien == 'box' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
+                                </TouchableOpacity>
                             </View>
-                        </View>
-                    }
-                    <View style={styles.accordienWrap}>
-                        <View style={styles.accordienContentFlex}>
-                            <Typography style={styles.accordienTitle}>From Your Cabinet</Typography>
-                        </View>
-                        <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("cabinet")} >
-                            <Image source={accrodien == 'cabinet' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        accrodien == 'cabinet' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
-                            <View style={{
-                                flexDirection: 'row',
-                                marginLeft: -10,
-                                marginTop: 10,
-                                flexWrap: 'wrap'
-                            }}>
-                                {
-                                    cabinet && cabinet.length > 0 ? (
-                                        cabinet && cabinet.map((item: any, index: any) => (
-                                            <>
-                                                <View key={index} style={[styles.inYourBox, {
-                                                    width: 100,
-                                                    marginBottom: 10,
-                                                }]}>
-                                                    {
-                                                        item.quantity == "" && item.quantity == 0 ? (
-                                                            <View />
-                                                        ) : (
-                                                            <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
-                                                        )
-                                                    }
-                                                    <Typography style={styles.nutritionType}>{item.name}</Typography>
-                                                </View>
-                                            </>
-                                        ))
-                                    ) : (
-                                        <View />
-                                    )
-                                }
+                            {
+                                accrodien == 'box' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        marginLeft: -10,
+                                        marginTop: 10,
+                                        flexWrap: 'wrap'
+                                    }}>
+                                        {
+                                            ingradient && ingradient.length > 0 ? (
+                                                ingradient && ingradient.map((item: any, index: any) => (
+                                                    <>
+                                                        <View key={index} style={[styles.inYourBox, {
+                                                            width: 100,
+                                                            marginBottom: 10,
+                                                        }]}>
+                                                            {
+                                                                item.quantity == "" && item.quantity == 0 ? (
+                                                                    <View />
+                                                                ) : (
+                                                                    <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
+                                                                )
+                                                            }
+                                                            <Typography style={styles.nutritionType}>{item.name}</Typography>
+                                                        </View>
+                                                    </>
+                                                ))
+                                            ) : (
+                                                <View />
+                                            )
+                                        }
 
+                                    </View>
+                                </View>
+                            }
+                            <View style={styles.accordienWrap}>
+                                <View style={styles.accordienContentFlex}>
+                                    <Typography style={styles.accordienTitle}>From Your Cabinet</Typography>
+                                </View>
+                                <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("cabinet")} >
+                                    <Image source={accrodien == 'cabinet' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
+                                </TouchableOpacity>
                             </View>
-                        </View>
-                    }
+                            {
+                                accrodien == 'cabinet' && <View style={[styles.nutritionWrap, { marginBottom: 20 }]}>
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        marginLeft: -10,
+                                        marginTop: 10,
+                                        flexWrap: 'wrap'
+                                    }}>
+                                        {
+                                            cabinet && cabinet.length > 0 ? (
+                                                cabinet && cabinet.map((item: any, index: any) => (
+                                                    <>
+                                                        <View key={index} style={[styles.inYourBox, {
+                                                            width: 100,
+                                                            marginBottom: 10,
+                                                        }]}>
+                                                            {
+                                                                item.quantity == "" && item.quantity == 0 ? (
+                                                                    <View />
+                                                                ) : (
+                                                                    <Typography style={styles.nutritionQuantity}>{item.quantity}{item.unit}</Typography>
+                                                                )
+                                                            }
+                                                            <Typography style={styles.nutritionType}>{item.name}</Typography>
+                                                        </View>
+                                                    </>
+                                                ))
+                                            ) : (
+                                                <View />
+                                            )
+                                        }
 
-                    <View style={styles.accordienWrap}>
-                        <View style={styles.accordienContentFlex}>
-                            <Typography style={styles.accordienTitle}>Cooking Instructions</Typography>
-                        </View>
-                        <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("cookingIns")}>
-                            <Image source={accrodien == 'cookingIns' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        accrodien == 'cookingIns' && <View>
-                            <View>
-                                <HTML source={{ html: _data }} baseFontStyle={{ fontSize: 14, fontFamily: FontFamilyFoods.POPPINS, lineHeight: 24 }} contentWidth={width} />
-                                {/* <Typography style={[styles.description, { fontSize: 14, lineHeight: 19, fontStyle: "italic" }]}>{_data} </Typography> */}
+                                    </View>
+                                </View>
+                            }
+
+                            <View style={styles.accordienWrap}>
+                                <View style={styles.accordienContentFlex}>
+                                    <Typography style={styles.accordienTitle}>Cooking Instructions</Typography>
+                                </View>
+                                <TouchableOpacity style={styles.accordienContentFlexRight} onPress={() => handleAccordien("cookingIns")}>
+                                    <Image source={accrodien == 'cookingIns' ? MINUSIMAGEURL : PLUSIMAGEURL} style={styles.plusIcon} />
+                                </TouchableOpacity>
                             </View>
-                        </View>
-                    }
+                            {
+                                accrodien == 'cookingIns' && <View>
+                                    <View>
+                                        <HTML source={{ html: _data }} baseFontStyle={{ fontSize: 14, fontFamily: FontFamilyFoods.POPPINS, lineHeight: 24 }} contentWidth={width} />
+                                        {/* <Typography style={[styles.description, { fontSize: 14, lineHeight: 19, fontStyle: "italic" }]}>{_data} </Typography> */}
+                                    </View>
+                                </View>
+                            }
 
+                        </View>
+                    </View>
                 </View>
-            </View>
-        </View>
+            }
+
+        </>
     )
 }
 
-
-
-
-
 const renderFooterSection = () => {
     return (
-        <View style={{marginVertical:18,marginHorizontal:20}}>
-            <Typography style={{fontStyle:'italic',fontSize:14,lineHeight:21,fontFamily:FontFamilyFoods.POPPINS}}>*Food on the Stove encourages portion control. The
+        <View style={{ marginVertical: 18, marginHorizontal: 20 }}>
+            <Typography style={{ fontStyle: 'italic', fontSize: 14, lineHeight: 21, fontFamily: FontFamilyFoods.POPPINS }}>*Food on the Stove encourages portion control. The
                 quantity provided is based on the known staffing
                 count provided by your department. Food on the
                 Stove buffers for 2-3 extra servings per delivery. </Typography>
         </View>
     )
 }
-// const renderModal = (modalizeRef: any, cart: {}) => {
-//     const closeModal = async () => {
-//         const category_id = await AsyncStorage.getItem('cId');
-//         const search = await AsyncStorage.getItem('search');
-//         modalizeRef?.current?.close();
-//         cartAgainAdd = false;
-//         cart = {};
-//         if(search){
-//             SearchScreen.navigate();
-//             AsyncStorage.removeItem('search')
-//         }else{
-//             OrderScreen.navigate(category_id);
-//         }
-//     }
-//     return (
-//         <>
-//             {
-//                 cartAgainAdd ? (
-//                     <ReactNativeModal ref={modalizeRef} isVisible={true} onModalHide={() => closeModal()} style={styles.modal}
-//                         backdropColor={'black'}
-//                         backdropOpacity={0.3}
-//                         coverScreen={true}
-//                     >
-//                         <View style={styles.modalcontainer} >
-//                             <View style={styles.modalSection}>
-//                                 <View style={styles.modalInner}>
-//                                     <Typography style={styles.label}>{'Your cart has another product, do you want to discard the previous selection and add new product?'}</Typography>
-//                                 </View>
-//                                 <View style={styles.modalButton}>
-//                                     <TouchableOpacity
-//                                         style={styles.btn}
-//                                         onPress={() => closeModal()}
-//                                     >
-//                                         <Typography style={styles.buttonText}>{'Cancel'}</Typography>
-//                                     </TouchableOpacity>
-//                                     <TouchableOpacity
-//                                         style={styles.btn}
-//                                         onPress={() => handleCartAgainAfterRemove(cart)}
-//                                     >
-//                                         <Typography style={styles.buttonText}>{'OK'}</Typography>
-//                                     </TouchableOpacity>
-//                                 </View>
-//                             </View>
-//                         </View>
-//                     </ReactNativeModal>
-//                 ) : (
-//                     <View />
-//                 ) 
-//             }
-//         </>
-//     )
-// }
+
 
 const ProductDetailScreen = (props: ProductDetailScreenProps) => {
     const modalizeRef = React.useRef<ReactNativeModal>(null);
     const [isShowModal, setIsShowModal] = useState<boolean>(false);
+    const [showConfirmModal, setShowConfirmModal] = useState<boolean>(true);
     const {
         route: { params: { id, meal } },
     } = props;
@@ -382,7 +328,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     meal ? (
                         <View />
                     ) : (
-                        <ModalComponent label={label} />
+                        <ModalComponent label={label} isVisiable={showConfirmModal} onClose={() => setShowConfirmModal(false)} />
                     )
                 }
 
@@ -397,8 +343,8 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
                     {renderDescriptionSection(productDetail?.description)}
                     {nutritionSection(productDetail?.nutrition, productDetail?.total_calories)}
                     {productDetail?.meal_id == "" && cookingSection(productDetail?.cooking_time)}
-                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient, productDetail?.cabinet)}
-                    {productDetail?.category_name=="Farm to Firehouse"&&renderFooterSection()}
+                    {cookingInstructionSection(productDetail?.cooking_instructions, productDetail?.ingredient, productDetail?.cabinet, productDetail?.category_name)}
+                    {productDetail?.category_name == "Farm to Firehouse" && renderFooterSection()}
                     {renderButtonSection(productDetail?.net_amount, productDetail)}
                     {
                         isShowModal && <AlertModal
