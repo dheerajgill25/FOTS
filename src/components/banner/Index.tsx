@@ -32,7 +32,7 @@ const BannerComponent = ({ BANNERIMAGEURL, imagesUrl }: BannerComponentProps) =>
     const renderItem = (data: any, index: React.Key | null | undefined) => {
         return (
             <>
-                <TouchableOpacity key={index} onPress={() => { handleClickImage(data.description) }} activeOpacity={0.6}>
+                <TouchableOpacity key={index} onPress={() => { handleClickImage(data.description) }} activeOpacity={0.8}>
                     <ImageBackground source={{ uri: data.image,cache:"force-cache" }} style={styles.homeBannerImg} resizeMode="stretch" resizeMethod="scale" >
                     </ImageBackground>
                 </TouchableOpacity>

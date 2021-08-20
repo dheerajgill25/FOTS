@@ -81,7 +81,7 @@ const MealPlan = (props: MealPlanProps) => {
   const generalSettingData = useSelector((state: RootStore) => state.GeneralSettingInState.data);
   useEffect(() => {
     if (generalSettingData && generalSettingData.banner) {
-        setBannerImages(generalSettingData.banner?.home);
+        setBannerImages(generalSettingData.banner?.meal);
     }
 }, [generalSettingData])
   const getItemLayout = (data: any, index: any) => ({

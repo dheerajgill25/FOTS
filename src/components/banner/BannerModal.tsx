@@ -19,8 +19,8 @@ const BannerModal = ({ label, isVisiable, onClosePress }: AlertModalProps) => {
             coverScreen={true}
             onBackdropPress={() => onClosePress()}
         >
-            <View style={styles.container} >
-                <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+            <View style={[styles.container, { height: label.length < 150 ? 150 : 355 }]} >
+                <ScrollView bounces={false} scrollEnabled={label.length > 100 ? true : false} showsVerticalScrollIndicator={false}>
                     <View style={styles.modalSection}>
                         <View style={styles.modalInner}>
                             <Typography style={styles.label}>{label}</Typography>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalSection: {
-        paddingTop:18
+        paddingTop: 18
     },
     modalInner: {
         marginBottom: 15,
