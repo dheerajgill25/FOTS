@@ -187,7 +187,7 @@ const MyAccount = (props: MyAccountProps) => {
                 <FlatList
                     scrollEnabled={false}
                     bounces={false}
-                    onTouchStart={() => onEnableScroll(false)}
+                    onTouchStart={() => onEnableScroll(true)}
                     onMomentumScrollEnd={() => onEnableScroll(true)}
                     nestedScrollEnabled={false}
                     data={orderListData}

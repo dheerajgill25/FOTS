@@ -10,7 +10,7 @@ import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
 class RemoveCartController {
-    async RemoveCartProducts(id: any, product_id: any, type?: string, cId?: any,length?:any) {
+    async RemoveCartProducts(id: any, product_id: any, type?: string, cId?: any, length?: any) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             var formData: FormData = new FormData();
@@ -22,12 +22,12 @@ class RemoveCartController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
                 CartCountControllerInstance.getCartCount();
                 if (type == 'meal') {
-                    if(length==0){
+                    if (length == 0) {
                         OrderScreen.navigate(cId)
-                    }else{
+                    } else {
                         CartListControllerInstance.getCartProducts()
                         return
                     }
@@ -36,7 +36,7 @@ class RemoveCartController {
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
@@ -57,10 +57,10 @@ class RemoveCartController {
             const { message } = data;
             if (data.status && status) {
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));
@@ -73,7 +73,7 @@ class RemoveCartController {
     async removeProductSuccess() {
         return true;
     }
-    async RemoveCartAllProducts(categoryId?: any,mealId?:any, type?: string) {
+    async RemoveCartAllProducts(categoryId?: any, mealId?: any, type?: string) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
             const URLS = APIENDPOINTS.APIBASEURL + URL.REMOVEALLPRODUCT + `?key=${APIENDPOINTS.APIKEY}`;
@@ -83,15 +83,15 @@ class RemoveCartController {
             if (data.status && status) {
                 CartCountControllerInstance.getCartCount();
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
                 if (type == 'meal') {
-                    ProductScreen.navigate(categoryId,mealId,true);
+                    ProductScreen.navigate(categoryId, mealId, true);
                 } else {
                     OrderScreen.navigate(categoryId);
                 }
             } else {
                 useAppDispatch(LoadingAction.showLoading(false));
-               Toaster.show(message);
+                Toaster.show(message);
             }
         } catch (error) {
             useAppDispatch(LoadingAction.showLoading(false));

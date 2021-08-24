@@ -151,13 +151,13 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         <SafeAreaView style={styles.container}>
             <ScrollView bounces={false} nestedScrollEnabled={false}>
                 <View>
-                    <DropdownComponentCheckOut title="State" imageLeftUrl={require('../../../assets/images/location.png')} data={stateData&&stateData.length>0?stateData:[]} onPress={(data) => onChangeStateListener(data)} />
+                    <DropdownComponentCheckOut title="State" imageLeftUrl={require('../../../assets/images/location.png')} data={stateData && stateData.length > 0 ? stateData : []} onPress={(data) => onChangeStateListener(data)} />
                 </View>
                 <View>
-                    <DropdownComponentCheckOut title="Fire Department" imageLeftUrl={require('../../../assets/images/firehydrant.png')} data={fireDepartmentData&&fireDepartmentData.length>0?fireDepartmentData:[]} onPress={(data) => onChangeFireDeparmentListener(data)} />
+                    <DropdownComponentCheckOut title="Fire Department" imageLeftUrl={require('../../../assets/images/firehydrant.png')} data={fireDepartmentData && fireDepartmentData.length > 0 ? fireDepartmentData : []} onPress={(data) => onChangeFireDeparmentListener(data)} />
                 </View>
                 <View>
-                    <DropdownComponentCheckOut title="Fire Station" data={fireStationData&&fireStationData.length>0?fireStationData:[]} onPress={(data) => onChangeFireStationListener(data)} />
+                    <DropdownComponentCheckOut title="Fire Station" data={fireStationData && fireStationData.length > 0 ? fireStationData : []} onPress={(data) => onChangeFireStationListener(data)} />
                 </View>
                 {renderDateOfDeliverSection(checkoutData?.delivery_date, checkoutData?.delivery_date2, isDateShow, checkoutData?.mealPlanDay)}
             </ScrollView>

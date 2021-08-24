@@ -5,7 +5,6 @@ import ThankYouScreen from "features/thankyou/Index";
 import { APIENDPOINTS, URL } from "libs/api/apiEndpoints";
 import { useAppDispatch } from "libs/functions";
 import HttpCall from "libs/http-call/https";
-import Toast from 'react-native-simple-toast';
 class PayNowController {
     async paynowProducts(stateId: any, fdId: any, fsID: any, date: any, paymentMethod?: any, pId?: any,orderJson?:any) {
         try {

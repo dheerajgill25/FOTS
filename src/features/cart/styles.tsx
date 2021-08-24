@@ -132,6 +132,11 @@ const styles = StyleSheet.create({
         fontSize: 16, color: '#484848',
         lineHeight: 22,
         marginRight: 10,
+    },
+    quantity:{
+        fontSize:10,
+        marginTop:-5,
+        textDecorationLine:'underline'
     }
 });
 export default styles;

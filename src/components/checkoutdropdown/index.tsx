@@ -1,6 +1,7 @@
 import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import Toaster from 'features/commonApiCall/toaster';
 import React, { memo, useState } from 'react';
+import { useEffect } from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 interface DropdownProps {
@@ -101,12 +102,10 @@ const styles = StyleSheet.create({
         color: '#A7A7A7',
         fontFamily: FontFamilyFoods.POPPINS,
         textAlign:"center",
-        textTransform:"capitalize",
     },
     values: {
         color: '#000',
         fontFamily: FontFamilyFoods.POPPINS,
-        textTransform:"capitalize",
         paddingLeft:15
     },
     deliveryContentContent:{

@@ -4,6 +4,7 @@ import Typography, { FontFamilyFoods } from 'components/typography/Typography';
 import CheckOutControllerInstance from 'features/commonApiCall/checkout/controllers/checkout.controller';
 import RemoveCartControllerInstance from 'features/commonApiCall/removeCart/controllers/reomveToCart.controller';
 import HomeScreen from 'features/home/Index';
+import NumberSeparatorInstance from 'libs/functions/ConvertNumber';
 import RootNavigator from 'navigation/rootnavigation';
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Image, FlatList, TextInput, TouchableOpacity } from 'react-native';
@@ -65,7 +66,8 @@ const renderCartItems = (data: any, i: number, type: string, length: any) => {
                         </View>
                         <View style={styles.shoppingCartRight}>
                             <Typography style={[styles.shoppingCartTitle, styles.productName]}>{product?.name}</Typography>
-                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{"$" + product?.net_amount}</Typography>
+                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice]}>{"$" + NumberSeparatorInstance.numberSeparator(product?.net_amount * data?.quantity)}</Typography>
+                            <Typography style={[styles.shoppingCartSubTitle, styles.productPrice, styles.quantity]}>{"Quantity: " + data?.quantity}</Typography>
                         </View>
 
                     </View>
@@ -108,7 +110,16 @@ const CartScreen = ({ }: CartProps) => {
                 }
             })
         }
-    }, [countNumber, cartData])
+        else if (countNumber == '') {
+            HomeScreen.navigate();
+            Snackbar.show({
+                text: 'Cart is empty',
+                textColor: "white",
+                duration: 3000,
+                fontFamily: FontFamilyFoods.POPPINS
+            });
+        }
+    }, [countNumber])
     const handleCheckout = () => {
         CheckOutControllerInstance.Checkout(coupenCode);
     }
@@ -146,11 +157,11 @@ const CartScreen = ({ }: CartProps) => {
                 <FlatList
                     getItemLayout={getItemLayout}
                     data={cartData?.data && cartData?.data[0]?.cart_item}
-                    ListEmptyComponent={() => renderEmptyCom()} scrollEnabled={false}
+                    ListEmptyComponent={() => renderEmptyCom()}
                     style={{ marginTop: 20, marginBottom: 13 }}
                     keyExtractor={(item, index) => index.toString()}
                     bounces={false}
-                    onTouchStart={() => onEnableScroll(false)}
+                    onTouchStart={() => onEnableScroll(true)}
                     onMomentumScrollEnd={() => onEnableScroll(true)}
                     renderItem={({ item, index }) => renderCartItems(item, index, cartData?.type, cartData && cartData?.data[0]?.cart_item?.length)} />
                 {cartData?.type == "meal" && coupenCodeSection()}
