@@ -84,12 +84,10 @@ const styles = StyleSheet.create({
     title: {
         color: '#A7A7A7',
         fontFamily: FontFamilyFoods.POPPINS,
-        textTransform: 'capitalize'
     },
     values: {
         color: '#000',
         fontFamily: FontFamilyFoods.POPPINS,
-        textTransform: 'capitalize'
     },
 });
 export default memo(DropdownComponent);

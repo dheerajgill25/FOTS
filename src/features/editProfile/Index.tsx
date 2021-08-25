@@ -25,8 +25,8 @@ const EditProfile = (props: EditProfileProps) => {
     const modalizeRef = React.useRef<Modalize>(null);
     const [fireDepartmentId, setFireDepartmentId] = useState<string>("");
     const [fireStationId, setFireStationId] = useState<string>("");
-    const [fireDepartment, setFireDepartment] = useState<any>("");
-    const [fireStation, setFireStation] = useState<any>("");
+    const [fireDepartment, setFireDepartment] = useState<any>("Select Fire Department");
+    const [fireStation, setFireStation] = useState<any>("Select Fire Station");
     const [profileImage, setProfileImage] = React.useState<ImagePickerResponse | string | any>('')
     const [first_name, setFirst_name] = useState<string>("");
     const [last_name, setLast_name] = useState<string>("");
@@ -182,10 +182,10 @@ const EditProfile = (props: EditProfileProps) => {
                                     <Typography onPress={() => ChangePassword.navigate()} style={styles.passwordLink}>Change Password</Typography>
                                 </View>
                                 <View style={[styles.formGroup, { marginTop:isAndroid?30:20 }]}>
-                                    <DropdownComponent edit title={fireDepartment} dropdownData={fireDepartmentData} onPress={(data) => onChangeFireDeparmentListener(data)} />
+                                    <DropdownComponent edit title={fireDepartment} dropdownData={fireDepartmentData&&fireDepartmentData.length>0?fireDepartmentData:[]} onPress={(data) => onChangeFireDeparmentListener(data)} />
                                 </View>
                                 <View style={styles.formGroup}>
-                                    <DropdownComponent edit title={fireStation} dropdownData={fireStationData} onPress={(data) => onChangeFireStationListener(data)} />
+                                    <DropdownComponent edit title={fireStation} dropdownData={ fireStationData&&fireStationData.length>0?fireStationData:[]} onPress={(data) => onChangeFireStationListener(data)} />
                                 </View>
                                 <View style={styles.button}>
                                     <ButtonFood label="Update" onPress={() => updateProfile()} />

@@ -28,7 +28,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
     const [text, setText] = useState<string>('');
     const [homePageBanner, setHomePageBanner] = useState<string>("");
     const [bannerImages, setBannerImages] = useState<any>([]);
-    const [enableScrollViewScroll,setEnableScrollViewScroll] =useState<boolean>(true);
+    const [enableScrollViewScroll, setEnableScrollViewScroll] = useState<boolean>(true);
     useEffect(() => {
         CategoryControllerInstance.getCategory();
         TestimonialsControllerInstance.getTestimonials();
@@ -58,7 +58,7 @@ const HomeScreen = ({ }: HomeScreenProps) => {
         offset: window.width / 5 * index,
         index,
     })
-    const onEnableScroll = (isScroll:boolean)=>{
+    const onEnableScroll = (isScroll: boolean) => {
         setEnableScrollViewScroll(isScroll)
     }
     return (
@@ -68,12 +68,12 @@ const HomeScreen = ({ }: HomeScreenProps) => {
                 <ScrollView bounces={false} scrollEnabled={enableScrollViewScroll} removeClippedSubviews nestedScrollEnabled>
                     <View style={styles.homeSection}>
                         <SearchComponent text={text} />
-                        </View>
-                        <BannerComponent BANNERIMAGEURL={homePageBanner} imagesUrl={bannerImages} />
-                        <View style={styles.homeSection}>
-                            <FlatList bounces={false} onTouchStart={()=>onEnableScroll(false)} onMomentumScrollEnd={()=>onEnableScroll(true)} getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
-                        </View>
-                    
+                    </View>
+                    <BannerComponent BANNERIMAGEURL={homePageBanner} imagesUrl={bannerImages} />
+                    <View style={styles.homeSection}>
+                        <FlatList bounces={false} onTouchStart={() => onEnableScroll(true)} onMomentumScrollEnd={() => onEnableScroll(true)} getItemLayout={(data: any, index: any) => getItemLayout(data, index)} data={categoryData} keyExtractor={(item, index) => index.toString()} renderItem={({ item, index }) => handleCategory(item, index)} />
+                    </View>
+
                     {/* <View >
                         <FlatList getItemLayout={(data: any, index: any) => getItemLayout(data, index)}  keyExtractor={(item, index) => index.toString()} bounces={false} data={popularProduct} renderItem={({ item, index }) => renderFoodItems(item, index)}  />
                     </View> */}
