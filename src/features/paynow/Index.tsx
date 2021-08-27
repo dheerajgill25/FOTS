@@ -80,6 +80,7 @@ const BeforePayNow = (props: BeforePayNowProps) => {
         StateControllerInstance.getState();
     }, [])
     const onChangeStateListener = (data: any) => {
+        console.log("data---------",data)
         setStateId(data.id);
         FireDepartmentControllerInstance.getFireDepartment(data.id)
     }

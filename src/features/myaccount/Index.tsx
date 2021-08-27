@@ -134,7 +134,7 @@ const renderItems = (items: any, index: any) => {
                                 </View>
                             </View>
                             {
-                                items.status == "Delivered" && <View style={styles.buttonBox}>
+                                items.status == "Delivered" && foods.product.rating == 0 && <View style={styles.buttonBox}>
                                     <ButtonFood onPress={() => { ProductRating.navigate(items.id, foods?.product?.id) }} label="RATE ORDER" />
                                 </View>
                             }

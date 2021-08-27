@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 23,
         paddingBottom: 20,
         borderBottomWidth: 1,
+        marginTop: 16,
     },
     orderContentInner: {
         display: 'flex',
