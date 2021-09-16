@@ -13,6 +13,7 @@ class CartCountController {
             const count = await HttpCall.post(URLS, {}, true);
             const { data, status }: any = count;
             const { message } = data;
+            console.log("data---",data)
             if (data.status && status) {
                 useAppDispatch(CartCountAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));

@@ -7,20 +7,20 @@ import HttpCall from "libs/http-call/https";
 import Toast from 'react-native-simple-toast';
 import { CheckoutAction } from "../actions/checkout.action";
 class CheckOutController {
-    async Checkout(coupanCode?:string) {
+    async Checkout(coupanCode?: string) {
         try {
             useAppDispatch(LoadingAction.showLoading(true));
-            var formData:FormData = new FormData();
-            formData.append("coupon_code",coupanCode?.trim());
-            const URLS = APIENDPOINTS.APIBASEURL+URL.CHECKOUT+`?key=${APIENDPOINTS.APIKEY}`;
-            const checkout= await HttpCall.post(URLS,formData, true);
-            const {data,status}:any = checkout;
-            const {message} = data;
-            if(data.status&&status){
+            var formData: FormData = new FormData();
+            formData.append("coupon_code", coupanCode?.trim() || "");
+            const URLS = APIENDPOINTS.APIBASEURL + URL.CHECKOUT + `?key=${APIENDPOINTS.APIKEY}`;
+            const checkout = await HttpCall.post(URLS, formData, true);
+            const { data, status }: any = checkout;
+            const { message } = data;
+            if (data.status && status) {
                 useAppDispatch(CheckoutAction.requestSuccess(data));
                 useAppDispatch(LoadingAction.showLoading(false));
                 BeforePayNow.navigate();
-            }else{
+            } else {
                 useAppDispatch(LoadingAction.showLoading(false));
                 Toaster.show(message);
             }

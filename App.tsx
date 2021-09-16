@@ -22,7 +22,7 @@ import CrashReporterInstance from 'libs/crash-reporter/CrashReporter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import PerfomanceWatcher from 'behaviour/perfomance';
+// import PerfomanceWatcher from 'behaviour/perfomance';
 import InactivityHandler from 'behaviour/inactivityHandler';
 declare const global: { HermesInternal: null | {} };
 const App = () => {
@@ -116,7 +116,7 @@ const App = () => {
             <InactivityHandler />
             <NotificationWatcher />
             <LoadingScreen />
-            <PerfomanceWatcher />
+            {/* <PerfomanceWatcher /> */}
           </NetworkInfo>
         </NavigationContainer>
       </PersistGate>

@@ -97,28 +97,7 @@ const CartScreen = ({ }: CartProps) => {
     const countNumber = useSelector((state: RootStore) => state.CartCountInState.data)
     const cartData = useSelector((state: RootStore) => state.CartListInState.data?.data);
     useEffect(() => {
-        if (countNumber && countNumber.length > 0) {
-            countNumber.map((obj: { carts_count: number; }) => {
-                if (obj.carts_count <= 0) {
-                    HomeScreen.navigate();
-                    Snackbar.show({
-                        text: 'Cart is empty',
-                        textColor: "white",
-                        duration: 3000,
-                        fontFamily: FontFamilyFoods.POPPINS
-                    });
-                }
-            })
-        }
-        else if (countNumber == '') {
-            HomeScreen.navigate();
-            Snackbar.show({
-                text: 'Cart is empty',
-                textColor: "white",
-                duration: 3000,
-                fontFamily: FontFamilyFoods.POPPINS
-            });
-        }
+        console.log(countNumber)
     }, [countNumber])
     const handleCheckout = () => {
         CheckOutControllerInstance.Checkout(coupenCode);
