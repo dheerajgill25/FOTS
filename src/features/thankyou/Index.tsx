@@ -5,6 +5,8 @@ import ButtonFood from 'components/buttons/ButtonFoods';
 import Typography from 'components/typography/Typography';
 import MyAccount from 'features/myaccount/Index';
 import RootNavigator from 'navigation/rootnavigation';
+import OpenLink from 'libs/functions/Linking';
+import { APIENDPOINTS } from 'libs/api/apiEndpoints';
 
 interface ThankYouScreenProps { }
 const renderThankYouSection = () => {
@@ -16,14 +18,13 @@ const renderThankYouSection = () => {
                     <Image source={THANKYOUURL} style={styles.successImage} />
                     <View style={styles.successMessage}>
                         <Typography style={styles.orderMessage}>Your Order has been placed</Typography>
-                        <Typography style={styles.deliveryMessage}>“The delivery will be made to your batallion”</Typography>
                     </View>
                     <View style={styles.successBtn}>
                         <View style={styles.successBtnBox}>
                         <ButtonFood onPress={()=>{MyAccount.navigate()}} label="View Order" textStyle={styles.buttonText}  buttonStyle={styles.orderBtn} />
                         </View>  
                         <View style={styles.donateBtnBox}>
-                        <ButtonFood onPress={()=>{}} label="Donate" textColor="black" textStyle={styles.buttonText} buttonStyle={styles.donateBtn} />
+                        <ButtonFood onPress={()=>{OpenLink.openWebUrl(APIENDPOINTS.DONATE)}} label="Donate" textColor="black" textStyle={styles.buttonText} buttonStyle={styles.donateBtn} />
                         </View>
                        
                     </View>

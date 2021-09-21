@@ -1,6 +1,7 @@
 export const APIENDPOINTS = {
     APIBASEURL: "https://thecodelabs.in/sachin/api",
     APIKEY: "e68b9b75-9b78-44cd-b0b9-3c5e7678bd84",
+    DONATE:'https://foodonthestove.networkforgood.com/projects/122855-food-on-the-stove'
 };
 export const URL={
     REGISTER:"/register",
