@@ -282,7 +282,6 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
         }
     }
     const handleAddToCart = (item: any) => {
-        console.log("item--------",item)
         const products: any[] = [];
         const productId = {
             product_id: item.id, quantity: 1
@@ -294,7 +293,7 @@ const ProductDetailScreen = (props: ProductDetailScreenProps) => {
             products: products
         };
         AsyncStorage.setItem("cartRequest", JSON.stringify(item));
-        AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart,false,item.category_name);
+        AddToCartControllerInstance.addToCartProducts(request, item.name, callbackAddToCart, false, item.category_name);
 
     }
     const handleAddToCartAfterRemove = async () => {
